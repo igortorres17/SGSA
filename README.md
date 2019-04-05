@@ -13,7 +13,7 @@ Sistema de Gerenciamento de Serviços Automotivos (SGSA) é um software desenvol
 - Inclusão de Serviços e Peças na OS
 - Inclusão de Mecânico Responsável
 - Impressão de OS
-- 
+ 
 **Autenticação**
 - Acesso através de nome de usuário e senha
 - Níveis de acesso (Permissão)
