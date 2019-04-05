@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sgsa1;
+package sgsa;
 
 /**
  *
  * @author igortorres
  */
-public class SGSA1 {
+public class SGSA {
 
     /**
      * @param args the command line arguments
