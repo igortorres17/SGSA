@@ -24,7 +24,9 @@ public class Conexao {
     
     public static void fechar() throws SQLException
     {
-        if(conn != null)
+        if(conn != null){
             conn.close();
+            conn = null;
+        }
     }
 }
