@@ -8,5 +8,6 @@ public class VeiculoDAO extends BaseDAO{
     
     public VeiculoDAO(){
         super();
+        
     }
 }
