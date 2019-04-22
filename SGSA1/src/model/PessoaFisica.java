@@ -25,6 +25,13 @@ public class PessoaFisica extends Cliente{
         this.cpf = cpf;
     }
     
+    public PessoaFisica(Cliente cliente, String nome, String cpf)
+    {
+        super(cliente.getId(), cliente.getEmail(), cliente.getTelefone(), cliente.getLogradouro(), cliente.getNumero(), cliente.getComplemento(), cliente.getBairro(), cliente.getMunicipio(), cliente.getEstado(),cliente.getData_nascimento());
+        this.nome = nome;
+        this.cpf = cpf;
+    }
+    
     public String getNome() {
         return nome;
     }

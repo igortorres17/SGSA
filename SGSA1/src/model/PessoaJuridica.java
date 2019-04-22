@@ -24,6 +24,12 @@ public class PessoaJuridica extends Cliente{
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
     }
+    
+    public PessoaJuridica(Cliente cliente, String razaoSocial, String cnpj){
+        super(cliente.getId(), cliente.getEmail(), cliente.getTelefone(), cliente.getLogradouro(), cliente.getNumero(), cliente.getComplemento(), cliente.getBairro(), cliente.getMunicipio(), cliente.getEstado(),cliente.getData_nascimento());
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+    }
 
     public String getRazaoSocial() {
         return razaoSocial;

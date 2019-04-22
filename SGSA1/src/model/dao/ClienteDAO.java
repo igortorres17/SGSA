@@ -1,6 +1,7 @@
 package model.dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Cliente;
 import model.PessoaFisica;
@@ -17,26 +18,10 @@ public class ClienteDAO extends BaseDAO{
         super();
         tabela = "cliente";
     }
-    
-    private boolean ePessoaFisica(Cliente cliente){
-        return ((cliente instanceof PessoaFisica) && !(cliente instanceof Mecanico));
-    }
-    
-    private boolean ePessoaJuridica(Cliente cliente){
-        return cliente instanceof PessoaJuridica;
-    }
-    
-    private boolean eMecanico(Cliente cliente){
-        return cliente instanceof Mecanico;
-    }
-    
-    private boolean eCliente(Cliente cliente){
-        return (!(cliente instanceof PessoaFisica) && !(cliente instanceof PessoaJuridica) && !(cliente instanceof Mecanico));
-    }
-    
+        
     public void inserir(Cliente cliente) throws SQLException{
         String insertSqlQuery = ""
-        + "INSERT INTO cliente ("
+        + "INSERT INTO "+tabela+" ("
         + "cpf_cnpj,"
         + "nome_rzsocial,"
         + "senha,"
@@ -53,7 +38,7 @@ public class ClienteDAO extends BaseDAO{
         
         PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(insertSqlQuery);
         
-         if(!eMecanico(cliente))
+         if(!Cliente.eMecanico(cliente))
             instrucaoSqlPreparada.setString(3, "");
          
         instrucaoSqlPreparada.setString(4, cliente.getEmail());
@@ -66,17 +51,17 @@ public class ClienteDAO extends BaseDAO{
         instrucaoSqlPreparada.setString(11, cliente.getEstado());
         instrucaoSqlPreparada.setString(12, cliente.getData_nascimento());
         
-        if(ePessoaFisica(cliente)){
+        if(Cliente.ePessoaFisica(cliente)){
             PessoaFisica pessoaFisica = (PessoaFisica)cliente;
             instrucaoSqlPreparada.setString(1, pessoaFisica.getCpf());
             instrucaoSqlPreparada.setString(2, pessoaFisica.getNome());
             instrucaoSqlPreparada.setInt(13, Cliente.PESSOA_FISICA);
-        }else if(ePessoaJuridica(cliente)){
+        }else if(Cliente.ePessoaJuridica(cliente)){
             PessoaJuridica pessoaJuridica = (PessoaJuridica)cliente;
             instrucaoSqlPreparada.setString(1, pessoaJuridica.getCnpj());
             instrucaoSqlPreparada.setString(2, pessoaJuridica.getRazaoSocial());
             instrucaoSqlPreparada.setInt(13, Cliente.PESSOA_JURIDICA);
-        }else if(eMecanico(cliente)){
+        }else if(Cliente.eMecanico(cliente)){
             Mecanico mecanico = (Mecanico)cliente;
             instrucaoSqlPreparada.setString(1, mecanico.getCpf());
             instrucaoSqlPreparada.setString(2, mecanico.getNome());
@@ -85,5 +70,56 @@ public class ClienteDAO extends BaseDAO{
         }
         
         instrucaoSqlPreparada.execute();
+    }
+    
+    public Cliente buscar(int id) throws SQLException{
+        String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE id = ?";
+        PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(selectSqlQuery);
+        instrucaoSqlPreparada.setInt(1, id);
+        ResultSet resultadoSelect = instrucaoSqlPreparada.executeQuery();
+        
+        Cliente cliente;
+        
+        if(resultadoSelect.next()){
+            int tipoCliente = resultadoSelect.getInt("tipo");
+            
+            cliente = new Cliente(
+            resultadoSelect.getInt("id"),
+            resultadoSelect.getString("email"),
+            resultadoSelect.getString("telefone"),
+            resultadoSelect.getString("logradouro"),
+            resultadoSelect.getInt("numero"),
+            resultadoSelect.getString("complemento"),
+            resultadoSelect.getString("bairro"),
+            resultadoSelect.getString("municipio"),
+            resultadoSelect.getString("estado"),
+            resultadoSelect.getString("data_nascimento"));
+            
+            switch (tipoCliente) {
+                case Cliente.PESSOA_FISICA:
+                    PessoaFisica pessoaFisica = new PessoaFisica(
+                    cliente, 
+                    resultadoSelect.getString("nome_rzsocial"),
+                    resultadoSelect.getString("cpf_cnpj"));
+                    return pessoaFisica;
+                case Cliente.PESSOA_JURIDICA:
+                    PessoaJuridica pessoaJuridica = new PessoaJuridica(
+                    cliente,
+                    resultadoSelect.getString("nome_rzsocial"),
+                    resultadoSelect.getString("cpf_cnpj"));
+                    return pessoaJuridica;
+                case Cliente.MECANICO:
+                    Mecanico mecanico = new Mecanico(
+                    cliente, 
+                    resultadoSelect.getString("nome_rzsocial"),
+                    resultadoSelect.getString("cpf_cnpj"),
+                    resultadoSelect.getString("senha"));
+                    return mecanico;
+                default:
+                    break;
+            }
+        }
+        
+        return null;
     }
 }

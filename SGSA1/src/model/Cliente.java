@@ -126,5 +126,21 @@ public class Cliente {
         this.data_nascimento = data_nascimento;
     }
     
+    public static boolean ePessoaFisica(Cliente cliente){
+        return ((cliente instanceof PessoaFisica) && !(cliente instanceof Mecanico));
+    }
+    
+    public static boolean ePessoaJuridica(Cliente cliente){
+        return cliente instanceof PessoaJuridica;
+    }
+    
+    public static boolean eMecanico(Cliente cliente){
+        return cliente instanceof Mecanico;
+    }
+    
+    public static boolean eCliente(Cliente cliente){
+        return (!(cliente instanceof PessoaFisica) && !(cliente instanceof PessoaJuridica) && !(cliente instanceof Mecanico));
+    }
+    
     
 }

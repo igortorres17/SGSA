@@ -23,6 +23,11 @@ public class Mecanico extends PessoaFisica{
         this.senha = senha;
     }
     
+    public Mecanico(Cliente cliente, String nome, String cpf, String senha){
+        super(cliente, nome, cpf);
+        this.senha = senha;
+    }
+    
     public String getSenha() {
         return senha;
     }
