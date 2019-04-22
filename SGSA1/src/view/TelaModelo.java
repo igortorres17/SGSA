@@ -75,7 +75,7 @@ public class TelaModelo extends javax.swing.JFrame {
 
         tipoCadLabel.setText("Tipo:");
 
-        tipoCadComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CARRO", "VAN", "CAMINHÃO", "CAMINHONETE", "OUTROS.." }));
+        tipoCadComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CARRO DE PASSEIO", "VAN", "CAMINHÃO", "CAMINHONETE", "OUTROS.." }));
         tipoCadComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tipoCadComboBoxActionPerformed(evt);
@@ -150,14 +150,13 @@ public class TelaModelo extends javax.swing.JFrame {
                     .addGroup(tabCadastroLayout.createSequentialGroup()
                         .addComponent(combustivelCadLabel)
                         .addGap(7, 7, 7)
-                        .addComponent(cobustivelCadComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))
+                        .addComponent(cobustivelCadComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(tabCadastroLayout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addComponent(numPortasCadLabel)
                         .addGap(7, 7, 7)
-                        .addComponent(numPortasCadComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(numPortasCadComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(tabCadastroLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addComponent(cadastrarCadButton)
@@ -203,7 +202,7 @@ public class TelaModelo extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 462, Short.MAX_VALUE)
+            .addGap(0, 421, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
