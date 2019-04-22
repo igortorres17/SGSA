@@ -21,7 +21,9 @@ public class Cliente {
     private String estado;
     private String data_nascimento;
     
-    public Cliente(){}
+    public Cliente(){
+    
+    }
     
     public Cliente(int id, String email, String telefone, String logradouro, int numero, String complemento, String bairro, String municipio, String estado, String data_nascimento){
         this.id = id;
@@ -36,12 +38,20 @@ public class Cliente {
         this.data_nascimento = data_nascimento;
     }
     
-    public int getId() {
-        return this.id;
+    public Cliente(String email, String telefone, String logradouro, int numero, String complemento, String bairro, String municipio, String estado, String data_nascimento){
+        this.email = email;
+        this.telefone = telefone;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.municipio = municipio;
+        this.estado = estado;
+        this.data_nascimento = data_nascimento;
     }
     
-    public void setId(int id) {
-        this.id = id;
+    public int getId() {
+        return this.id;
     }
     
     public String getEmail() {
