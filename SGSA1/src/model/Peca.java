@@ -2,28 +2,32 @@ package model;
 
 /**
  *
- * @author igortorres
+ * @author Hércules M.
  */
-public class Servico {
+public class Peca {
     private int id;
     private String nome;
+    private String serial;
     private float valor;
     
-    public Servico(){
+    public Peca()
+    {
         
     }
     
-    public Servico(int id, String nome, float valor){
+    public Peca(int id, String nome, String serial, float valor){
         this.id = id;
         this.nome = nome;
+        this.serial = serial;
         this.valor = valor;
     }
     
-    public Servico(String nome, float valor){
+    public Peca(String nome, String serial, float valor){
         this.nome = nome;
+        this.serial = serial;
         this.valor = valor;
     }
-        
+    
     public int getId() {
         return id;
     }
@@ -36,6 +40,16 @@ public class Servico {
         this.nome = nome;
     }
 
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    
+    
     public float getValor() {
         return valor;
     }
