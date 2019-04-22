@@ -79,47 +79,47 @@ public class ClienteDAO extends BaseDAO{
         + "data_nascimento,"
         + "tipo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
         
-        PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(insertSqlQuery);
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(insertSqlQuery);
         
          if(!Cliente.eMecanico(cliente))
-            instrucaoSqlPreparada.setNull(3, Types.VARCHAR);
+            instrucaoPreparada.setNull(3, Types.VARCHAR);
          
-        instrucaoSqlPreparada.setString(4, cliente.getEmail());
-        instrucaoSqlPreparada.setString(5, cliente.getTelefone());
-        instrucaoSqlPreparada.setString(6, cliente.getLogradouro());
-        instrucaoSqlPreparada.setInt(7, cliente.getNumero());
-        instrucaoSqlPreparada.setString(8, cliente.getComplemento());
-        instrucaoSqlPreparada.setString(9, cliente.getBairro());
-        instrucaoSqlPreparada.setString(10, cliente.getMunicipio());
-        instrucaoSqlPreparada.setString(11, cliente.getEstado());
-        instrucaoSqlPreparada.setString(12, cliente.getData_nascimento());
+        instrucaoPreparada.setString(4, cliente.getEmail());
+        instrucaoPreparada.setString(5, cliente.getTelefone());
+        instrucaoPreparada.setString(6, cliente.getLogradouro());
+        instrucaoPreparada.setInt(7, cliente.getNumero());
+        instrucaoPreparada.setString(8, cliente.getComplemento());
+        instrucaoPreparada.setString(9, cliente.getBairro());
+        instrucaoPreparada.setString(10, cliente.getMunicipio());
+        instrucaoPreparada.setString(11, cliente.getEstado());
+        instrucaoPreparada.setString(12, cliente.getData_nascimento());
         
         if(Cliente.ePessoaFisica(cliente)){
             PessoaFisica pessoaFisica = (PessoaFisica)cliente;
-            instrucaoSqlPreparada.setString(1, pessoaFisica.getCpf());
-            instrucaoSqlPreparada.setString(2, pessoaFisica.getNome());
-            instrucaoSqlPreparada.setInt(13, Cliente.PESSOA_FISICA);
+            instrucaoPreparada.setString(1, pessoaFisica.getCpf());
+            instrucaoPreparada.setString(2, pessoaFisica.getNome());
+            instrucaoPreparada.setInt(13, Cliente.PESSOA_FISICA);
         }else if(Cliente.ePessoaJuridica(cliente)){
             PessoaJuridica pessoaJuridica = (PessoaJuridica)cliente;
-            instrucaoSqlPreparada.setString(1, pessoaJuridica.getCnpj());
-            instrucaoSqlPreparada.setString(2, pessoaJuridica.getRazaoSocial());
-            instrucaoSqlPreparada.setInt(13, Cliente.PESSOA_JURIDICA);
+            instrucaoPreparada.setString(1, pessoaJuridica.getCnpj());
+            instrucaoPreparada.setString(2, pessoaJuridica.getRazaoSocial());
+            instrucaoPreparada.setInt(13, Cliente.PESSOA_JURIDICA);
         }else if(Cliente.eMecanico(cliente)){
             Mecanico mecanico = (Mecanico)cliente;
-            instrucaoSqlPreparada.setString(1, mecanico.getCpf());
-            instrucaoSqlPreparada.setString(2, mecanico.getNome());
-            instrucaoSqlPreparada.setString(3, mecanico.getSenha());
-            instrucaoSqlPreparada.setInt(13, Cliente.MECANICO);
+            instrucaoPreparada.setString(1, mecanico.getCpf());
+            instrucaoPreparada.setString(2, mecanico.getNome());
+            instrucaoPreparada.setString(3, mecanico.getSenha());
+            instrucaoPreparada.setInt(13, Cliente.MECANICO);
         }
         
-        instrucaoSqlPreparada.execute();
+        instrucaoPreparada.execute();
     }
     
     public Cliente buscar(int id) throws SQLException{
         String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE id = ?";
-        PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(selectSqlQuery);
-        instrucaoSqlPreparada.setInt(1, id);
-        ResultSet resultadoSelect = instrucaoSqlPreparada.executeQuery();
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(selectSqlQuery);
+        instrucaoPreparada.setInt(1, id);
+        ResultSet resultadoSelect = instrucaoPreparada.executeQuery();
         
         if(resultadoSelect.next()){
             return converterResultSetEmCliente(resultadoSelect);
@@ -133,9 +133,9 @@ public class ClienteDAO extends BaseDAO{
         ArrayList<Cliente> listaClientes = new ArrayList();
         
         String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome_rzsocial like ?";
-        PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(selectSqlQuery);
-        instrucaoSqlPreparada.setString(1, "%"+nome+"%");
-        ResultSet resultadoSelect = instrucaoSqlPreparada.executeQuery();    
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(selectSqlQuery);
+        instrucaoPreparada.setString(1, "%"+nome+"%");
+        ResultSet resultadoSelect = instrucaoPreparada.executeQuery();    
         
         while(resultadoSelect.next()){
             listaClientes.add(this.converterResultSetEmCliente(resultadoSelect));
@@ -162,50 +162,50 @@ public class ClienteDAO extends BaseDAO{
         + "tipo = ?"
         + " WHERE id = ?";
 
-        PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(updateSqlQuery);
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(updateSqlQuery);
 
         if(!Cliente.eMecanico(cliente))
-            instrucaoSqlPreparada.setNull(3, Types.VARCHAR);
+            instrucaoPreparada.setNull(3, Types.VARCHAR);
 
-        instrucaoSqlPreparada.setString(4, cliente.getEmail());
-        instrucaoSqlPreparada.setString(5, cliente.getTelefone());
-        instrucaoSqlPreparada.setString(6, cliente.getLogradouro());
-        instrucaoSqlPreparada.setInt(7, cliente.getNumero());
-        instrucaoSqlPreparada.setString(8, cliente.getComplemento());
-        instrucaoSqlPreparada.setString(9, cliente.getBairro());
-        instrucaoSqlPreparada.setString(10, cliente.getMunicipio());
-        instrucaoSqlPreparada.setString(11, cliente.getEstado());
-        instrucaoSqlPreparada.setString(12, cliente.getData_nascimento());
-        instrucaoSqlPreparada.setInt(14, cliente.getId());
+        instrucaoPreparada.setString(4, cliente.getEmail());
+        instrucaoPreparada.setString(5, cliente.getTelefone());
+        instrucaoPreparada.setString(6, cliente.getLogradouro());
+        instrucaoPreparada.setInt(7, cliente.getNumero());
+        instrucaoPreparada.setString(8, cliente.getComplemento());
+        instrucaoPreparada.setString(9, cliente.getBairro());
+        instrucaoPreparada.setString(10, cliente.getMunicipio());
+        instrucaoPreparada.setString(11, cliente.getEstado());
+        instrucaoPreparada.setString(12, cliente.getData_nascimento());
+        instrucaoPreparada.setInt(14, cliente.getId());
 
         if(Cliente.ePessoaFisica(cliente)){
             PessoaFisica pessoaFisica = (PessoaFisica)cliente;
-            instrucaoSqlPreparada.setString(1, pessoaFisica.getCpf());
-            instrucaoSqlPreparada.setString(2, pessoaFisica.getNome());
-            instrucaoSqlPreparada.setInt(13, Cliente.PESSOA_FISICA);
+            instrucaoPreparada.setString(1, pessoaFisica.getCpf());
+            instrucaoPreparada.setString(2, pessoaFisica.getNome());
+            instrucaoPreparada.setInt(13, Cliente.PESSOA_FISICA);
         }else if(Cliente.ePessoaJuridica(cliente)){
             PessoaJuridica pessoaJuridica = (PessoaJuridica)cliente;
-            instrucaoSqlPreparada.setString(1, pessoaJuridica.getCnpj());
-            instrucaoSqlPreparada.setString(2, pessoaJuridica.getRazaoSocial());
-            instrucaoSqlPreparada.setInt(13, Cliente.PESSOA_JURIDICA);
+            instrucaoPreparada.setString(1, pessoaJuridica.getCnpj());
+            instrucaoPreparada.setString(2, pessoaJuridica.getRazaoSocial());
+            instrucaoPreparada.setInt(13, Cliente.PESSOA_JURIDICA);
         }else if(Cliente.eMecanico(cliente)){
             Mecanico mecanico = (Mecanico)cliente;
-            instrucaoSqlPreparada.setString(1, mecanico.getCpf());
-            instrucaoSqlPreparada.setString(2, mecanico.getNome());
-            instrucaoSqlPreparada.setString(3, mecanico.getSenha());
-            instrucaoSqlPreparada.setInt(13, Cliente.MECANICO);
+            instrucaoPreparada.setString(1, mecanico.getCpf());
+            instrucaoPreparada.setString(2, mecanico.getNome());
+            instrucaoPreparada.setString(3, mecanico.getSenha());
+            instrucaoPreparada.setInt(13, Cliente.MECANICO);
         }
         
-        instrucaoSqlPreparada.execute();
+        instrucaoPreparada.execute();
                 
     }
     
     public void excluir(int id) throws SQLException {
         String deleteSqlQuery = "DELETE FROM "+tabela+" WHERE id = ?";
         
-        PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(deleteSqlQuery);
-        instrucaoSqlPreparada.setInt(1, id);
-        instrucaoSqlPreparada.execute();
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(deleteSqlQuery);
+        instrucaoPreparada.setInt(1, id);
+        instrucaoPreparada.execute();
     }
     
     public void excluir(Cliente cliente) throws SQLException{
