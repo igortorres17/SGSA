@@ -128,6 +128,8 @@ public class ControleModelo extends JFrame {
             mens.sucesso(1);
         } catch (Exception ex) {
             mens.erroBanco(ex);
+            
+            
         }
         
         return 0;
