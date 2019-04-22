@@ -14,9 +14,10 @@ public abstract class BaseDAO {
     public BaseDAO()
     {
         try {
-            Conexao.get();
+            conexao = Conexao.get();
+            System.out.println("Conectado!");
         }catch(SQLException e) {
-            
+            System.out.println("Erro ao conectar-se: " + e.getMessage());
         }
     }
 }
