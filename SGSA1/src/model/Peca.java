@@ -2,9 +2,9 @@ package model;
 
 /**
  *
- * @author igortorres
+ * @author Hércules M.
  */
-public class Servico {
+public class Peca {
     private int id;
     private String nome;
     private float valor;
