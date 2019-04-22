@@ -6,6 +6,7 @@
 package view;
 
 import controller.ControleModelo;
+import java.awt.Color;
 import java.awt.Component;
 
 /**
@@ -83,6 +84,12 @@ public class TelaModelo extends javax.swing.JFrame {
 
         outrosCadLabel.setText("Outros:");
 
+        outrosCadTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                outrosCadTextFieldMouseClicked(evt);
+            }
+        });
+
         marcaCadLabel.setText("Marca:");
 
         numPortasCadLabel.setText("N.Portas:");
@@ -141,7 +148,6 @@ public class TelaModelo extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addGroup(tabCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabCadastroLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                         .addComponent(combustivelCadLabel)
                         .addGap(7, 7, 7)
                         .addComponent(cobustivelCadComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -275,6 +281,11 @@ public class TelaModelo extends javax.swing.JFrame {
       int fun = controle.inserir(tipoCadComboBox, outrosCadTextField, nomeCadjTextField, marcaCadTextField, numPortasCadComboBox, MotorCadTextField, cobustivelCadComboBox);
 // TODO add your handling code here:
     }//GEN-LAST:event_cadastrarCadButtonActionPerformed
+
+    private void outrosCadTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_outrosCadTextFieldMouseClicked
+        // TODO add your handling code here:
+        setBackground(Color.WHITE);
+    }//GEN-LAST:event_outrosCadTextFieldMouseClicked
     
     //Habilita os componentes do painel de cadastro, altecação e Exclusão
     

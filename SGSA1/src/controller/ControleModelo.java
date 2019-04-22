@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import model.Modelo;
 import model.dao.ModeloDAO;
+import org.w3c.dom.css.RGBColor;
 import view.TelaMensagens;
 
 /**
@@ -47,90 +48,99 @@ public class ControleModelo extends JFrame {
         String motorVar = null;
         int combustivelVar = 0;
 
-        if (tipo.getSelectedIndex() == 5) {
+        if (tipo.getSelectedIndex() == 4) {
 
-            if (outros.getText() != null) {
-                tipoVar = outros.getText();
+            if (!outros.getText().isEmpty()) {
+                tipoVar = outros.getText().toUpperCase();
             } else {
                 alerta(outros);
-                outros.setToolTipText("Digite o tipo do veiculo.");
+                 JOptionPane.showMessageDialog(null,"Digite o tipo do veiculo.");
                 return 0;
             }
         } else {
             switch (tipo.getSelectedIndex()) {
-                case 1:
+                case 0:
                     tipoVar = "CARRO DE PASSEIO";
                     break;
-                case 2:
+                case 1:
                     tipoVar = "VAN";
                     break;
-                case 3:
+                case 2:
                     tipoVar = "CAMINHAO";
                     break;
-                case 4:
+                case 3:
                     tipoVar = "CAMINHONETE";
                     break;
             }
         }
-        if (nome.getText() != null) {
-            nomeVar = nome.getText();
+
+
+ 
+        if (!nome.getText().isEmpty()) {
+            nomeVar = nome.getText().toUpperCase();
         } else {
             alerta(nome);
-            nome.setToolTipText("Digite o nome do veículo.");
+            JOptionPane.showMessageDialog(null,"Digite o nome do veículo.");
             return 0;
         }
+        
 
-        if (marca.getText() != null) {
-            marcaVar = marca.getText();
+        if (!marca.getText().isEmpty()) {
+            marcaVar = marca.getText().toUpperCase();
         } else {
             alerta(marca);
-            marca.setToolTipText("Digite a marca do veículo.");
+            JOptionPane.showMessageDialog(null,"Digite a marca do veículo.");
             return 0;
         }
-
+        
         switch (qtdPortas.getSelectedIndex()) {
-            case 1:
+            case 0:
                 qtdPortasVar = 0;
                 break;
-            case 2:
+            case 1:
                 qtdPortasVar = 2;
                 break;
-            case 3:
+            case 2:
                 qtdPortasVar = 3;
                 break;
-            case 4:
+            case 3:
                 qtdPortasVar = 4;
                 break;
-            case 5:
+            case 4:
                 qtdPortasVar = 5;
                 break;
         }
-        if (motor.getText() != null) {
-            motorVar = motor.getText();
+
+     
+        if (!motor.getText().isEmpty()) {
+            motorVar = motor.getText().toUpperCase();
         } else {
             alerta(motor);
-            motor.setToolTipText("Digite o nome do motor do veículo");
+            JOptionPane.showMessageDialog(null,"Digite o nome do motor do veículo");
             return 0;
         }
-
+        
+        
         combustivelVar = combustivel.getSelectedIndex();
-        if(tipoVar.isEmpty() && nomeVar.isEmpty() && marcaVar.isEmpty() && motorVar.isEmpty()){
-            JOptionPane.showMessageDialog(null, "ta dando certo");
-        }
-        else{
+        
         try {
             dao.inserir(new Modelo(tipoVar, nomeVar, marcaVar, qtdPortasVar, motorVar, combustivelVar));
             mens.sucesso(1);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             mens.erroBanco(ex);
         }
-        }
+        
         return 0;
     }
 
+     
     private void alerta(JTextField comp) {
         comp.requestFocus();
-        comp.setBackground(Color.red);
+        comp.setBackground(Color.RED);
     }
+
+   
+    
+
 
 }

@@ -140,7 +140,6 @@
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="combustivelCadLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                               <Component id="cobustivelCadComboBox" min="-2" max="-2" attributes="0"/>
@@ -234,6 +233,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="outrosCadTextField">
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="outrosCadTextFieldMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="marcaCadLabel">
               <Properties>
