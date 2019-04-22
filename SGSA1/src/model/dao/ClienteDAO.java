@@ -3,6 +3,7 @@ package model.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import model.Cliente;
 import model.PessoaFisica;
@@ -81,7 +82,7 @@ public class ClienteDAO extends BaseDAO{
         PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(insertSqlQuery);
         
          if(!Cliente.eMecanico(cliente))
-            instrucaoSqlPreparada.setString(3, "");
+            instrucaoSqlPreparada.setNull(3, Types.VARCHAR);
          
         instrucaoSqlPreparada.setString(4, cliente.getEmail());
         instrucaoSqlPreparada.setString(5, cliente.getTelefone());
@@ -141,5 +142,73 @@ public class ClienteDAO extends BaseDAO{
         }
         
         return listaClientes;
+    }
+    
+    public void alterar(Cliente cliente) throws SQLException {
+            
+        String updateSqlQuery = "UPDATE "+tabela+" SET "
+        + "cpf_cnpj = ?,"
+        + "nome_rzsocial = ?,"
+        + "senha = ?,"
+        + "email = ?,"
+        + "telefone = ?,"
+        + "logradouro = ?,"
+        + "numero = ?,"
+        + "complemento = ?,"
+        + "bairro = ?,"
+        + "municipio = ?,"
+        + "estado = ?,"
+        + "data_nascimento = ?,"
+        + "tipo = ?"
+        + " WHERE id = ?";
+
+        PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(updateSqlQuery);
+
+        if(!Cliente.eMecanico(cliente))
+            instrucaoSqlPreparada.setNull(3, Types.VARCHAR);
+
+        instrucaoSqlPreparada.setString(4, cliente.getEmail());
+        instrucaoSqlPreparada.setString(5, cliente.getTelefone());
+        instrucaoSqlPreparada.setString(6, cliente.getLogradouro());
+        instrucaoSqlPreparada.setInt(7, cliente.getNumero());
+        instrucaoSqlPreparada.setString(8, cliente.getComplemento());
+        instrucaoSqlPreparada.setString(9, cliente.getBairro());
+        instrucaoSqlPreparada.setString(10, cliente.getMunicipio());
+        instrucaoSqlPreparada.setString(11, cliente.getEstado());
+        instrucaoSqlPreparada.setString(12, cliente.getData_nascimento());
+        instrucaoSqlPreparada.setInt(14, cliente.getId());
+
+        if(Cliente.ePessoaFisica(cliente)){
+            PessoaFisica pessoaFisica = (PessoaFisica)cliente;
+            instrucaoSqlPreparada.setString(1, pessoaFisica.getCpf());
+            instrucaoSqlPreparada.setString(2, pessoaFisica.getNome());
+            instrucaoSqlPreparada.setInt(13, Cliente.PESSOA_FISICA);
+        }else if(Cliente.ePessoaJuridica(cliente)){
+            PessoaJuridica pessoaJuridica = (PessoaJuridica)cliente;
+            instrucaoSqlPreparada.setString(1, pessoaJuridica.getCnpj());
+            instrucaoSqlPreparada.setString(2, pessoaJuridica.getRazaoSocial());
+            instrucaoSqlPreparada.setInt(13, Cliente.PESSOA_JURIDICA);
+        }else if(Cliente.eMecanico(cliente)){
+            Mecanico mecanico = (Mecanico)cliente;
+            instrucaoSqlPreparada.setString(1, mecanico.getCpf());
+            instrucaoSqlPreparada.setString(2, mecanico.getNome());
+            instrucaoSqlPreparada.setString(3, mecanico.getSenha());
+            instrucaoSqlPreparada.setInt(13, Cliente.MECANICO);
+        }
+        
+        instrucaoSqlPreparada.execute();
+                
+    }
+    
+    public void excluir(int id) throws SQLException {
+        String deleteSqlQuery = "DELETE FROM "+tabela+" WHERE id = ?";
+        
+        PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(deleteSqlQuery);
+        instrucaoSqlPreparada.setInt(1, id);
+        instrucaoSqlPreparada.execute();
+    }
+    
+    public void excluir(Cliente cliente) throws SQLException{
+        this.excluir(cliente.getId());
     }
 }
