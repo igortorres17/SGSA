@@ -27,7 +27,7 @@ public class ModeloDAO extends BaseDAO {
 
     public void inserir(Modelo mod) throws SQLException {
 
-        String SQL = "INSERT INTO modelo (tipo,nome,marca,quantidade_portas,motor,combustivel) VALUES (?,?,?,?,?)";
+        String SQL = "INSERT INTO modelo (tipo,nome,marca,quantidade_portas,motor,combustivel) VALUES (?,?,?,?,?,?)";
         stmt = conexao.prepareStatement(SQL);
         stmt.setString(1, mod.getTipo());
         stmt.setString(2, mod.getNome());
