@@ -1,5 +1,7 @@
 package controller;
 
+import view.TelaModelo;
+
 /**
  *
  * @author igortorres
@@ -7,10 +9,10 @@ package controller;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Olá Mundo!");
+       TelaModelo modV = new TelaModelo();
+      
+      modV.setVisible(true);
         
-        view.MainForm mainForm = new view.MainForm();
-        mainForm.setVisible(true);
     }
     
 }
