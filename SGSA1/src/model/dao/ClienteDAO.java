@@ -3,6 +3,7 @@ package model.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.Cliente;
 import model.PessoaFisica;
 import model.PessoaJuridica;
@@ -18,7 +19,48 @@ public class ClienteDAO extends BaseDAO{
         super();
         tabela = "cliente";
     }
+    
+    private Cliente converterResultSetEmCliente(ResultSet resultSet) throws SQLException{
+        int tipoCliente = resultSet.getInt("tipo");
+        Cliente cliente;
+        cliente = new Cliente(
+        resultSet.getInt("id"),
+        resultSet.getString("email"),
+        resultSet.getString("telefone"),
+        resultSet.getString("logradouro"),
+        resultSet.getInt("numero"),
+        resultSet.getString("complemento"),
+        resultSet.getString("bairro"),
+        resultSet.getString("municipio"),
+        resultSet.getString("estado"),
+        resultSet.getString("data_nascimento"));
+
+        switch (tipoCliente) {
+            case Cliente.PESSOA_FISICA:
+                PessoaFisica pessoaFisica = new PessoaFisica(
+                cliente, 
+                resultSet.getString("nome_rzsocial"),
+                resultSet.getString("cpf_cnpj"));
+                return pessoaFisica;
+            case Cliente.PESSOA_JURIDICA:
+                PessoaJuridica pessoaJuridica = new PessoaJuridica(
+                cliente,
+                resultSet.getString("nome_rzsocial"),
+                resultSet.getString("cpf_cnpj"));
+                return pessoaJuridica;
+            case Cliente.MECANICO:
+                Mecanico mecanico = new Mecanico(
+                cliente, 
+                resultSet.getString("nome_rzsocial"),
+                resultSet.getString("cpf_cnpj"),
+                resultSet.getString("senha"));
+                return mecanico;
+            default:
+                break;
+        }
         
+        return null;
+    }
     public void inserir(Cliente cliente) throws SQLException{
         String insertSqlQuery = ""
         + "INSERT INTO "+tabela+" ("
@@ -78,48 +120,26 @@ public class ClienteDAO extends BaseDAO{
         instrucaoSqlPreparada.setInt(1, id);
         ResultSet resultadoSelect = instrucaoSqlPreparada.executeQuery();
         
-        Cliente cliente;
-        
         if(resultadoSelect.next()){
-            int tipoCliente = resultadoSelect.getInt("tipo");
-            
-            cliente = new Cliente(
-            resultadoSelect.getInt("id"),
-            resultadoSelect.getString("email"),
-            resultadoSelect.getString("telefone"),
-            resultadoSelect.getString("logradouro"),
-            resultadoSelect.getInt("numero"),
-            resultadoSelect.getString("complemento"),
-            resultadoSelect.getString("bairro"),
-            resultadoSelect.getString("municipio"),
-            resultadoSelect.getString("estado"),
-            resultadoSelect.getString("data_nascimento"));
-            
-            switch (tipoCliente) {
-                case Cliente.PESSOA_FISICA:
-                    PessoaFisica pessoaFisica = new PessoaFisica(
-                    cliente, 
-                    resultadoSelect.getString("nome_rzsocial"),
-                    resultadoSelect.getString("cpf_cnpj"));
-                    return pessoaFisica;
-                case Cliente.PESSOA_JURIDICA:
-                    PessoaJuridica pessoaJuridica = new PessoaJuridica(
-                    cliente,
-                    resultadoSelect.getString("nome_rzsocial"),
-                    resultadoSelect.getString("cpf_cnpj"));
-                    return pessoaJuridica;
-                case Cliente.MECANICO:
-                    Mecanico mecanico = new Mecanico(
-                    cliente, 
-                    resultadoSelect.getString("nome_rzsocial"),
-                    resultadoSelect.getString("cpf_cnpj"),
-                    resultadoSelect.getString("senha"));
-                    return mecanico;
-                default:
-                    break;
-            }
+            return converterResultSetEmCliente(resultadoSelect);
         }
         
         return null;
+    }
+    
+    public ArrayList<Cliente> buscar(String nome) throws SQLException
+    {
+        ArrayList<Cliente> listaClientes = new ArrayList();
+        
+        String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome_rzsocial like ?";
+        PreparedStatement instrucaoSqlPreparada = conexao.prepareStatement(selectSqlQuery);
+        instrucaoSqlPreparada.setString(1, "%"+nome+"%");
+        ResultSet resultadoSelect = instrucaoSqlPreparada.executeQuery();    
+        
+        while(resultadoSelect.next()){
+            listaClientes.add(this.converterResultSetEmCliente(resultadoSelect));
+        }
+        
+        return listaClientes;
     }
 }
