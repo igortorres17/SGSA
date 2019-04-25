@@ -96,6 +96,30 @@ public class ModeloDAO extends BaseDAO {
         }
         return null;
     }
+    
+        public Modelo buscar(String nomes) throws SQLException {
+        String SQL = "SELECT * FROM modelo WHERE nome LIKE ?";
+        stmt = conexao.prepareStatement(SQL);
+        stmt.setString(1, nomes);
+        rs = stmt.executeQuery();
+
+        if (rs.next()) {
+
+            int ident = rs.getInt("id");
+            String tipo = rs.getString("tipo");
+            String nome = rs.getString("nome");
+            String marca = rs.getString("marca");
+            int qtdPortas = rs.getInt("quantidade_portas");
+            String motor = rs.getString("motor");
+            int combustivel = rs.getInt("combustivel");
+            stmt.close();
+            rs.close();
+
+            Modelo mod = new Modelo(ident, tipo, nome, marca, qtdPortas, motor, combustivel);
+            return mod;
+        }
+        return null;
+    }
 
     public void alterar(Modelo mod) throws SQLException {
 

@@ -8,6 +8,7 @@ package view;
 import controller.ControleModelo;
 import java.awt.Color;
 import java.awt.Component;
+import javax.swing.JTable;
 
 /**
  *
@@ -20,12 +21,16 @@ public class TelaModelo extends javax.swing.JFrame {
      */
     
     private ControleModelo controle;
+    private JTable tabelaRelatorio;
     
     public TelaModelo() {
         initComponents();
         setLocationRelativeTo(null);
         configComponent();
         controle = new ControleModelo();
+        tabelaRelatorio = new JTable();
+        PainelRelatorio.add(tabelaRelatorio);
+        tabelaRelatorio.setVisible(true);
     }
 
     /**
@@ -55,7 +60,8 @@ public class TelaModelo extends javax.swing.JFrame {
         limparCadButton = new javax.swing.JButton();
         nomeCadLabel = new javax.swing.JLabel();
         nomeCadjTextField = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        PainelRelatorio = new javax.swing.JPanel();
+        atualizaReModelo = new javax.swing.JButton();
         modificarModeloCheckBox = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
 
@@ -173,7 +179,7 @@ public class TelaModelo extends javax.swing.JFrame {
                     .addComponent(outrosCadTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(outrosCadLabel)
                     .addComponent(tipoCadLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addGroup(tabCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nomeCadjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nomeCadLabel))
@@ -189,7 +195,7 @@ public class TelaModelo extends javax.swing.JFrame {
                     .addComponent(MotorCadTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(numPortasCadLabel)
                     .addComponent(numPortasCadComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addGroup(tabCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cadastrarCadButton)
                     .addComponent(limparCadButton))
@@ -198,18 +204,31 @@ public class TelaModelo extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Cadastro", tabCadastro);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 421, Short.MAX_VALUE)
+        atualizaReModelo.setText("Atualizar");
+        atualizaReModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizaReModeloActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout PainelRelatorioLayout = new javax.swing.GroupLayout(PainelRelatorio);
+        PainelRelatorio.setLayout(PainelRelatorioLayout);
+        PainelRelatorioLayout.setHorizontalGroup(
+            PainelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PainelRelatorioLayout.createSequentialGroup()
+                .addContainerGap(312, Short.MAX_VALUE)
+                .addComponent(atualizaReModelo)
+                .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 387, Short.MAX_VALUE)
+        PainelRelatorioLayout.setVerticalGroup(
+            PainelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PainelRelatorioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(atualizaReModelo)
+                .addContainerGap(368, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel3);
+        jTabbedPane1.addTab("Relatório", PainelRelatorio);
 
         modificarModeloCheckBox.setText("Modificar");
         modificarModeloCheckBox.addActionListener(new java.awt.event.ActionListener() {
@@ -285,6 +304,12 @@ public class TelaModelo extends javax.swing.JFrame {
         // TODO add your handling code here:
         setBackground(Color.WHITE);
     }//GEN-LAST:event_outrosCadTextFieldMouseClicked
+
+    private void atualizaReModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizaReModeloActionPerformed
+        // TODO add your handling code here:
+        controle.relatorio(tabelaRelatorio);
+        
+    }//GEN-LAST:event_atualizaReModeloActionPerformed
     
     //Habilita os componentes do painel de cadastro, altecação e Exclusão
     
@@ -310,11 +335,12 @@ public class TelaModelo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel MotorCadLabel;
     private javax.swing.JTextField MotorCadTextField;
+    private javax.swing.JPanel PainelRelatorio;
+    private javax.swing.JButton atualizaReModelo;
     private javax.swing.JButton cadastrarCadButton;
     private javax.swing.JComboBox<String> cobustivelCadComboBox;
     private javax.swing.JLabel combustivelCadLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton limparCadButton;
     private javax.swing.JLabel marcaCadLabel;
