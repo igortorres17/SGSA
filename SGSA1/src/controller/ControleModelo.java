@@ -185,16 +185,16 @@ public class ControleModelo extends JFrame {
             motor.setText(model.getMotor());
             String combus = null;
             switch (model.getCombustivel()) {
-                case 1:
+                case 0:
                     combus = "GASOLINA";
                     break;
-                case 2:
+                case 1:
                     combus = "ALCOOL";
                     break;
-                case 3:
+                case 2:
                     combus = "DIESEL";
                     break;
-                case 4:
+                case 3:
                     combus = "GNV";
                     break;
             }
