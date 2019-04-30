@@ -12,13 +12,15 @@ public class OrdemServico {
     private float valor;
     private ArrayList<Servico> servicos;
     private ArrayList<Peca> pecas;
+    private String observacao;
     
-    public OrdemServico(int id, Veiculo veiculo, float valor, ArrayList<Servico> servicos, ArrayList<Peca> pecas ) {
+    public OrdemServico(int id, Veiculo veiculo, float valor, ArrayList<Servico> servicos, ArrayList<Peca> pecas, String observacao ) {
         this.id  = id;
         this.veiculo = veiculo;
         this.valor = valor;
         this.servicos = servicos;
         this.pecas = pecas;
+        this.observacao = observacao;
     }
     
     public OrdemServico(Veiculo veiculo, float valor, ArrayList<Servico> servicos, ArrayList<Peca> pecas ) {
@@ -26,6 +28,7 @@ public class OrdemServico {
         this.valor = valor;
         this.servicos = servicos;
         this.pecas = pecas;
+        this.observacao = observacao;
     }
 
     public int getId() {
