@@ -30,16 +30,35 @@ public class OrdemServicoDAO extends BaseDAO{
            resultSet.getFloat("valor"),
            servicos,
            pecas,
-           resultSet.getString("obs")
+           resultSet.getString("obs"),
+           resultSet.getInt("status"),
+           resultSet.getString("data")
         );
         
         return ordem;
     }
     
-    public void inserir(OrdemServico ordemServico){
+    public void inserir(OrdemServico ordemServico) throws SQLException, Exception{
+        String sqlQuery = "INSERTO INTO " + tabela + "(valor, veiculo_id, obs, status, data) VALUES(?, ?, ?, ?, ?)";
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
+        instrucaoPreparada.setFloat(1, ordemServico.getValor());
+        instrucaoPreparada.setInt(2, ordemServico.getVeiculo().getId());
+        instrucaoPreparada.setString(3, ordemServico.getObservacao());
+        instrucaoPreparada.setInt(4, ordemServico.getStatus());
+        instrucaoPreparada.setString(5, ordemServico.getData());
+        instrucaoPreparada.executeUpdate();
+        ResultSet resultado = instrucaoPreparada.getGeneratedKeys();
         
+        if(!resultado.next())
+            throw new Exception("Falha ao obter último ID");
+        
+        int id = resultado.getInt(1);
+        OrdemTemPecaDAO ordemTemPeca = new OrdemTemPecaDAO();
+        OrdemTemServicoDAO ordemTemServico = new OrdemTemServicoDAO();
+        ordemTemPeca.inserir(ordemServico.getPecas(), id);
+        ordemTemServico.inserir(ordemServico.getServicos(), id);        
     }
-    
+        
     public ArrayList<OrdemServico> buscar(String placa) throws SQLException, Exception{
         Veiculo veiculo = new VeiculoDAO().buscar(placa);
         if(veiculo == null)
@@ -58,7 +77,7 @@ public class OrdemServicoDAO extends BaseDAO{
         return ordens;
     }
     
-    public void alterar(OrdemServico ordemServico){
+    public void cancelar(OrdemServico ordemServico){
         
     }
     

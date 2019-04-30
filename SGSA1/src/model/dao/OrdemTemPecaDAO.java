@@ -17,8 +17,18 @@ public class OrdemTemPecaDAO extends BaseDAO{
         tabela = "ordem_tem_peca";
     }
     
-    public void inserir(Peca peca, int ordemServicoID){
-        
+    public void inserir(Peca peca, int ordemServicoID) throws SQLException{
+        String sqlQuery = "INSERT INTO "+tabela+" VALUES(?, ?)";
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
+        instrucaoPreparada.setInt(1, ordemServicoID);
+        instrucaoPreparada.setInt(2, peca.getId());
+        instrucaoPreparada.execute();
+    }
+    
+    public void inserir(ArrayList<Peca> pecas, int ordemServicoID) throws SQLException{
+        for(int i = 0; i < pecas.size(); i++){
+            inserir(pecas.get(i), ordemServicoID);
+        }
     }
     
     public ArrayList<Peca> buscar(int id_os) throws SQLException{

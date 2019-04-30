@@ -13,22 +13,28 @@ public class OrdemServico {
     private ArrayList<Servico> servicos;
     private ArrayList<Peca> pecas;
     private String observacao;
+    private int status;
+    private String data;
     
-    public OrdemServico(int id, Veiculo veiculo, float valor, ArrayList<Servico> servicos, ArrayList<Peca> pecas, String observacao ) {
+    public OrdemServico(int id, Veiculo veiculo, float valor, ArrayList<Servico> servicos, ArrayList<Peca> pecas, String observacao, int status, String data ) {
         this.id  = id;
         this.veiculo = veiculo;
         this.valor = valor;
         this.servicos = servicos;
         this.pecas = pecas;
         this.observacao = observacao;
+        this.status = status;
+        this.data = data;
     }
     
-    public OrdemServico(Veiculo veiculo, float valor, ArrayList<Servico> servicos, ArrayList<Peca> pecas ) {
+    public OrdemServico(Veiculo veiculo, float valor, ArrayList<Servico> servicos, ArrayList<Peca> pecas, String observacao, int status, String data ) {
         this.veiculo = veiculo;
         this.valor = valor;
         this.servicos = servicos;
         this.pecas = pecas;
         this.observacao = observacao;
+        this.status = status;
+        this.data = data;
     }
 
     public int getId() {
@@ -66,6 +72,29 @@ public class OrdemServico {
     public void setPecas(ArrayList<Peca> pecas) {
         this.pecas = pecas;
     }
-    
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
     
 }
