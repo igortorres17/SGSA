@@ -3,6 +3,7 @@ package model.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import model.Peca;
 import model.Servico;
@@ -39,8 +40,8 @@ public class OrdemServicoDAO extends BaseDAO{
     }
     
     public void inserir(OrdemServico ordemServico) throws SQLException, Exception{
-        String sqlQuery = "INSERTO INTO " + tabela + "(valor, veiculo_id, obs, status, data) VALUES(?, ?, ?, ?, ?)";
-        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
+        String sqlQuery = "INSERT INTO " + tabela + "(valor, veiculo_id, obs, status, data) VALUES(?, ?, ?, ?, ?)";
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
         instrucaoPreparada.setFloat(1, ordemServico.getValor());
         instrucaoPreparada.setInt(2, ordemServico.getVeiculo().getId());
         instrucaoPreparada.setString(3, ordemServico.getObservacao());
