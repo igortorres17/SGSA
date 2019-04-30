@@ -164,7 +164,9 @@ public class VeiculoDAO extends BaseDAO{
         stmt.execute();
         stmt.close();
     }
+    
+    public void excluir(Veiculo veiculo) throws SQLException{
+        this.excluir(veiculo.getId());
+    }
 
 }
-
-
