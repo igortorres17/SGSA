@@ -8,8 +8,9 @@
             <file>file:/home/igortorres/ProjetosNetbeans/SGSA/SGSA1/src/model/Veiculo.java</file>
             <file>file:/home/igortorres/ProjetosNetbeans/SGSA/SGSA1/src/model/dao/ModeloDAO.java</file>
             <file>file:/home/igortorres/ProjetosNetbeans/SGSA/SGSA1/src/view/TelaModelo.java</file>
+            <file>file:/home/igortorres/ProjetosNetbeans/SGSA/SGSA1/src/model/OrdemServico.java</file>
+            <file>file:/home/igortorres/ProjetosNetbeans/SGSA/SGSA1/src/controller/ControleVeiculo.java</file>
             <file>file:/home/igortorres/ProjetosNetbeans/SGSA/SGSA1/src/model/CombustivelEnum.java</file>
-            <file>file:/home/igortorres/ProjetosNetbeans/SGSA/SGSA1/src/model/dao/VeiculoDAO.java</file>
         </group>
     </open-files>
 </project-private>

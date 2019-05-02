@@ -100,7 +100,7 @@ public class ModeloDAO extends BaseDAO {
         public Modelo buscar(String nomes) throws SQLException {
         String SQL = "SELECT * FROM modelo WHERE nome LIKE ?";
         stmt = conexao.prepareStatement(SQL);
-        stmt.setString(1, nomes);
+        stmt.setString(1, nomes+"%");
         rs = stmt.executeQuery();
 
         if (rs.next()) {

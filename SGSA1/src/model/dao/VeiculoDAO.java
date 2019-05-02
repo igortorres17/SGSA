@@ -57,7 +57,7 @@ public class VeiculoDAO extends BaseDAO{
 
         ArrayList<Veiculo> veics = new ArrayList<>();
 
-        String SQL = "SELECT * FROM veiculos";
+        String SQL = "SELECT * FROM veiculo";
         stmt = conexao.prepareStatement(SQL);
         rs = stmt.executeQuery();
 
@@ -118,7 +118,7 @@ public class VeiculoDAO extends BaseDAO{
         public Veiculo buscar(String placas) throws SQLException {
         String SQL = "SELECT * FROM veiculo WHERE placa LIKE ?";
         stmt = conexao.prepareStatement(SQL);
-        stmt.setString(1, placas);
+        stmt.setString(1, placas+"%");
         rs = stmt.executeQuery();
 
         if (rs.next()) {
