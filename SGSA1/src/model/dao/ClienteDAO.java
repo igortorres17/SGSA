@@ -211,4 +211,18 @@ public class ClienteDAO extends BaseDAO{
     public void excluir(Cliente cliente) throws SQLException{
         this.excluir(cliente.getId());
     }
+    
+    public Cliente login(String cpf, String senha) throws SQLException{
+        String sqlQuery = "SELECT * FROM " + tabela + " WHERE cpf_cnpj = ? AND senha = ?";
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
+        instrucaoPreparada.setString(1, cpf);
+        instrucaoPreparada.setString(2, senha);
+        ResultSet resultado = instrucaoPreparada.executeQuery();
+        
+        Cliente cliente = null;
+        if(resultado.next())
+            cliente = converterResultSetEmCliente(resultado);
+        
+        return cliente;
+    }
 }
