@@ -78,11 +78,22 @@ public class OrdemServicoDAO extends BaseDAO{
         return ordens;
     }
     
-    public void cancelar(OrdemServico ordemServico){
-        
+    public void cancelar(OrdemServico ordemServico) throws SQLException{
+        String sqlQuery = "UPDATE " + tabela + " SET status = ? WHERE id = ?";
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
+        instrucaoPreparada.setInt(1, OrdemServico.CANCELADA);
+        instrucaoPreparada.setInt(2, ordemServico.getId());
+        instrucaoPreparada.execute();
     }
     
-    public void excluir(){
-        
+    public void excluir(int id) throws SQLException{
+        String sqlQuery = "DELETE FROM " + tabela + " WHERE id = ?";
+        PreparedStatement instrucaoPreparada = conexao.prepareCall(sqlQuery);
+        instrucaoPreparada.setInt(1, id);
+        instrucaoPreparada.execute();
+    }
+    
+    public void excluir(OrdemServico ordemServico) throws SQLException{
+        this.excluir(ordemServico.getId());
     }
 }

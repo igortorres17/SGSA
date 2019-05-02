@@ -7,6 +7,9 @@ import java.util.ArrayList;
  * @author Hércules M.
  */
 public class OrdemServico {
+    public static final int ABERTA = 0;
+    public static final int CONCLUIDA = 1;
+    public static final int CANCELADA = 3;
     private int id;
     private Veiculo veiculo;
     private float valor;
