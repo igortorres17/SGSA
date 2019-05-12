@@ -27,7 +27,7 @@
                   </Label>
                </children>
             </Pane>
-            <Button layoutX="43.0" layoutY="298.0" mnemonicParsing="false" onAction="#btnLogin_pressed" prefHeight="25.0" prefWidth="151.0" styleClass="btn" text="Login" />
+            <Button layoutX="43.0" layoutY="292.0" mnemonicParsing="false" onAction="#btnLogin_pressed" prefHeight="40.0" prefWidth="250.0" styleClass="btn" text="Login" />
             <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="128.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../recursos/avatar.png" />

@@ -5,6 +5,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="854.0" stylesheets="@../recursos/sgsa.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleDashboard">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" styleClass="sgsaTitle" text="Ordem de Serviço" />
+      <Label layoutX="14.0" layoutY="14.0" styleClass="sgsaTitle" text="Serviços" />
    </children>
 </AnchorPane>

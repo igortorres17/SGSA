@@ -14,8 +14,6 @@
 
 .btn{
     -fx-background-color:#2BB96B;
-    -fx-pref-width:250px;
-    -fx-pref-height:40px;
     -fx-text-fill:#FFFFFF;
     -fx-background-radius:5px;
 }
@@ -32,6 +30,19 @@
     -fx-background-radius:5px;
 }
 
+/* Cores e backgrounds*/
+.blue-bg{
+    -fx-background-color:#6178EA;
+}
+
+.blue-contrast-bg{
+    -fx-background-color:rgb(78, 101, 214);
+}
+
+.light-bg{
+    -fx-background-color:#F3F4F8;
+}
+
 .default-bg{
     -fx-background-color: #ECF0F1;
 }
@@ -40,27 +51,58 @@
     -fx-background-color: #DFE2E2;
 }
 
-.sideMenu{
-    -fx-background-color:  #ECF0F1;
-}
-
-.sideMenuBtn{
-    -fx-background-radius:0px;
-    -fx-background-color: #DFE2E2;
-    -fx-border-style:solid;
-    -fx-border-color:#cacaca;
-}
-
-.sideMenuBtn:hover{
-    -fx-background-color:#2BB96B;
-    -fx-border-color:#2BB96B;
-}
-
-.sgsaTitle{
+/* Estilização de textos */
+.title{
     -fx-font-size:22px;
+    -fx-text-fill:#FFFFFF;
 }
 
-.nomeUsuario{
+.text-user-name{
     -fx-font-size: 18px;
     -fx-font-weight:bold;
+}
+
+/* Estilização de controles*/
+.side-button{
+    -fx-background-color:none;
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-border-style:solid;
+    -fx-border-color:#F4F4FE;
+    -fx-alignment:left;
+    -fx-text-fill:#F4F4FE;
+}
+
+.side-button:hover{
+    -fx-font-weight:bold;
+}
+
+.side-button:pressed{
+
+    
+}
+
+.last-side-button{
+    -fx-border-width: 0px 0px 0px 0px;
+}
+
+.side-button-active{
+    -fx-font-weight:bold;
+}
+
+.light-input{
+    -fx-background-color:#F8FCFF;
+    -fx-background-radius:15px;
+    -fx-border-style:solid;
+    -fx-border-color:#D5D6D8;
+    -fx-border-radius:15px;
+    -fx-border-width:3px;
+}
+
+/* Estilização de fontes */
+.light-font{
+    -fx-text-fill:#F4F4FE;
+}
+
+.black-font{
+    -fx-text-fill:#131313;
 }
