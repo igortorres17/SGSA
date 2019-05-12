@@ -13,17 +13,44 @@
 }
 
 .btn{
-    -fx-background-color:#2BB96B;
     -fx-text-fill:#FFFFFF;
     -fx-background-radius:5px;
 }
 
-.btn:hover{
+.btn-green{
+    -fx-background-color:#2BB96B;
+}
+
+.btn-green:hover{
     -fx-background-color: #27ab62;
 }
 
-.btn:pressed{
+.btn-green:pressed{
     -fx-background-color: #1d8d50;
+}
+
+.btn-blue{
+    -fx-background-color:#6178EA;
+}
+
+.btn-blue:hover{
+    -fx-background-color:#4e65d6;
+}
+
+.btn-blue:pressed{
+    -fx-background-color:#3547a0;
+}
+
+.btn-orange{
+    -fx-background-color:#fcc207;
+}
+
+.btn-orange:hover{
+    -fx-background-color:#d8a705;
+}
+
+.btn-orange:pressed{
+    -fx-background-color:#ad8500;
 }
 
 .default-bg-radius{
@@ -37,6 +64,10 @@
 
 .blue-contrast-bg{
     -fx-background-color:rgb(78, 101, 214);
+}
+
+.orange-bg{
+    -fx-background-color:#fcc207;
 }
 
 .light-bg{
@@ -68,7 +99,7 @@
     -fx-border-width: 0px 0px 1px 0px;
     -fx-border-style:solid;
     -fx-border-color:#F4F4FE;
-    -fx-alignment:left;
+    -fx-alignment:center-left;
     -fx-text-fill:#F4F4FE;
 }
 

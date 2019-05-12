@@ -26,14 +26,18 @@
                         <TableView layoutX="14.0" layoutY="69.0" prefHeight="367.0" prefWidth="804.0">
                           <columns>
                             <TableColumn prefWidth="41.0" text="ID" />
-                            <TableColumn prefWidth="172.0" text="Nome" />
-                              <TableColumn prefWidth="210.0" text="Email" />
-                              <TableColumn prefWidth="148.0" text="Telefone" />
-                              <TableColumn prefWidth="116.0" text="Cidade" />
-                              <TableColumn prefWidth="116.0" text="Nascimento" />
+                            <TableColumn prefWidth="125.0" text="Placa" />
+                              <TableColumn prefWidth="231.0" text="Chassi" />
+                              <TableColumn prefWidth="117.0" text="Ano" />
+                              <TableColumn prefWidth="153.0" text="Quilometragem" />
+                              <TableColumn prefWidth="136.0" text="Proprietário" />
                           </columns>
                         </TableView>
-                        <Button layoutX="711.0" layoutY="17.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="84.0" styleClass="btn" text="Vá!" />
+                        <Button layoutX="711.0" layoutY="17.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="84.0" text="Vá!">
+                           <styleClass>
+                              <String fx:value="btn" />
+                              <String fx:value="btn-blue" />
+                           </styleClass></Button>
                         <TextField layoutX="520.0" layoutY="17.0" prefHeight="35.0" prefWidth="180.0" promptText="Pesquisar . . ." styleClass="light-input" />
                      </children>
                   </AnchorPane>
