@@ -1,0 +1,54 @@
+.entradaTexto{
+    -fx-background-color: #FFFFFF;
+    -fx-pref-width:250px;
+    -fx-pref-height:40px;
+    -fx-background-radius:5px;
+    -fx-font-wight:bold;
+}
+.entradaTexto:focused{
+    -fx-border-style:solid;
+    -fx-border-color:rgb(177, 177, 177);
+    -fx-border-radius:5px;
+    -fx-border-width:1px;
+}
+
+.btn{
+    -fx-background-color:#2BB96B;
+    -fx-pref-width:250px;
+    -fx-pref-height:40px;
+    -fx-text-fill:#FFFFFF;
+    -fx-background-radius:5px;
+}
+
+.sideMenu{
+    -fx-background-color:  #ECF0F1;
+}
+
+.sideMenuBtn{
+    -fx-background-radius:0px;
+    -fx-background-color: #DFE2E2;
+    -fx-border-style:solid;
+    -fx-border-color:#cacaca;
+}
+
+.sideMenuBtn:hover{
+    -fx-background-color:#2BB96B;
+    -fx-border-color:#2BB96B;
+}
+
+.bgPadrao{
+    -fx-background-color: #ECF0F1;
+}
+
+.bgPanePadrao{
+    -fx-background-color: #DFE2E2;
+}
+
+.sgsaTitle{
+    -fx-font-size:22px;
+}
+
+.nomeUsuario{
+    -fx-font-size: 18px;
+    -fx-font-weight:bold;
+}

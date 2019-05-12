@@ -1,18 +1,24 @@
 package controller;
 
-import view.TelaModelo;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-/**
- *
- * @author igortorres
- */
-public class Main {
+public class Main extends Application{
 
     public static void main(String[] args) {
-       TelaModelo modV = new TelaModelo();
-      
-      modV.setVisible(true);
-        
+           launch(args);     
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("SGSA - Login");
+        stage.show();
     }
     
 }

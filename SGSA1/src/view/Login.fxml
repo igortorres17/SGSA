@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="376.0" prefWidth="335.0" stylesheets="@../recursos/sgsa.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleLogin">
+
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="458.0" prefWidth="320.0" styleClass="bgPadrao" VBox.vgrow="ALWAYS">
+         <children>
+            <TextField fx:id="fieldLogin" layoutX="43.0" layoutY="188.0" promptText="Usuário" styleClass="entradaTexto" />
+            <PasswordField fx:id="fieldSenha" layoutX="43.0" layoutY="239.0" promptText="Senha" styleClass="entradaTexto" />
+            <Pane prefHeight="48.0" prefWidth="335.0" styleClass="bgPanePadrao">
+               <children>
+                  <Label layoutX="89.0" layoutY="11.0" text="SGSA - Autenticação">
+                     <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button layoutX="43.0" layoutY="298.0" mnemonicParsing="false" onAction="#btnLogin_pressed" prefHeight="25.0" prefWidth="151.0" styleClass="btn" text="Login" />
+            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="128.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../recursos/avatar.png" />
+               </image>
+            </ImageView>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
