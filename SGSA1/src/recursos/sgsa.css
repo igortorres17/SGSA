@@ -1,11 +1,11 @@
-.entradaTexto{
+.input{
     -fx-background-color: #FFFFFF;
     -fx-pref-width:250px;
     -fx-pref-height:40px;
     -fx-background-radius:5px;
     -fx-font-wight:bold;
 }
-.entradaTexto:focused{
+.input:focused{
     -fx-border-style:solid;
     -fx-border-color:rgb(177, 177, 177);
     -fx-border-radius:5px;
@@ -28,6 +28,18 @@
     -fx-background-color: #1d8d50;
 }
 
+.default-bg-radius{
+    -fx-background-radius:5px;
+}
+
+.default-bg{
+    -fx-background-color: #ECF0F1;
+}
+
+.default-pane-bg{
+    -fx-background-color: #DFE2E2;
+}
+
 .sideMenu{
     -fx-background-color:  #ECF0F1;
 }
@@ -42,14 +54,6 @@
 .sideMenuBtn:hover{
     -fx-background-color:#2BB96B;
     -fx-border-color:#2BB96B;
-}
-
-.bgPadrao{
-    -fx-background-color: #ECF0F1;
-}
-
-.bgPanePadrao{
-    -fx-background-color: #DFE2E2;
 }
 
 .sgsaTitle{

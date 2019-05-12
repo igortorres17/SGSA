@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Hércules M.
  */
-public class ControlePrincipal {
+public class ControlePrincipal extends ControleBase{
     @FXML
     private Button btnDashboard;
     
@@ -38,13 +38,17 @@ public class ControlePrincipal {
         
     }
     
-    @FXML
-    protected void btnDashboard_pressed(ActionEvent event){
+    protected void abrirSubForm(String caminho_fxml){
         try {
-            AnchorPane pane = FXMLLoader.load(getClass().getResource("/view/Dashboard.fxml"));
+            AnchorPane pane = FXMLLoader.load(getClass().getResource(caminho_fxml));
             this.contentPane.getChildren().setAll(pane);
         } catch (IOException ex) {
-            System.out.println("Erro ao abrir dashboard: " + ex.getMessage());
-        }
+            System.out.println("Erro ao abrir sub-formulario: " + ex.getMessage());
+        } 
+    }
+    
+    @FXML
+    protected void btnDashboard_pressed(ActionEvent event){
+        abrirSubForm("/view/Dashboard.fxml");
     }
 }

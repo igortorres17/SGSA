@@ -14,7 +14,7 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefWidth="830.0" styleClass="bgPadrao" VBox.vgrow="ALWAYS">
          <children>
-            <Pane prefHeight="594.0" prefWidth="274.0" styleClass="bgPanePadrao">
+            <Pane prefHeight="594.0" prefWidth="274.0" styleClass="default-pane-bg">
                <children>
                   <Label layoutX="111.0" layoutY="14.0" styleClass="sgsaTitle" text="SGSA" />
                   <Separator layoutX="37.0" layoutY="53.0" prefWidth="200.0" />
@@ -43,7 +43,7 @@
                   </ImageView>
                </children>
             </Pane>
-            <AnchorPane fx:id="contentPane" layoutX="274.0" layoutY="48.0" prefHeight="546.0" prefWidth="854.0">
+            <AnchorPane fx:id="contentPane" layoutX="274.0" layoutY="48.0" prefHeight="546.0" prefWidth="854.0" styleClass="default-bg">
                <children>
                   <Label layoutX="716.0" layoutY="504.0" styleClass="sgsaTitle" text="Dashboard" />
                </children>
