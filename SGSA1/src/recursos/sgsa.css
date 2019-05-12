@@ -20,6 +20,14 @@
     -fx-background-radius:5px;
 }
 
+.btn:hover{
+    -fx-background-color: #27ab62;
+}
+
+.btn:pressed{
+    -fx-background-color: #1d8d50;
+}
+
 .sideMenu{
     -fx-background-color:  #ECF0F1;
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
@@ -24,7 +25,7 @@
                   </ImageView>
                   <Label layoutX="93.0" layoutY="80.0" styleClass="nomeUsuario" text="Hércules M." />
                   <Label layoutX="91.0" layoutY="107.0" text="11/05/2019 - 22:18" />
-                  <Button fx:id="btnDashboard" layoutX="-1.0" layoutY="165.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="274.0" styleClass="sideMenuBtn" text="Dashboard" />
+                  <Button fx:id="btnDashboard" layoutX="-1.0" layoutY="165.0" mnemonicParsing="false" onAction="#btnDashboard_pressed" prefHeight="48.0" prefWidth="274.0" styleClass="sideMenuBtn" text="Dashboard" />
                   <Button fx:id="btnOS" layoutX="-1.0" layoutY="212.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="274.0" styleClass="sideMenuBtn" text="Ordem de Serviço" />
                   <Button fx:id="btnVeiculos" layoutX="-1.0" layoutY="259.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="274.0" styleClass="sideMenuBtn" text="Veículos" />
                   <Button fx:id="btnClientes" layoutX="-1.0" layoutY="306.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="274.0" styleClass="sideMenuBtn" text="Clientes" />
@@ -32,6 +33,21 @@
                   <Button fx:id="btnPecas" layoutX="-1.0" layoutY="400.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="274.0" styleClass="sideMenuBtn" text="Peças" />
                </children>
             </Pane>
+            <Pane layoutX="274.0" prefHeight="48.0" prefWidth="854.0" style="-fx-background-color: #d4d4d4;">
+               <children>
+                  <Hyperlink layoutX="765.0" layoutY="13.0" text="Logout" />
+                  <ImageView fitHeight="23.0" fitWidth="18.0" layoutX="818.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../recursos/logout.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <AnchorPane fx:id="contentPane" layoutX="274.0" layoutY="48.0" prefHeight="546.0" prefWidth="854.0">
+               <children>
+                  <Label layoutX="716.0" layoutY="504.0" styleClass="sgsaTitle" text="Dashboard" />
+               </children>
+            </AnchorPane>
          </children>
     </AnchorPane>
   </children>
