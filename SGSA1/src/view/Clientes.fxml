@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -12,11 +13,13 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="854.0" stylesheets="@../recursos/sgsa.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleDashboard">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleClientes">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" text="Clientes">
+      <Label layoutX="57.0" layoutY="14.0" text="Clientes">
          <styleClass>
             <String fx:value="title" />
             <String fx:value="black-font" />
@@ -27,23 +30,25 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="827.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="69.0" prefHeight="367.0" prefWidth="804.0">
+                        <TableView fx:id="tabelaClientes" layoutX="14.0" layoutY="69.0" prefHeight="318.0" prefWidth="804.0">
                            <columns>
                               <TableColumn prefWidth="41.0" text="ID" />
-                              <TableColumn prefWidth="125.0" text="Nome" />
-                              <TableColumn prefWidth="231.0" text="CPF / CNPJ" />
-                              <TableColumn prefWidth="117.0" text="Email" />
-                              <TableColumn prefWidth="153.0" text="Telefone" />
-                              <TableColumn prefWidth="136.0" text="Tipo" />
+                              <TableColumn prefWidth="166.0" text="Nome / Razão Social" />
+                              <TableColumn prefWidth="181.0" text="CPF / CNPJ" />
+                              <TableColumn prefWidth="144.0" text="E-mail" />
+                              <TableColumn prefWidth="152.0" text="Telefone" />
+                              <TableColumn prefWidth="119.0" text="Tipo" />
                            </columns>
                         </TableView>
-                        <Button layoutX="711.0" layoutY="17.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="84.0" text="Vá!">
-                           <styleClass>
-                              <String fx:value="btn" />
-                              <String fx:value="btn-blue" />
-                           </styleClass>
-                        </Button>
-                        <TextField layoutX="520.0" layoutY="17.0" prefHeight="35.0" prefWidth="180.0" promptText="Pesquisar . . ." styleClass="light-input" />
+                        <Button fx:id="btnPesquisar" layoutX="736.0" layoutY="28.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" styleClass="blue-button" text="OK" />
+                        <TextField fx:id="txtPesquisar" layoutX="545.0" layoutY="21.0" prefHeight="35.0" prefWidth="180.0" promptText="Pesquisar . . ." styleClass="light-input" />
+                        <ImageView fitHeight="21.0" fitWidth="27.0" layoutX="522.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../recursos/icones/pesquisar.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="btnEditar" disable="true" layoutX="648.0" layoutY="404.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" styleClass="blue-button" text="Editar" />
+                        <Button fx:id="btnVisualizar" disable="true" layoutX="736.0" layoutY="404.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" styleClass="blue-button" text="Visualizar" />
                      </children>
                   </AnchorPane>
                </content>
@@ -52,63 +57,69 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="14.0" text="Cadastro de Cliente">
+                        <Label layoutX="16.0" layoutY="14.0" text="Cadastro de Cliente">
                            <styleClass>
                               <String fx:value="title" />
                               <String fx:value="black-font" />
                            </styleClass>
                         </Label>
-                        <Separator layoutX="14.0" layoutY="45.0" prefWidth="300.0" />
-                        <Label layoutX="14.0" layoutY="59.0" text="Nome" />
-                        <TextField layoutX="14.0" layoutY="77.0" prefHeight="31.0" prefWidth="189.0" promptText="Nome completo" styleClass="light-input" />
-                        <Label layoutX="15.0" layoutY="121.0" text="CPF/CNPJ" />
-                        <TextField layoutX="15.0" layoutY="139.0" prefHeight="31.0" prefWidth="189.0" promptText="CPF ou CNPJ" styleClass="light-input" />
-                        <Label layoutX="16.0" layoutY="251.0" text="Email" />
-                        <TextField layoutX="16.0" layoutY="269.0" prefHeight="31.0" prefWidth="189.0" promptText="Email pessoal" styleClass="light-input" />
-                        <Label layoutX="15.0" layoutY="314.0" text="Telefone" />
-                        <TextField layoutX="15.0" layoutY="332.0" prefHeight="31.0" prefWidth="189.0" promptText="Telefone ou Celular" styleClass="light-input" />
-                        <Label layoutX="277.0" layoutY="60.0" text="Logradouro" />
-                        <TextField layoutX="277.0" layoutY="78.0" prefHeight="31.0" prefWidth="189.0" promptText="Rua, Avenida..." styleClass="light-input" />
-                        <Label layoutX="478.0" layoutY="60.0" text="Número" />
-                        <TextField layoutX="478.0" layoutY="78.0" prefHeight="31.0" prefWidth="70.0" promptText="Ex: 65" styleClass="light-input" />
-                        <Label layoutX="277.0" layoutY="121.0" text="Complemento" />
-                        <TextField layoutX="277.0" layoutY="139.0" prefHeight="31.0" prefWidth="189.0" promptText="Casa, Apto..." styleClass="light-input" />
-                        <Label layoutX="277.0" layoutY="188.0" text="Bairro" />
-                        <TextField layoutX="277.0" layoutY="206.0" prefHeight="31.0" prefWidth="189.0" promptText="Bairro, quadra" styleClass="light-input" />
-                        <Label layoutX="277.0" layoutY="251.0" text="Cidade" />
-                        <TextField layoutX="277.0" layoutY="269.0" prefHeight="31.0" prefWidth="189.0" promptText="Município de moradia" styleClass="light-input" />
-                        <Label layoutX="482.0" layoutY="251.0" text="UF" />
-                        <ComboBox layoutX="482.0" layoutY="272.0" prefHeight="25.0" prefWidth="77.0" promptText="MG" />
-                        <Label layoutX="16.0" layoutY="188.0" text="Data de Nascimento" />
-                        <TextField layoutX="16.0" layoutY="206.0" prefHeight="31.0" prefWidth="189.0" promptText="DD/MM/AA" styleClass="light-input" />
-                        <Button layoutX="671.0" layoutY="403.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="110.0" text="Cadastrar">
-                           <styleClass>
-                              <String fx:value="btn" />
-                              <String fx:value="btn-blue" />
-                           </styleClass>
-                        </Button>
-                        <Button layoutX="548.0" layoutY="403.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="106.0" text="Limpar">
-                           <styleClass>
-                              <String fx:value="btn" />
-                              <String fx:value="btn-orange" />
-                           </styleClass>
-                        </Button>
-                        <RadioButton layoutX="277.0" layoutY="339.0" mnemonicParsing="false" selected="true" text="Pessoa Física">
+                        <Separator layoutX="14.0" layoutY="55.0" prefWidth="700.0" />
+                        <Label layoutX="14.0" layoutY="73.0" text="Nome" />
+                        <TextField fx:id="txtNome" layoutX="14.0" layoutY="91.0" prefHeight="31.0" prefWidth="189.0" promptText="Nome ou Razão Social" styleClass="light-input" />
+                        <Label layoutX="15.0" layoutY="135.0" text="CPF/CNPJ" />
+                        <TextField fx:id="txtCpf" layoutX="15.0" layoutY="153.0" prefHeight="31.0" prefWidth="189.0" promptText="CPF ou CNPJ" styleClass="light-input" />
+                        <Label layoutX="16.0" layoutY="265.0" text="Email" />
+                        <TextField fx:id="txtEmail" layoutX="16.0" layoutY="283.0" prefHeight="31.0" prefWidth="189.0" promptText="nome@provedor.com" styleClass="light-input" />
+                        <Label layoutX="15.0" layoutY="328.0" text="Telefone" />
+                        <TextField fx:id="txtTelefone" layoutX="15.0" layoutY="346.0" prefHeight="31.0" prefWidth="189.0" promptText="(XX) XXXXX - XXXX" styleClass="light-input" />
+                        <Label layoutX="277.0" layoutY="74.0" text="Logradouro" />
+                        <TextField fx:id="txtLogradouro" layoutX="277.0" layoutY="92.0" prefHeight="31.0" prefWidth="189.0" promptText="Rua, Avenida e etc..." styleClass="light-input" />
+                        <Label layoutX="496.0" layoutY="73.0" text="Número" />
+                        <TextField layoutX="495.0" layoutY="92.0" prefHeight="31.0" prefWidth="70.0" promptText="Ex: 65" styleClass="light-input" />
+                        <Label layoutX="277.0" layoutY="135.0" text="Complemento" />
+                        <TextField fx:id="txtComplemento" layoutX="277.0" layoutY="153.0" prefHeight="31.0" prefWidth="189.0" promptText="Casa, Apto..." styleClass="light-input" />
+                        <Label layoutX="277.0" layoutY="202.0" text="Bairro" />
+                        <TextField fx:id="txtBairro" layoutX="277.0" layoutY="220.0" prefHeight="31.0" prefWidth="189.0" promptText="Bairro, quadra" styleClass="light-input" />
+                        <Label layoutX="277.0" layoutY="265.0" text="Cidade" />
+                        <TextField fx:id="txtCidade" layoutX="277.0" layoutY="283.0" prefHeight="31.0" prefWidth="189.0" promptText="Município de moradia" styleClass="light-input" />
+                        <Label layoutX="496.0" layoutY="265.0" text="UF" />
+                        <ComboBox fx:id="cbEstado" layoutX="495.0" layoutY="288.0" prefHeight="25.0" prefWidth="77.0" promptText="MG" />
+                        <Label layoutX="16.0" layoutY="202.0" text="Data de Nascimento" />
+                        <TextField fx:id="txtNascimento" layoutX="16.0" layoutY="220.0" prefHeight="31.0" prefWidth="189.0" promptText="DD/MM/AA" styleClass="light-input" />
+                        <Button fx:id="btnCadastrar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="110.0" styleClass="blue-button" text="Cadastrar" />
+                        <Button fx:id="btnLimpar" layoutX="548.0" layoutY="403.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="106.0" styleClass="orange-button" text="Limpar" />
+                        <RadioButton fx:id="rbFisica" layoutX="277.0" layoutY="353.0" mnemonicParsing="false" selected="true" text="Pessoa Física">
                            <toggleGroup>
                               <ToggleGroup fx:id="tipoCliente" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton layoutX="381.0" layoutY="339.0" mnemonicParsing="false" text="Pessoa Jurídica" toggleGroup="$tipoCliente" />
+                        <RadioButton fx:id="rbJuridica" layoutX="388.0" layoutY="353.0" mnemonicParsing="false" text="Pessoa Jurídica" toggleGroup="$tipoCliente" />
+                        <Label layoutX="277.0" layoutY="328.0" text="Tipo de Cliente" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Modificar">
+            <Tab disable="true" text="Editar">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab disable="true" text="Visualizar">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
          </tabs>
       </TabPane>
+      <ImageView fitHeight="32.0" fitWidth="28.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../recursos/icones/cliente.png" />
+         </image>
+      </ImageView>
    </children>
+   <stylesheets>
+      <URL value="@../recursos/css/tema.css" />
+      <URL value="@../recursos/css/backgrounds.css" />
+      <URL value="@../recursos/css/texts.css" />
+   </stylesheets>
 </AnchorPane>

@@ -61,6 +61,7 @@ public class ControlePrincipal extends ControleBase implements Initializable{
             AnchorPane pane = FXMLLoader.load(getClass().getResource(caminho_fxml));
             this.contentPane.getChildren().setAll(pane);
         } catch (IOException ex) {
+            ex.printStackTrace();
             System.out.println("Erro ao abrir sub-formulario: " + ex.getMessage());
         } 
     }

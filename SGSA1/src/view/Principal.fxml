@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="594.0" prefWidth="1126.0" stylesheets="@../recursos/sgsa.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlePrincipal">
+<VBox prefHeight="594.0" prefWidth="1126.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlePrincipal">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefWidth="830.0" VBox.vgrow="ALWAYS">
          <children>
@@ -44,7 +44,7 @@
                   </ImageView>
                   <Pane prefHeight="48.0" prefWidth="274.0" styleClass="blue-contrast-bg">
                      <children>
-                        <Label layoutX="106.0" layoutY="12.0" styleClass="title" text="SGSA" />
+                        <Label layoutX="106.0" layoutY="12.0" styleClass="title" text="SGSA" textFill="WHITE" />
                      </children>
                   </Pane>
                   <Button layoutX="91.0" layoutY="545.0" mnemonicParsing="false" text="Deslogar-se">
@@ -56,11 +56,13 @@
                </children>
             </Pane>
             <Pane layoutX="274.0" prefHeight="48.0" prefWidth="854.0" style="-fx-background-color: #d4d4d4;" />
-            <AnchorPane fx:id="contentPane" layoutX="274.0" layoutY="48.0" prefHeight="546.0" prefWidth="854.0" styleClass="light-bg">
-               <children>
-                  <TextField layoutX="98.0" layoutY="84.0" promptText="Buscar . . . " styleClass="light-input" />
-               </children></AnchorPane>
+            <AnchorPane fx:id="contentPane" layoutX="274.0" layoutY="48.0" prefHeight="546.0" prefWidth="854.0" styleClass="light-bg" />
          </children>
     </AnchorPane>
   </children>
+   <stylesheets>
+      <URL value="@../recursos/css/tema.css" />
+      <URL value="@../recursos/css/backgrounds.css" />
+      <URL value="@../recursos/css/texts.css" />
+   </stylesheets>
 </VBox>

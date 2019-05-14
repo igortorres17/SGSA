@@ -1,0 +1,15 @@
+.blue-bg{
+     -fx-background-color:#0078D7;
+}
+
+.blue-contrast-bg{
+    -fx-background-color:rgb(3, 104, 187);
+}
+
+.purple-bg{
+    -fx-background-color:#6178EA;
+}
+
+.purple-contrast-bg{
+    -fx-background-color:rgb(78, 101, 214);
+}

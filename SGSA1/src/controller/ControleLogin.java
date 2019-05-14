@@ -11,18 +11,18 @@ import javafx.event.ActionEvent;
  */
 public class ControleLogin extends ControleBase{
     @FXML
-    private TextField fieldLogin;
+    private TextField txtUsuario;
     
     @FXML
-    private TextField fieldSenha;
+    private TextField txtSenha;
     
     @FXML
     private Button btnLogin;
     
     @FXML
     protected void btnLogin_pressed(ActionEvent event){
-        System.out.println("Login: " + fieldLogin.getText());
-        System.out.println("Senha: " + fieldSenha.getText());
+        System.out.println("Login: " + txtUsuario.getText());
+        System.out.println("Senha: " + txtSenha.getText());
         super.abrirJanela("/view/Principal.fxml");
     }
 }

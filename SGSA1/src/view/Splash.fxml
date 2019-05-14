@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="322.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleSplash">
+   <children>
+      <AnchorPane fx:id="root" prefHeight="460.0" prefWidth="322.0" styleClass="blue-bg">
+         <children>
+            <Label layoutX="74.0" layoutY="14.0" text="Bem-vindo" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="141.0" layoutY="203.0" text="SGSA" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="62.0" layoutY="238.0" text="Sistema de Ger. de Serviços Automotivos" textFill="WHITE" />
+            <Label layoutX="132.0" layoutY="415.0" text="Caregando . . ." textFill="WHITE" />
+         </children>
+      </AnchorPane>
+   </children>
+   <stylesheets>
+      <URL value="@../recursos/css/tema.css" />
+      <URL value="@../recursos/css/backgrounds.css" />
+      <URL value="@../recursos/css/texts.css" />
+   </stylesheets>
+</VBox>

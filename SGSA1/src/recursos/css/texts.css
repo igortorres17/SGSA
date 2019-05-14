@@ -1,0 +1,10 @@
+.title{
+    -fx-font-size:22px;
+}
+
+.text-user-name{
+    -fx-font-size: 18px;
+    -fx-font-weight:bold;
+    -fx-text-fill: #FFFFFF;
+    
+}

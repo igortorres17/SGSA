@@ -47,5 +47,14 @@ public class PessoaJuridica extends Cliente{
         this.cnpj = cnpj;
     }
     
+    /* Compatibilidade com TableView */
+    public String getNome() {
+        return razaoSocial;
+    }
+    
+    public String getCpf() {
+        return cnpj;
+    }
+    
     
 }

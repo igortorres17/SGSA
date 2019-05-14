@@ -128,13 +128,14 @@ public class ClienteDAO extends BaseDAO{
         return null;
     }
     
-    public ArrayList<Cliente> buscar(String nome) throws SQLException
+    public ArrayList<Cliente> buscar(String nome, int limite) throws SQLException
     {
         ArrayList<Cliente> listaClientes = new ArrayList();
         
-        String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome_rzsocial like ?";
+        String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome_rzsocial like ? LIMIT ?";
         PreparedStatement instrucaoPreparada = conexao.prepareStatement(selectSqlQuery);
         instrucaoPreparada.setString(1, "%"+nome+"%");
+        instrucaoPreparada.setInt(2, limite);
         ResultSet resultadoSelect = instrucaoPreparada.executeQuery();    
         
         while(resultadoSelect.next()){
@@ -143,7 +144,7 @@ public class ClienteDAO extends BaseDAO{
         
         return listaClientes;
     }
-    
+      
     public void alterar(Cliente cliente) throws SQLException {
             
         String updateSqlQuery = "UPDATE "+tabela+" SET "

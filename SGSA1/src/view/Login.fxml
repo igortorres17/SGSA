@@ -1,44 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="376.0" prefWidth="335.0" stylesheets="@../recursos/sgsa.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleLogin">
-
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="458.0" prefWidth="320.0" styleClass="default-bg" VBox.vgrow="ALWAYS">
+<VBox fx:id="vbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleLogin">
+   <children>
+      <AnchorPane prefHeight="494.0" prefWidth="592.0">
          <children>
-            <TextField fx:id="fieldLogin" layoutX="43.0" layoutY="188.0" promptText="Usuário" styleClass="input" />
-            <PasswordField fx:id="fieldSenha" layoutX="43.0" layoutY="239.0" promptText="Senha" styleClass="input" />
-            <Pane prefHeight="48.0" prefWidth="335.0" styleClass="default-pane-bg">
+            <Pane prefHeight="458.0" prefWidth="322.0" styleClass="blue-bg">
                <children>
-                  <Label layoutX="89.0" layoutY="11.0" text="SGSA - Autenticação">
+                  <Label layoutX="74.0" layoutY="14.0" text="Bem-vindo" textFill="WHITE">
                      <font>
-                        <Font name="Segoe UI Light" size="18.0" />
+                        <Font size="36.0" />
                      </font>
                   </Label>
+                  <Label layoutX="132.0" layoutY="203.0" text="SGSA" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="53.0" layoutY="238.0" text="Sistema de Ger. de Serviços Automotivos" textFill="WHITE" />
                </children>
             </Pane>
-            <Button layoutX="43.0" layoutY="292.0" mnemonicParsing="false" onAction="#btnLogin_pressed" prefHeight="40.0" prefWidth="250.0" text="Login">
-               <styleClass>
-                  <String fx:value="btn" />
-                  <String fx:value="btn-green" />
-               </styleClass></Button>
-            <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="128.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../recursos/avatar.png" />
-               </image>
-            </ImageView>
+            <Label layoutX="348.0" layoutY="82.0" text="Logar-se" textFill="#6b6b6b">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUsuario" layoutX="348.0" layoutY="148.0" prefHeight="26.0" prefWidth="231.0" promptText="Usuário" />
+            <TextField fx:id="txtSenha" layoutX="348.0" layoutY="192.0" prefHeight="26.0" prefWidth="231.0" promptText="Senha" />
+            <Label layoutX="348.0" layoutY="117.0" text="Insira suas credenciais" textFill="#6b6b6b">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnLogin" layoutX="348.0" layoutY="239.0" mnemonicParsing="false" onAction="#btnLogin_pressed" prefHeight="30.0" prefWidth="231.0" text="Continuar" />
          </children>
-    </AnchorPane>
-  </children>
+      </AnchorPane>
+   </children>
+   <stylesheets>
+      <URL value="@../recursos/css/tema.css" />
+      <URL value="@../recursos/css/backgrounds.css" />
+   </stylesheets>
 </VBox>

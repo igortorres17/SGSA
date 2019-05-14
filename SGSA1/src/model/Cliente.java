@@ -142,5 +142,17 @@ public class Cliente {
         return (!(cliente instanceof PessoaFisica) && !(cliente instanceof PessoaJuridica) && !(cliente instanceof Mecanico));
     }
     
+    public String getTipo(){
+        if(ePessoaFisica(this))
+            return "Pessoa Física";
+        if(ePessoaJuridica(this))
+            return "Pessoa Jurídica";
+        if(eMecanico(this))
+            return "Mecânico";
+        if(eCliente(this))
+            return "Cliente";
+        
+        return "Indetectável";
+    }   
     
 }
