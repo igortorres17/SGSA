@@ -9,7 +9,10 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -91,7 +94,7 @@ public class ControleClientes extends ControleBase implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // Configura TableView para receber objetos 'Cliente e derivados'
+        // Configura TableView para receber objeto 'Cliente e derivados'
         TableColumn colId = (TableColumn) tabelaClientes.getColumns().get(0);
         TableColumn colNome = (TableColumn) tabelaClientes.getColumns().get(1);
         TableColumn colCpf = (TableColumn) tabelaClientes.getColumns().get(2);
@@ -106,7 +109,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         colTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         
-        // Busca 10 clientes aleatórios para preencher o TableView
+        // Busca 10 clientes mais recentes
         clienteDao = new ClienteDAO();
         try {
             ArrayList<Cliente> clis = clienteDao.buscar("", limite_registros);
@@ -122,6 +125,9 @@ public class ControleClientes extends ControleBase implements Initializable{
         {
             habilitar_editar_visualizar(true);
         }
+        
+        // Popula combobox com sigla dos estados
+        cbEstado.getItems().addAll("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO", "Selecionar");
     }
     
     private void habilitar_editar_visualizar(Boolean habilitar){
@@ -147,6 +153,21 @@ public class ControleClientes extends ControleBase implements Initializable{
         }
     }
     
+    private void limpar_campos(){
+        txtNome.setText("");
+        txtCpf.setText("");
+        txtNascimento.setText("");
+        txtEmail.setText("");
+        txtTelefone.setText("");
+        txtLogradouro.setText("");
+        txtNumero.setText("");
+        txtComplemento.setText("");
+        txtBairro.setText("");
+        txtCidade.setText("");
+        cbEstado.getSelectionModel().selectLast();
+        rbFisica.selectedProperty().set(true);
+    }    
+    
     /*
     * Tratamento de eventos
     */
@@ -164,6 +185,16 @@ public class ControleClientes extends ControleBase implements Initializable{
     protected void txtPesquisar_keyTyped(KeyEvent event){
         if(txtPesquisar.getText().isEmpty())
             buscar("");
+    }
+    
+    @FXML
+    protected void btnLimpar_pressed(ActionEvent event){
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Tem certeza que deseja limpar TODOS os campos?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        
+        if(alert.getResult() == ButtonType.YES){
+            limpar_campos();
+        }
     }
     
 }
