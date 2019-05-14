@@ -46,5 +46,5 @@ public abstract class ControleBase {
     public void windowShow(WindowEvent event){
         
     }
-    
+       
 }

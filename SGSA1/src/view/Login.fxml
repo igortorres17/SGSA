@@ -16,17 +16,17 @@
          <children>
             <Pane prefHeight="458.0" prefWidth="322.0" styleClass="blue-bg">
                <children>
-                  <Label layoutX="74.0" layoutY="14.0" text="Bem-vindo" textFill="WHITE">
+                  <Label layoutY="14.0" prefHeight="41.0" prefWidth="322.0" style="-fx-alignment: center;" text="Bem-vindo" textFill="WHITE">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Label>
-                  <Label layoutX="132.0" layoutY="203.0" text="SGSA" textFill="WHITE">
+                  <Label layoutX="-1.0" layoutY="203.0" prefHeight="27.0" prefWidth="322.0" style="-fx-alignment: center;" text="SGSA" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="53.0" layoutY="238.0" text="Sistema de Ger. de Serviços Automotivos" textFill="WHITE" />
+                  <Label layoutY="238.0" prefHeight="15.0" prefWidth="322.0" style="-fx-alignment: center;" text="Sistema de Ger. de Serviços Automotivos" textFill="WHITE" />
                </children>
             </Pane>
             <Label layoutX="348.0" layoutY="82.0" text="Logar-se" textFill="#6b6b6b">
