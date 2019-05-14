@@ -16,7 +16,12 @@ public abstract class ControleBase {
     
     protected Stage abrirJanela(String caminho_fxml){
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(caminho_fxml));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho_fxml));
+            Parent root = loader.load();
+            
+            ControleBase controller = loader.getController();
+            controller.setStage(stage);
+            
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

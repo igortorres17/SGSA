@@ -3,6 +3,9 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,15 +58,29 @@ public class ControlePrincipal extends ControleBase implements Initializable{
         removerBtnActiveTodos();
         btn.getStyleClass().add("side-button-active");
     }
-    
+       
     private void abrirSubForm(String caminho_fxml){
+        // Exibe tela de carregamento
         try {
-            AnchorPane pane = FXMLLoader.load(getClass().getResource(caminho_fxml));
-            this.contentPane.getChildren().setAll(pane);
+
+            AnchorPane paneLoading = FXMLLoader.load(getClass().getResource("/view/Carregando.fxml"));
+            this.contentPane.getChildren().setAll(paneLoading);
+            this.contentPane.requestLayout();
         } catch (IOException ex) {
-            ex.printStackTrace();
             System.out.println("Erro ao abrir sub-formulario: " + ex.getMessage());
         } 
+        
+        // Exibe tela 
+        Platform.runLater(
+            () -> {
+                try {
+                    AnchorPane subPane = FXMLLoader.load(getClass().getResource(caminho_fxml));
+                    contentPane.getChildren().setAll(subPane); 
+                } catch (IOException ex) {
+                    System.out.println("Erro ao abrir sub-formulario: " + ex.getMessage());
+                }
+            });
+        
     }
     
     @FXML
