@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.SQLException;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.WindowEvent;
@@ -17,12 +18,28 @@ public class ControleSplash extends ControleBase{
     
     @Override
     public void windowShow(WindowEvent event){
-        Platform.runLater(
+        Task task = new Task<Void>(){
+            public Void call(){
+                try {
+                    Thread.sleep(150);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                
+                Platform.runLater(
                 () -> {
                     conectar();
-                }
-        );
+                });
+                
+                return null;
+            }
+        };
+        
+        new Thread(task).start();
+        
     }
+    
+    
     
     private void conectar(){
         try {
