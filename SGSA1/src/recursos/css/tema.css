@@ -11,6 +11,17 @@ TextField:focused{
     -fx-border-color:#0078D7;
 }
 
+PasswordField{
+    -fx-border-color:#d1d1d1;
+    -fx-border-style:solid;
+    -fx-border-width:0px 0px 1px 0px;
+    -fx-background-color:none;
+}
+
+PasswordField:focused{
+    -fx-border-color:#0078D7;
+}
+
 Button{
     -fx-background-color:none;
     -fx-background-radius:0px;

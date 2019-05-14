@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -34,13 +35,13 @@
                </font>
             </Label>
             <TextField fx:id="txtUsuario" layoutX="348.0" layoutY="148.0" prefHeight="26.0" prefWidth="231.0" promptText="Usuário" />
-            <TextField fx:id="txtSenha" layoutX="348.0" layoutY="192.0" prefHeight="26.0" prefWidth="231.0" promptText="Senha" />
             <Label layoutX="348.0" layoutY="117.0" text="Insira suas credenciais" textFill="#6b6b6b">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
             <Button fx:id="btnLogin" layoutX="348.0" layoutY="239.0" mnemonicParsing="false" onAction="#btnLogin_pressed" prefHeight="30.0" prefWidth="231.0" text="Continuar" />
+            <PasswordField fx:id="txtSenha" layoutX="348.0" layoutY="194.0" prefHeight="25.0" prefWidth="231.0" promptText="Senha" />
          </children>
       </AnchorPane>
    </children>

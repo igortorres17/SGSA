@@ -8,8 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.PasswordField;
 import model.Cliente;
-import model.Mecanico;
 import model.PessoaFisica;
 
 import model.Sessao;
@@ -24,7 +24,7 @@ public class ControleLogin extends ControleBase{
     private TextField txtUsuario;
     
     @FXML
-    private TextField txtSenha;
+    private PasswordField txtSenha;
     
     @FXML
     private Button btnLogin;
