@@ -5,20 +5,22 @@ package model;
  * @author Hércules M.
  */
 public class Sessao {
-    private Mecanico usuario;
+    private static PessoaFisica usuario;
     
-    public Sessao(Mecanico usuario) throws Exception{
-        if(usuario == null)
+    public static void setUsuario(PessoaFisica pessoa) throws Exception{
+        if(pessoa == null)
             throw new Exception("Usuário é nulo");
 
-        this.usuario = usuario;
+        usuario = pessoa;
+    }
+    
+    public static PessoaFisica getUsuario(){
+        return usuario;
     }
     
     public void logoff(){
-        this.usuario = null;
+        usuario = null;
     }
     
-    public Mecanico getUsuario(){
-        return this.usuario;
-    }
+
 }

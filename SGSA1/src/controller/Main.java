@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -8,11 +9,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import model.dao.Conexao;
 
 public class Main extends Application{
 
     public static void main(String[] args) {
-           launch(args);     
+           launch(args);    
+        try {
+            System.out.println("Encerando...");
+            Conexao.fechar();
+        } catch (SQLException ex) {
+           ex.printStackTrace();
+        }
     }
 
     @Override

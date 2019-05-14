@@ -19,11 +19,12 @@ public abstract class ControleBase {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho_fxml));
             Parent root = loader.load();
             
-            ControleBase controller = loader.getController();
-            controller.setStage(stage);
-            
             Scene scene = new Scene(root);
             Stage stage = new Stage();
+            
+            ControleBase controller = (ControleBase) loader.getController();
+            controller.setStage(stage);
+            
             stage.setScene(scene);
             stage.show();
             return stage;

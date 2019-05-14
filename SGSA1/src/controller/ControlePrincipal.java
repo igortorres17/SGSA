@@ -3,15 +3,15 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import model.Sessao;
 
 /**
  *
@@ -39,8 +39,26 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     @FXML
     private AnchorPane contentPane;
     
+    @FXML
+    private Label lblUsuario;
+    
+    // Custom
+    AnchorPane paneLoading;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            paneLoading = FXMLLoader.load(getClass().getResource("/view/Carregando.fxml"));
+        } catch (IOException ex) {
+            System.out.println("Falha ao carregar arquivo: " + ex.getMessage());
+        }
+        
+        Platform.runLater(
+            () -> {
+                lblUsuario.setText(Sessao.getUsuario().getNome());
+            }
+        );
+        
         abrirSubForm("/view/Dashboard.fxml");
         btnDashboard.getStyleClass().add("side-button-active");
     }
@@ -60,20 +78,15 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     }
        
     private void abrirSubForm(String caminho_fxml){
-        // Exibe tela de carregamento
-        try {
-
-            AnchorPane paneLoading = FXMLLoader.load(getClass().getResource("/view/Carregando.fxml"));
-            this.contentPane.getChildren().setAll(paneLoading);
-            this.contentPane.requestLayout();
-        } catch (IOException ex) {
-            System.out.println("Erro ao abrir sub-formulario: " + ex.getMessage());
-        } 
+        // Exibe tela de carregamento         
+        this.contentPane.requestLayout();
+        this.contentPane.getChildren().setAll(paneLoading);
+        this.contentPane.requestLayout();
         
         // Exibe tela 
         Platform.runLater(
             () -> {
-                try {
+                try { 
                     AnchorPane subPane = FXMLLoader.load(getClass().getResource(caminho_fxml));
                     contentPane.getChildren().setAll(subPane); 
                 } catch (IOException ex) {
