@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,8 +16,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import model.Cliente;
-import model.PessoaFisica;
 import model.dao.ClienteDAO;
 
 /**
@@ -83,6 +84,10 @@ public class ControleClientes extends ControleBase implements Initializable{
     
     @FXML
     private Button btnCadastrar;
+    
+    // Custom
+    ClienteDAO clienteDao;
+    private int limite_registros = 10;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -102,9 +107,9 @@ public class ControleClientes extends ControleBase implements Initializable{
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         
         // Busca 10 clientes aleatórios para preencher o TableView
-        ClienteDAO cliDao = new ClienteDAO();
+        clienteDao = new ClienteDAO();
         try {
-            ArrayList<Cliente> clis = cliDao.buscar("", 10);
+            ArrayList<Cliente> clis = clienteDao.buscar("", limite_registros);
             for(int i = 0; i < clis.size(); i++){
                 tabelaClientes.getItems().add(clis.get(i));
             }
@@ -113,8 +118,52 @@ public class ControleClientes extends ControleBase implements Initializable{
         }
         
         tabelaClientes.getSelectionModel().selectFirst();
+        if(tabelaClientes.getItems().size() > 0)
+        {
+            habilitar_editar_visualizar(true);
+        }
     }
     
+    private void habilitar_editar_visualizar(Boolean habilitar){
+        btnEditar.setDisable(!habilitar);
+        btnVisualizar.setDisable(!habilitar);
+    }
     
+    private void buscar(String nome){
+        tabelaClientes.getItems().clear();
+        try {
+            ArrayList<Cliente> clientes = clienteDao.buscar(nome, limite_registros);
+            for(int i = 0; i < clientes.size(); i++){
+                tabelaClientes.getItems().add(clientes.get(i));
+            }
+            if(tabelaClientes.getItems().size() == 0)
+                habilitar_editar_visualizar(false);
+            else
+                habilitar_editar_visualizar(true);
+            
+            tabelaClientes.getSelectionModel().selectFirst();            
+        } catch (SQLException ex) {
+            System.out.println("Falha ao buscar: " + ex.getMessage());
+        }
+    }
+    
+    /*
+    * Tratamento de eventos
+    */
+    @FXML
+    protected void btnPesquisar_pressed(ActionEvent event){
+        String termo_busca = txtPesquisar.getText();
+        
+        if(termo_busca.isEmpty())
+            return;
+        
+        buscar(termo_busca);
+    }
+    
+    @FXML
+    protected void txtPesquisar_keyTyped(KeyEvent event){
+        if(txtPesquisar.getText().isEmpty())
+            buscar("");
+    }
     
 }

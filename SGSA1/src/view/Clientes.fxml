@@ -37,11 +37,11 @@
                               <TableColumn prefWidth="181.0" text="CPF / CNPJ" />
                               <TableColumn prefWidth="144.0" text="E-mail" />
                               <TableColumn prefWidth="152.0" text="Telefone" />
-                              <TableColumn prefWidth="119.0" text="Tipo" />
+                              <TableColumn prefWidth="118.0" text="Tipo" />
                            </columns>
                         </TableView>
-                        <Button fx:id="btnPesquisar" layoutX="736.0" layoutY="28.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" styleClass="blue-button" text="OK" />
-                        <TextField fx:id="txtPesquisar" layoutX="545.0" layoutY="21.0" prefHeight="35.0" prefWidth="180.0" promptText="Pesquisar . . ." styleClass="light-input" />
+                        <Button fx:id="btnPesquisar" layoutX="736.0" layoutY="28.0" mnemonicParsing="false" onAction="#btnPesquisar_pressed" prefHeight="27.0" prefWidth="77.0" styleClass="blue-button" text="OK" />
+                        <TextField fx:id="txtPesquisar" layoutX="545.0" layoutY="21.0" onKeyTyped="#txtPesquisar_keyTyped" prefHeight="35.0" prefWidth="180.0" promptText="Pesquisar . . ." styleClass="light-input" />
                         <ImageView fitHeight="21.0" fitWidth="27.0" layoutX="522.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../recursos/icones/pesquisar.png" />
