@@ -4,8 +4,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -90,11 +88,28 @@ public class ControleClientes extends ControleBase implements Initializable{
     
     // Custom
     ClienteDAO clienteDao;
-    private int limite_registros = 10;
+    private int limiteRegistros = 10;
 
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        // Configura TableView para receber objeto 'Cliente e derivados'
+    public void initialize(URL arg0, ResourceBundle arg1) {        
+        configurarTableView();
+        clienteDao = new ClienteDAO();
+        
+        try {
+            ArrayList<Cliente> clientes = clienteDao.buscar("", limiteRegistros);
+            preencherTableView(clientes);
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar clientes: " + ex.getMessage());
+        }
+        
+        tabelaClientes.getSelectionModel().selectFirst();
+        if(tabelaClientes.getItems().size() > 0)
+            habilitarBotoesEditarVisualizar(true);
+        
+        cbEstado.getItems().addAll("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO", "Selecionar");
+    }
+    
+    private void configurarTableView(){
         TableColumn colId = (TableColumn) tabelaClientes.getColumns().get(0);
         TableColumn colNome = (TableColumn) tabelaClientes.getColumns().get(1);
         TableColumn colCpf = (TableColumn) tabelaClientes.getColumns().get(2);
@@ -108,29 +123,18 @@ public class ControleClientes extends ControleBase implements Initializable{
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        
-        // Busca 10 clientes mais recentes
-        clienteDao = new ClienteDAO();
-        try {
-            ArrayList<Cliente> clis = clienteDao.buscar("", limite_registros);
-            for(int i = 0; i < clis.size(); i++){
-                tabelaClientes.getItems().add(clis.get(i));
-            }
-        } catch (SQLException ex) {
-            System.out.println("Erro: " + ex.getMessage());
-        }
-        
-        tabelaClientes.getSelectionModel().selectFirst();
-        if(tabelaClientes.getItems().size() > 0)
-        {
-            habilitar_editar_visualizar(true);
-        }
-        
-        // Popula combobox com sigla dos estados
-        cbEstado.getItems().addAll("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO", "Selecionar");
     }
     
-    private void habilitar_editar_visualizar(Boolean habilitar){
+    private void preencherTableView(ArrayList<Cliente> clientes){
+        if(clientes == null)
+            return;
+        
+        for(int i = 0; i < clientes.size(); i++){
+                tabelaClientes.getItems().add(clientes.get(i));
+            }
+    }
+    
+    private void habilitarBotoesEditarVisualizar(Boolean habilitar){
         btnEditar.setDisable(!habilitar);
         btnVisualizar.setDisable(!habilitar);
     }
@@ -138,14 +142,14 @@ public class ControleClientes extends ControleBase implements Initializable{
     private void buscar(String nome){
         tabelaClientes.getItems().clear();
         try {
-            ArrayList<Cliente> clientes = clienteDao.buscar(nome, limite_registros);
+            ArrayList<Cliente> clientes = clienteDao.buscar(nome, limiteRegistros);
             for(int i = 0; i < clientes.size(); i++){
                 tabelaClientes.getItems().add(clientes.get(i));
             }
             if(tabelaClientes.getItems().size() == 0)
-                habilitar_editar_visualizar(false);
+                habilitarBotoesEditarVisualizar(false);
             else
-                habilitar_editar_visualizar(true);
+                habilitarBotoesEditarVisualizar(true);
             
             tabelaClientes.getSelectionModel().selectFirst();            
         } catch (SQLException ex) {
@@ -153,7 +157,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         }
     }
     
-    private void limpar_campos(){
+    private void limparCampos(){
         txtNome.setText("");
         txtCpf.setText("");
         txtNascimento.setText("");
@@ -193,7 +197,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         alert.showAndWait();
         
         if(alert.getResult() == ButtonType.YES){
-            limpar_campos();
+            limparCampos();
         }
     }
     
