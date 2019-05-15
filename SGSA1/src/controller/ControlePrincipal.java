@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -46,18 +48,8 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     AnchorPane paneLoading;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        try {
-            paneLoading = FXMLLoader.load(getClass().getResource("/view/Carregando.fxml"));
-        } catch (IOException ex) {
-            System.out.println("Falha ao carregar arquivo: " + ex.getMessage());
-        }
-        
-        Platform.runLater(
-            () -> {
-                lblUsuario.setText(Sessao.getUsuario().getNome());
-            }
-        );
+    public void initialize(URL url, ResourceBundle rb) {        
+        lblUsuario.setText(Sessao.getUsuario().getNome());
         
         abrirSubForm("/view/Dashboard.fxml");
         btnDashboard.getStyleClass().add("side-button-active");
@@ -76,23 +68,37 @@ public class ControlePrincipal extends ControleBase implements Initializable{
         removerBtnActiveTodos();
         btn.getStyleClass().add("side-button-active");
     }
-       
+    
+    private Parent carregarSubForm(String caminho_fxml){
+        try { 
+            Parent subPane = FXMLLoader.load(getClass().getResource(caminho_fxml));
+            return subPane;
+        } catch (IOException ex) {
+            System.out.println("Erro ao carregar FXML: " + ex.getMessage());
+            return null;
+        }
+    }
+    
     private void abrirSubForm(String caminho_fxml){
         // Exibe tela de carregamento         
-        this.contentPane.requestLayout();
-        this.contentPane.getChildren().setAll(paneLoading);
-        this.contentPane.requestLayout();
+        this.contentPane.getChildren().setAll(carregarSubForm("/view/Carregando.fxml"));
         
-        // Exibe tela 
-        Platform.runLater(
-            () -> {
-                try { 
-                    AnchorPane subPane = FXMLLoader.load(getClass().getResource(caminho_fxml));
-                    contentPane.getChildren().setAll(subPane); 
-                } catch (IOException ex) {
-                    System.out.println("Erro ao abrir sub-formulario: " + ex.getMessage());
-                }
-            });
+        Task task = new Task<Void>(){
+            public Void call(){
+                try {
+                    Thread.sleep(150);
+                } catch (InterruptedException ex) {}
+                
+                Platform.runLater(
+                    () -> {
+                        contentPane.getChildren().setAll(carregarSubForm(caminho_fxml)); 
+                    }
+                );
+                return null;
+            }
+        };
+        
+        new Thread(task).start();
         
     }
     
