@@ -14,7 +14,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
@@ -22,6 +24,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.Cliente;
+import model.PessoaFisica;
+import model.PessoaJuridica;
 import model.dao.ClienteDAO;
 
 /**
@@ -88,6 +92,33 @@ public class ControleClientes extends ControleBase implements Initializable{
     
     @FXML
     private Button btnCadastrar;
+    
+    @FXML
+    private Label lblNome;
+    
+    @FXML
+    private Label lblCpf;
+    
+    @FXML
+    private Label lblNasc;
+    
+    @FXML
+    private Label lblRua;
+    
+    @FXML
+    private Label lblBairro;
+    
+    @FXML
+    private Label lblCidade;
+    
+    @FXML
+    private Label lblEmail;
+    
+    @FXML
+    private Label lblTel;
+    
+    @FXML
+    private TabPane abas;
     
     // Custom
     ClienteDAO clienteDao;
@@ -185,6 +216,26 @@ public class ControleClientes extends ControleBase implements Initializable{
         rbFisica.selectedProperty().set(true);
     }    
     
+    private void visualizarInfo(Cliente cliente){
+        lblNasc.setText(cliente.getData_nascimento());
+        
+        lblRua.setText(cliente.getLogradouro() + ", " + cliente.getNumero());
+        lblBairro.setText(cliente.getBairro());
+        lblCidade.setText(cliente.getMunicipio() + " / " + cliente.getEstado());
+        
+        lblEmail.setText(cliente.getEmail());
+        lblTel.setText(cliente.getTelefone());
+        
+        if(cliente instanceof PessoaFisica){
+            PessoaFisica pf = (PessoaFisica)cliente;
+            lblNome.setText(pf.getNome());
+            lblCpf.setText(pf.getCpf());
+        }else{
+            PessoaJuridica pj = (PessoaJuridica)cliente;
+            lblNome.setText(pj.getRazaoSocial());
+            lblCpf.setText(pj.getCnpj());
+        }
+    }
     /*
     * Tratamento de eventos
     */
@@ -218,6 +269,27 @@ public class ControleClientes extends ControleBase implements Initializable{
         if(alert.getResult() == ButtonType.YES){
             limparCampos();
         }
+    }
+    
+    @FXML
+    protected void btnVisualizar_pressed(ActionEvent event){
+        Cliente cliente = (Cliente)tabelaClientes.getSelectionModel().getSelectedItem();         
+        visualizarInfo(cliente);
+        abas.getTabs().get(0).setDisable(true);
+        abas.getTabs().get(1).setDisable(true);
+        abas.getTabs().get(2).setDisable(true);
+        abas.getTabs().get(3).setDisable(false);
+        abas.getSelectionModel().select(3);
+        
+    }
+    
+    @FXML
+    protected void vis_btnVoltar_pressed(ActionEvent event){        
+        abas.getTabs().get(0).setDisable(false);
+        abas.getTabs().get(1).setDisable(false);
+        abas.getTabs().get(2).setDisable(true);
+        abas.getTabs().get(3).setDisable(true);
+        abas.getSelectionModel().selectFirst();
     }
     
 }
