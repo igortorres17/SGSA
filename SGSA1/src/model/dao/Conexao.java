@@ -18,6 +18,8 @@ public class Conexao {
     {
         if(conn == null)
             conn = DriverManager.getConnection(URL_CONEXAO, USUARIO, SENHA);
+        else if(!conn.isValid(10))
+            conn = DriverManager.getConnection(URL_CONEXAO, USUARIO, SENHA);
         
         return conn;            
     }
