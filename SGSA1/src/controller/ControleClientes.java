@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.Cliente;
 import model.dao.ClienteDAO;
@@ -88,7 +91,7 @@ public class ControleClientes extends ControleBase implements Initializable{
     
     // Custom
     ClienteDAO clienteDao;
-    private int limiteRegistros = 10;
+    private final int LIMITE_CLIENTES = 10;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {        
@@ -96,7 +99,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         clienteDao = new ClienteDAO();
         
         try {
-            ArrayList<Cliente> clientes = clienteDao.buscar("", limiteRegistros);
+            ArrayList<Cliente> clientes = clienteDao.buscar("", LIMITE_CLIENTES);
             preencherTableView(clientes);
         } catch (SQLException ex) {
             System.out.println("Erro ao buscar clientes: " + ex.getMessage());
@@ -139,22 +142,32 @@ public class ControleClientes extends ControleBase implements Initializable{
         btnVisualizar.setDisable(!habilitar);
     }
     
-    private void buscar(String nome){
-        tabelaClientes.getItems().clear();
-        try {
-            ArrayList<Cliente> clientes = clienteDao.buscar(nome, limiteRegistros);
-            for(int i = 0; i < clientes.size(); i++){
-                tabelaClientes.getItems().add(clientes.get(i));
+    private void buscarCliente(String nome){
+        Task task = new Task(){
+            public Void call() {
+                ArrayList<Cliente> clientes;
+                try {
+                    clientes = clienteDao.buscar(nome, LIMITE_CLIENTES);
+                    Platform.runLater(
+                        () -> {
+                            tabelaClientes.getItems().clear();
+                            preencherTableView(clientes);
+                            if(tabelaClientes.getItems().isEmpty())
+                                habilitarBotoesEditarVisualizar(false);
+                            else
+                                habilitarBotoesEditarVisualizar(true);
+
+                            tabelaClientes.getSelectionModel().selectFirst();
+                        }
+                    );
+                } catch (SQLException ex) {
+                    System.out.println("Falha ao buscar clientes: " + ex.getMessage());
+                }
+
+                return null;
             }
-            if(tabelaClientes.getItems().size() == 0)
-                habilitarBotoesEditarVisualizar(false);
-            else
-                habilitarBotoesEditarVisualizar(true);
-            
-            tabelaClientes.getSelectionModel().selectFirst();            
-        } catch (SQLException ex) {
-            System.out.println("Falha ao buscar: " + ex.getMessage());
-        }
+        };
+        new Thread(task).start();
     }
     
     private void limparCampos(){
@@ -182,13 +195,19 @@ public class ControleClientes extends ControleBase implements Initializable{
         if(termo_busca.isEmpty())
             return;
         
-        buscar(termo_busca);
+        buscarCliente(termo_busca);
     }
     
     @FXML
-    protected void txtPesquisar_keyTyped(KeyEvent event){
-        if(txtPesquisar.getText().isEmpty())
-            buscar("");
+    protected void txtPesquisar_keypressed(KeyEvent event){
+        String termo_busca = txtPesquisar.getText();
+        KeyCode tecla = event.getCode();
+        
+        if(tecla == KeyCode.ENTER){
+            buscarCliente(txtPesquisar.getText());
+        }else if(tecla == KeyCode.BACK_SPACE && termo_busca.isEmpty()){
+            buscarCliente("");
+        }
     }
     
     @FXML
