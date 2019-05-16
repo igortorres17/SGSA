@@ -65,7 +65,7 @@
                         <ComboBox fx:id="cbEstado" layoutX="492.0" layoutY="283.0" prefWidth="77.0" promptText="Selecionar" />
                         <Label layoutX="16.0" layoutY="202.0" text="Data de Nascimento" />
                         <TextField fx:id="txtNascimento" layoutX="16.0" layoutY="220.0" prefWidth="189.0" promptText="DD/MM/AA" styleClass="light-input" />
-                        <Button fx:id="btnCadastrar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Cadastrar" />
+                        <Button fx:id="btnCadastrar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnCadastrar_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Cadastrar" />
                         <Button fx:id="btnLimpar" layoutX="548.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnLimpar_pressed" prefHeight="0.0" prefWidth="106.0" styleClass="orange-button" text="Limpar" />
                         <RadioButton fx:id="rbFisica" layoutX="277.0" layoutY="353.0" mnemonicParsing="false" selected="true" text="Pessoa Física">
                            <toggleGroup>

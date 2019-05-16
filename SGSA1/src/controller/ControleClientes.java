@@ -202,16 +202,33 @@ public class ControleClientes extends ControleBase implements Initializable{
     }
     
     private void limparCampos(){
-        txtNome.setText("");
-        txtCpf.setText("");
-        txtNascimento.setText("");
+        txtNome.getStyleClass().remove("text-prompt-erro");
+        txtNome.setText("");        
+        
+        txtCpf.getStyleClass().remove("text-prompt-erro");
+        txtCpf.setText("");        
+        
+        txtNascimento.getStyleClass().remove("text-prompt-erro");
+        txtNascimento.setText("");        
+        
+        txtEmail.getStyleClass().remove("text-prompt-erro");
         txtEmail.setText("");
-        txtTelefone.setText("");
-        txtLogradouro.setText("");
+        
+        txtTelefone.getStyleClass().remove("text-prompt-erro");
+        txtTelefone.setText("");        
+        
+        txtLogradouro.getStyleClass().remove("text-prompt-erro");
+        txtLogradouro.setText("");        
+        
         txtNumero.setText("");
-        txtComplemento.setText("");
-        txtBairro.setText("");
+
+        txtBairro.getStyleClass().remove("text-prompt-erro");
+        txtBairro.setText("");        
+        
+        txtCidade.getStyleClass().remove("text-prompt-erro");
         txtCidade.setText("");
+        
+        
         cbEstado.getSelectionModel().selectLast();
         rbFisica.selectedProperty().set(true);
     }    
@@ -234,6 +251,64 @@ public class ControleClientes extends ControleBase implements Initializable{
             PessoaJuridica pj = (PessoaJuridica)cliente;
             lblNome.setText(pj.getRazaoSocial());
             lblCpf.setText(pj.getCnpj());
+        }
+    }
+    
+    private void validarCampos(){
+        if(txtNome.getText().isEmpty()){
+            txtNome.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo nome é obrigatório!", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        if(txtCpf.getText().length() < 11){
+            new Alert(AlertType.ERROR, "Campo CPF/CNPJ deve conter pelo menos 11 dígitos", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        if(txtNascimento.getText().isEmpty()){
+            txtNascimento.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Data de Nascimento é obrigatório", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        if(txtEmail.getText().isEmpty()){
+            txtEmail.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Email é obrigatório", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        if(!txtEmail.getText().contains("@")){
+            new Alert(AlertType.ERROR, "Campo Email deve conter pelo menos um '@'", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        if(txtTelefone.getText().isEmpty()){
+            txtTelefone.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Telefone é obrigatório", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        if(txtLogradouro.getText().isEmpty()){
+            txtLogradouro.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Logradouro é obrigatório", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        if(txtBairro.getText().isEmpty()){
+            txtBairro.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Bairro é obrigatório", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        if(txtCidade.getText().isEmpty()){
+            txtCidade.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Cidade é obrigatório", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        if(cbEstado.getSelectionModel().getSelectedItem() == null || cbEstado.getSelectionModel().getSelectedItem() == cbEstado.getItems().get(cbEstado.getItems().size()-1)){
+            new Alert(AlertType.ERROR, "Selecione uma Unidade Federativa", ButtonType.OK).showAndWait();
         }
     }
     /*
@@ -269,6 +344,11 @@ public class ControleClientes extends ControleBase implements Initializable{
         if(alert.getResult() == ButtonType.YES){
             limparCampos();
         }
+    }
+    
+    @FXML
+    protected void btnCadastrar_pressed(ActionEvent event){
+        validarCampos();
     }
     
     @FXML

@@ -211,6 +211,10 @@ TableView .table-cell{
     -fx-font-size:18px;
 }
 
+.text-prompt-erro{
+    -fx-prompt-text-fill:#A20025;
+}
+
 /* Ícones */
 .dashboard-icon{
     -fx-background-image: url("../icones/velocimentro.png");
