@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleDashboard">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="854.0" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleDashboard">
    <children>
-      <Label layoutX="358.0" layoutY="257.0" styleClass="title" text="Caregando . . ." />
+      <Label layoutY="282.0" prefHeight="23.0" prefWidth="854.0" style="-fx-alignment: center left;" styleClass="title2" text="Carregando" />
+      <Label layoutY="305.0" prefHeight="23.0" prefWidth="854.0" style="-fx-alignment: center left;" styleClass="title2" text=". . ." />
    </children>
-   <stylesheets>
-      <URL value="@../recursos/css/tema.css" />
-      <URL value="@../recursos/css/backgrounds.css" />
-      <URL value="@../recursos/css/texts.css" />
-   </stylesheets>
 </AnchorPane>

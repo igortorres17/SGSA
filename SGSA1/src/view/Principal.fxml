@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
-<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -9,60 +8,69 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="594.0" prefWidth="1126.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlePrincipal">
+<VBox prefHeight="610.0" prefWidth="1126.0" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlePrincipal">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefWidth="830.0" VBox.vgrow="ALWAYS">
          <children>
-            <Pane prefHeight="594.0" prefWidth="274.0" styleClass="blue-bg">
+            <Pane prefHeight="610.0" prefWidth="282.0" style="-fx-background-color: -cor-azul;">
                <children>
-                  <Button fx:id="btnDashboard" layoutX="14.0" layoutY="205.0" mnemonicParsing="false" onAction="#btnDashboard_pressed" prefHeight="48.0" prefWidth="197.0" styleClass="side-button" text="Dashboard" />
-                  <Button fx:id="btnOS" layoutX="14.0" layoutY="252.0" mnemonicParsing="false" onAction="#btnOS_pressed" prefHeight="48.0" prefWidth="197.0" styleClass="side-button" text="Ordem de Serviço" />
-                  <Button fx:id="btnVeiculos" layoutX="14.0" layoutY="299.0" mnemonicParsing="false" onAction="#btnVeiculos_pressed" prefHeight="48.0" prefWidth="197.0" styleClass="side-button" text="Veículos" />
-                  <Button fx:id="btnClientes" layoutX="14.0" layoutY="346.0" mnemonicParsing="false" onAction="#btnClientes_pressed" prefHeight="48.0" prefWidth="197.0" styleClass="side-button" text="Clientes" />
-                  <Button fx:id="btnServicos" layoutX="14.0" layoutY="393.0" mnemonicParsing="false" onAction="#btnServicos_pressed" prefHeight="48.0" prefWidth="197.0" styleClass="side-button" text="Serviços" />
-                  <Button fx:id="btnPecas" layoutX="14.0" layoutY="440.0" mnemonicParsing="false" onAction="#btnPecas_pressed" prefHeight="48.0" prefWidth="197.0" text="Peças">
+                  <Button fx:id="btnDashboard" layoutY="115.0" mnemonicParsing="false" onAction="#btnDashboard_pressed" prefHeight="25.0" prefWidth="274.0" text="Dashboard">
                      <styleClass>
                         <String fx:value="side-button" />
-                        <String fx:value="last-side-button" />
+                        <String fx:value="dashboard-icon" />
+                        <String fx:value="side-button-active" />
                      </styleClass></Button>
-                  <Label fx:id="lblUsuario" layoutX="-1.0" layoutY="156.0" prefHeight="27.0" prefWidth="274.0" style="-fx-alignment: center;" text="Hercules M.">
+                  <Button fx:id="btnOS" layoutY="163.0" mnemonicParsing="false" onAction="#btnOS_pressed" prefHeight="25.0" prefWidth="274.0" text="Ordem de Serviço">
                      <styleClass>
-                        <String fx:value="text-user-name" />
-                        <String fx:value="light-font" />
-                     </styleClass>
-                  </Label>
-                  <ImageView fitHeight="76.0" fitWidth="80.0" layoutX="98.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/avatar.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="21.0" fitWidth="25.0" layoutX="58.0" layoutY="547.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../recursos/logout.png" />
-                     </image>
-                  </ImageView>
-                  <Pane prefHeight="48.0" prefWidth="274.0" styleClass="blue-contrast-bg">
+                        <String fx:value="side-button" />
+                        <String fx:value="os-icon" />
+                     </styleClass></Button>
+                  <Button fx:id="btnVeiculos" layoutY="211.0" mnemonicParsing="false" onAction="#btnVeiculos_pressed" prefHeight="25.0" prefWidth="274.0" text="Veículos">
+                     <styleClass>
+                        <String fx:value="side-button" />
+                        <String fx:value="veiculo-icon" />
+                     </styleClass></Button>
+                  <Button fx:id="btnClientes" layoutY="259.0" mnemonicParsing="false" onAction="#btnClientes_pressed" prefHeight="25.0" prefWidth="274.0" text="Clientes">
+                     <styleClass>
+                        <String fx:value="side-button" />
+                        <String fx:value="cliente-icon" />
+                     </styleClass></Button>
+                  <Button fx:id="btnServicos" layoutY="307.0" mnemonicParsing="false" onAction="#btnServicos_pressed" prefHeight="25.0" prefWidth="274.0" text="Serviços">
+                     <styleClass>
+                        <String fx:value="side-button" />
+                        <String fx:value="servico-icon" />
+                     </styleClass></Button>
+                  <Button fx:id="btnPecas" layoutY="355.0" mnemonicParsing="false" onAction="#btnPecas_pressed" prefHeight="25.0" prefWidth="274.0" text="Peças">
+                     <styleClass>
+                        <String fx:value="side-button" />
+                        <String fx:value="peca-icon" />
+                     </styleClass></Button>
+                  <Pane prefHeight="77.0" prefWidth="282.0">
                      <children>
-                        <Label layoutX="106.0" layoutY="12.0" styleClass="title" text="SGSA" textFill="WHITE" />
+                        <Pane layoutX="14.0" layoutY="7.0" prefHeight="64.0" prefWidth="64.0" style="-fx-background-color: #1c559a;">
+                           <children>
+                              <ImageView fitHeight="136.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../recursos/icones/usuario.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Label layoutX="89.0" layoutY="42.0" prefHeight="15.0" prefWidth="192.0" style="-fx-alignment: center-left;" text="Logado desde: 16.04.19 às 09:25" textFill="#c9c9c9" wrapText="true" />
+                        <Label fx:id="lblUsuario" layoutX="90.0" layoutY="17.0" prefHeight="27.0" prefWidth="192.0" style="-fx-alignment: center-left;" text="Hercules M." textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
-                  <Button layoutX="91.0" layoutY="545.0" mnemonicParsing="false" text="Deslogar-se">
-                     <styleClass>
-                        <String fx:value="side-button" />
-                        <String fx:value="last-side-button" />
-                     </styleClass>
-                  </Button>
+                  <Button layoutX="95.0" layoutY="569.0" mnemonicParsing="false" text="Deslogar-se" />
                </children>
             </Pane>
-            <Pane layoutX="274.0" prefHeight="48.0" prefWidth="854.0" style="-fx-background-color: #d4d4d4;" />
-            <AnchorPane fx:id="contentPane" layoutX="274.0" layoutY="48.0" prefHeight="546.0" prefWidth="854.0" styleClass="light-bg" />
+            <AnchorPane fx:id="contentPane" layoutX="282.0" prefHeight="610.0" prefWidth="844.0" style="-fx-background-color: #FFFFFF;" />
          </children>
     </AnchorPane>
   </children>
-   <stylesheets>
-      <URL value="@../recursos/css/tema.css" />
-      <URL value="@../recursos/css/backgrounds.css" />
-      <URL value="@../recursos/css/texts.css" />
-   </stylesheets>
 </VBox>

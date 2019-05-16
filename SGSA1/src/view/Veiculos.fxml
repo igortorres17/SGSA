@@ -10,20 +10,20 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="854.0" styleClass="default-bg" stylesheets="@../recursos/sgsa.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleDashboard">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="854.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleDashboard">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Veiculos">
          <styleClass>
             <String fx:value="title" />
             <String fx:value="black-font" />
          </styleClass></Label>
-      <TabPane layoutX="13.0" layoutY="52.0" prefHeight="480.0" prefWidth="829.0" style="-fx-border-style: solid; -fx-border-color: cacaca;" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="13.0" layoutY="52.0" prefHeight="551.0" prefWidth="824.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Pesquisar">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="827.0">
                      <children>
-                        <TableView layoutX="14.0" layoutY="69.0" prefHeight="367.0" prefWidth="804.0">
+                        <TableView layoutX="14.0" layoutY="69.0" prefHeight="318.0" prefWidth="798.0">
                           <columns>
                             <TableColumn prefWidth="41.0" text="ID" />
                             <TableColumn prefWidth="125.0" text="Placa" />
@@ -33,12 +33,10 @@
                               <TableColumn prefWidth="136.0" text="Proprietário" />
                           </columns>
                         </TableView>
-                        <Button layoutX="711.0" layoutY="17.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="84.0" text="Vá!">
-                           <styleClass>
-                              <String fx:value="btn" />
-                              <String fx:value="btn-blue" />
-                           </styleClass></Button>
-                        <TextField layoutX="520.0" layoutY="17.0" prefHeight="35.0" prefWidth="180.0" promptText="Pesquisar . . ." styleClass="light-input" />
+                        <TextField fx:id="txtPesquisar" layoutX="562.0" layoutY="30.0" prefHeight="27.0" prefWidth="252.0" promptText="Pesquisar . . ." styleClass="pesquisar-cinza-icon" />
+                        <Label layoutX="14.0" layoutY="16.0" styleClass="title1" text="Pesquisar" />
+                        <Button layoutX="733.0" layoutY="393.0" mnemonicParsing="false" prefWidth="77.0" text="Visualizar" />
+                        <Button layoutX="650.0" layoutY="393.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Editar" />
                      </children>
                   </AnchorPane>
             </content>
@@ -48,7 +46,12 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-            <Tab text="Modificar">
+            <Tab text="Editar">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab text="Visualizar">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>

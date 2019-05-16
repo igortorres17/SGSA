@@ -1,0 +1,263 @@
+*{
+    -fx-font-family: 'Segoe UI';
+    -cor-azul: #1e5da9;
+    -cor-bg-controle:#EEEEEE;
+    -cor-borda-controle:#999999;
+    -cor-borda-controle-hover: 	#555555;
+}
+
+Button{
+    -fx-background-color:#c1c1c1;
+    -fx-background-radius:0px;
+    -fx-background-insets:0;
+    -fx-border-color:#c1c1c1;
+    -fx-border-width:2px;
+    -fx-border-radius:0px;
+}
+
+Button:hover{
+    -fx-border-color:-cor-borda-controle-hover;
+    -fx-cursor:hand;
+}
+
+TextField{
+    -fx-background-color: -cor-bg-controle;
+    -fx-background-insets:0;
+    -fx-border-color:-cor-borda-controle;
+    -fx-border-width:2px;
+    /*preconfig para icones*/
+    -fx-background-size: 18px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 95%;
+}
+
+TextField:hover{
+    -fx-border-color:-cor-borda-controle-hover;
+}
+
+PasswordField{
+    -fx-background-color: -cor-bg-controle;
+    -fx-background-insets:0;
+    -fx-border-color:-cor-borda-controle;
+    -fx-border-width:2px;
+    /*preconfig para icones*/
+    -fx-background-size: 18px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 95%;
+}
+
+PasswordField:hover{
+    -fx-border-color:-cor-borda-controle-hover;
+}
+
+ComboBox{
+    -fx-background-color: -cor-bg-controle;
+    -fx-background-insets:0;
+    -fx-border-color:-cor-borda-controle;
+    -fx-border-width:2px;
+    -fx-border-style:solid;
+
+}
+
+ComboBox:hover{
+    -fx-border-color:-cor-borda-controle-hover; 
+}
+
+RadioButton .radio{
+    -fx-background-color:-cor-bg-controle;
+    -fx-background-insets:0;
+    -fx-border-width:1px;
+    -fx-border-radius:15px;
+    -fx-border-color:-cor-borda-controle;
+}
+
+RadioButton .radio:hover{
+    -fx-border-color:-cor-borda-controle-hover;
+}
+
+RadioButton .dot{
+    -fx-background-color: transparent;
+    -fx-background-insets:0;
+}
+
+
+
+.radio-button:selected > .radio > .dot {
+    -fx-background-color:-cor-borda-controle;
+}
+
+CheckBox .box{
+    -fx-background-color:-cor-bg-controle;
+    -fx-border-color:-cor-borda-controle;
+}
+
+CheckBox .box:hover{
+    -fx-border-color:-cor-borda-controle-hover;
+}
+
+TabPane .tab-header-background{
+    -fx-background-color: none;
+    -fx-border-style:solid;
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color:#e8e3dd;
+}
+
+TabPane .tab{
+    -fx-background-color:none;
+}
+
+TabPane .tab:selected{
+    -fx-background-color: none; 
+    -fx-border-width: 0px 0px 2px 0px;
+    -fx-border-color: -cor-azul;
+}
+
+TabPane .tab:selected .tab-label{
+    -fx-text-fill:-cor-azul;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator{
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+TableView{
+    -fx-background-color:#FFFFFF;
+    -fx-border-color:-cor-borda-controle;
+    -fx-padding:0px;
+    -fx-border-width:1px;
+}
+
+TableView .label{
+    -fx-alignment:center-left;
+}
+
+TableView .column-header{
+    -fx-background-color: #cccccc;
+    -fx-border-width:0;
+    -fx-pref-height:32px;
+}
+
+TableView .table-column{
+    -fx-border-width:0;
+}
+
+TableView .table-cell{
+
+}
+
+.table-row-cell{
+    -fx-background-color:transparent;
+    -fx-pref-height:32px;
+}
+
+.table-row-cell:odd{
+    -fx-background-color:#f2f2f2; 
+}
+
+.table-row-cell:selected {
+    -fx-background-color: -cor-borda-controle;
+}
+
+
+
+
+/* Custom  */
+.side-button{
+    -fx-background-color:none;
+    -fx-border-style:solid;
+    -fx-border-width:0px 0px 0px 0px;
+    -fx-text-fill:white;
+    -fx-alignment:center-left;
+    -fx-font-size:16px;
+    -fx-padding:0px 0px 0px 45px;
+    /*preconfig para os ícones*/
+    -fx-background-size: 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 15px;
+}
+
+.side-button:hover{
+    -fx-border-width:0px 0px 0px 5px;
+    -fx-border-color:white;
+    -fx-padding:0px 0px 0px 40px;
+    -fx-cursor:hand;
+}
+
+.side-button-active{
+    -fx-border-width:0px 0px 0px 5px;
+    -fx-border-color:white;
+    -fx-padding:0px 0px 0px 40px;
+}
+
+.icon-button{
+    -fx-background-color:transparent;
+    -fx-background-size: 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-border-width:0px
+}
+
+
+.icon-button:hover{
+    -fx-opacity:0.5;
+}
+
+.title1{
+    -fx-font-size:24px;
+}
+
+.title2{
+    -fx-font-size:18px;
+}
+
+/* Ícones */
+.dashboard-icon{
+    -fx-background-image: url("../icones/velocimentro.png");
+}
+
+.os-icon{
+    -fx-background-image: url("../icones/folha.png");
+}
+
+.veiculo-icon{
+    -fx-background-image: url("../icones/veiculo.png");
+}
+
+.cliente-icon{
+    -fx-background-image: url("../icones/cliente.png");
+}
+
+.usuario-icon{
+    
+    -fx-background-image: url("../icones/usuario.png");
+}
+
+.servico-icon{
+    -fx-background-image: url("../icones/servico.png");
+}
+
+.peca-icon{
+    -fx-background-image: url("../icones/peca.png");
+}
+
+.pesquisar-icon{
+    -fx-background-image: url("../icones/pesquisar.png");
+}
+
+.pesquisar-cinza-icon{
+    -fx-background-image: url("../icones/pesquisar_cinza.png");
+}
+
+.usuario-cinza-icon{
+    
+    -fx-background-image: url("../icones/usuario_cinza.png");
+}
+
+.senha-cinza-icon{ 
+    -fx-background-image: url("../icones/senha_cinza.png");
+}
+
+.excluir-cinza-icon{ 
+    -fx-background-image: url("../icones/excluir_cinza.png");
+}
