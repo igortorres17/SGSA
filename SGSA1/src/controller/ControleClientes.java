@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -120,9 +122,49 @@ public class ControleClientes extends ControleBase implements Initializable{
     @FXML
     private TabPane abas;
     
+    @FXML
+    private TextField txtEditNome;
+    
+    @FXML
+    private TextField txtEditCpf;
+    
+    @FXML
+    private TextField txtEditNasc;
+    
+    @FXML
+    private TextField txtEditEmail;
+            
+    @FXML
+    private TextField txtEditTel;
+                
+    @FXML
+    private TextField txtEditLogradouro;
+    
+    @FXML
+    private TextField txtEditNumero;
+    
+    @FXML
+    private TextField txtEditComplemento;
+    
+    @FXML
+    private TextField txtEditBairro;
+    
+    @FXML
+    private TextField txtEditCidade;
+    
+    @FXML
+    private ComboBox cbEditEstado;
+    
+    @FXML
+    private Button btnEditCancelar;
+    
+    @FXML
+    private Button btnEditSalvar;
+                
     // Custom
     ClienteDAO clienteDao;
     private final int LIMITE_CLIENTES = 10;
+    Cliente clienteEmEdicao = null;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {        
@@ -141,6 +183,7 @@ public class ControleClientes extends ControleBase implements Initializable{
             habilitarBotoesEditarVisualizar(true);
         
         cbEstado.getItems().addAll("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO", "Selecionar");
+        cbEditEstado.getItems().addAll("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO", "Selecionar");
     }
     
     private void configurarTableView(){
@@ -201,7 +244,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         new Thread(task).start();
     }
     
-    private void limparCampos(){
+    private void limparCamposCadastro(){
         txtNome.getStyleClass().remove("text-prompt-erro");
         txtNome.setText("");        
         
@@ -233,6 +276,38 @@ public class ControleClientes extends ControleBase implements Initializable{
         rbFisica.selectedProperty().set(true);
     }    
     
+    private void limparCamposEditar(){
+        txtEditNome.getStyleClass().remove("text-prompt-erro");
+        txtEditNome.setText("");        
+        
+        txtEditCpf.getStyleClass().remove("text-prompt-erro");
+        txtEditCpf.setText("");        
+        
+        txtEditNasc.getStyleClass().remove("text-prompt-erro");
+        txtEditNasc.setText("");        
+        
+        txtEditEmail.getStyleClass().remove("text-prompt-erro");
+        txtEditEmail.setText("");
+        
+        txtEditTel.getStyleClass().remove("text-prompt-erro");
+        txtEditTel.setText("");        
+        
+        txtEditLogradouro.getStyleClass().remove("text-prompt-erro");
+        txtEditLogradouro.setText("");        
+        
+        txtEditNumero.setText("");
+
+        txtEditBairro.getStyleClass().remove("text-prompt-erro");
+        txtEditBairro.setText("");        
+        
+        txtEditCidade.getStyleClass().remove("text-prompt-erro");
+        txtEditCidade.setText("");
+        
+        
+        cbEditEstado.getSelectionModel().selectLast();
+    }    
+    
+
     private void visualizarInfo(Cliente cliente){
         lblNasc.setText(cliente.getData_nascimento());
         
@@ -254,7 +329,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         }
     }
     
-    private boolean validarCampos(){
+    private boolean validarCamposCadastro(){
         if(txtNome.getText().isEmpty()){
             txtNome.getStyleClass().add("text-prompt-erro");
             new Alert(AlertType.ERROR, "Campo nome é obrigatório!", ButtonType.OK).showAndWait();
@@ -314,6 +389,69 @@ public class ControleClientes extends ControleBase implements Initializable{
         
         return true;
     }
+    
+    private boolean validarCamposEditar(){
+        if(txtEditNome.getText().isEmpty()){
+            txtEditNome.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo nome é obrigatório!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtEditCpf.getText().length() < 11){
+            new Alert(AlertType.ERROR, "Campo CPF/CNPJ deve conter pelo menos 11 dígitos", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtEditNasc.getText().isEmpty()){
+            txtEditNasc.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Data de Nascimento é obrigatório", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtEditEmail.getText().isEmpty()){
+            txtEditEmail.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Email é obrigatório", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(!txtEditEmail.getText().contains("@")){
+            new Alert(AlertType.ERROR, "Campo Email deve conter pelo menos um '@'", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtEditTel.getText().isEmpty()){
+            txtEditTel.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Telefone é obrigatório", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtEditLogradouro.getText().isEmpty()){
+            txtEditLogradouro.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Logradouro é obrigatório", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtEditBairro.getText().isEmpty()){
+            txtEditBairro.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Bairro é obrigatório", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtEditCidade.getText().isEmpty()){
+            txtEditCidade.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Cidade é obrigatório", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(cbEditEstado.getSelectionModel().getSelectedItem() == null || cbEstado.getSelectionModel().getSelectedItem() == cbEstado.getItems().get(cbEstado.getItems().size()-1)){
+            new Alert(AlertType.ERROR, "Selecione uma Unidade Federativa", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        return true;
+    }
+
+    
     /*
     * Tratamento de eventos
     */
@@ -345,13 +483,13 @@ public class ControleClientes extends ControleBase implements Initializable{
         alert.showAndWait();
         
         if(alert.getResult() == ButtonType.YES){
-            limparCampos();
+            limparCamposCadastro();
         }
     }
     
     @FXML
     protected void btnCadastrar_pressed(ActionEvent event){
-        if(!validarCampos())
+        if(!validarCamposCadastro())
                 return;
         Cliente pessoa;
         if(rbFisica.isSelected()){
@@ -385,7 +523,7 @@ public class ControleClientes extends ControleBase implements Initializable{
                 buscarCliente("");
             }
             
-            limparCampos();
+            limparCamposCadastro();
         } catch (SQLException e) {
             new Alert(AlertType.ERROR, "Ocorreu um erro ao inserir o registro. Se o problema persistir, contate o suporte!", ButtonType.OK).showAndWait();
             System.out.println("Erro ao cadastrar cliente: " + e.getMessage());
@@ -406,6 +544,38 @@ public class ControleClientes extends ControleBase implements Initializable{
     }
     
     @FXML
+    protected void btnEditar_pressed(ActionEvent event){
+        clienteEmEdicao = (Cliente) tabelaClientes.getSelectionModel().getSelectedItem();
+        if(clienteEmEdicao == null)
+            return;
+        
+        txtEditNasc.setText(clienteEmEdicao.getData_nascimento());
+        txtEditEmail.setText(clienteEmEdicao.getEmail());
+        txtEditTel.setText(clienteEmEdicao.getTelefone());
+        txtEditLogradouro.setText(clienteEmEdicao.getLogradouro());
+        txtEditNumero.setText(""+clienteEmEdicao.getNumero());
+        txtEditComplemento.setText(clienteEmEdicao.getComplemento());
+        txtEditBairro.setText(clienteEmEdicao.getBairro());
+        txtEditCidade.setText(clienteEmEdicao.getMunicipio());
+        cbEditEstado.getSelectionModel().select(clienteEmEdicao.getEstado());
+        
+        if(clienteEmEdicao instanceof PessoaFisica){
+            PessoaFisica cli = (PessoaFisica) clienteEmEdicao;
+            txtEditNome.setText(cli.getNome());
+            txtEditCpf.setText(cli.getCpf());
+        }else{
+            PessoaJuridica cli = (PessoaJuridica) clienteEmEdicao;
+            txtEditNome.setText(cli.getRazaoSocial());
+            txtEditCpf.setText(cli.getCnpj()); 
+        }
+        
+        abas.getSelectionModel().select(2);
+        abas.getTabs().get(0).setDisable(true);
+        abas.getTabs().get(1).setDisable(true);
+        abas.getTabs().get(2).setDisable(false);
+    }
+    
+    @FXML
     protected void vis_btnVoltar_pressed(ActionEvent event){        
         abas.getTabs().get(0).setDisable(false);
         abas.getTabs().get(1).setDisable(false);
@@ -414,4 +584,52 @@ public class ControleClientes extends ControleBase implements Initializable{
         abas.getSelectionModel().selectFirst();
     }
     
+    @FXML
+    protected void btnEditCancelar_pressed(ActionEvent event){
+        limparCamposEditar();
+        abas.getSelectionModel().selectFirst();
+        abas.getTabs().get(2).setDisable(true);
+        abas.getTabs().get(0).setDisable(false);
+        abas.getTabs().get(1).setDisable(false);
+    }    
+    
+    @FXML
+    protected void btnEditSalvar_pressed(ActionEvent event){
+        if(!validarCamposEditar())
+            return;
+        
+        clienteEmEdicao.setData_nascimento(txtEditNasc.getText());
+        clienteEmEdicao.setEmail(txtEditEmail.getText());
+        clienteEmEdicao.setTelefone(txtEditTel.getText());
+        clienteEmEdicao.setLogradouro(txtEditLogradouro.getText());
+        clienteEmEdicao.setNumero(Integer.parseInt(txtEditNumero.getText()));
+        clienteEmEdicao.setComplemento(txtEditComplemento.getText());
+        clienteEmEdicao.setBairro(txtEditBairro.getText());
+        clienteEmEdicao.setMunicipio(txtEditCidade.getText());   
+        clienteEmEdicao.setEstado(cbEditEstado.getSelectionModel().getSelectedItem().toString());
+        
+        if(clienteEmEdicao instanceof PessoaFisica){
+            PessoaFisica cli = (PessoaFisica) clienteEmEdicao;
+            cli.setNome(txtEditNome.getText());
+            cli.setCpf(txtEditCpf.getText());            
+        }else{
+            PessoaJuridica cli = (PessoaJuridica) clienteEmEdicao;
+            cli.setRazaoSocial(txtEditNome.getText());
+            cli.setCnpj(txtEditCpf.getText());           
+        }
+        
+        ClienteDAO clienteDao = new ClienteDAO();
+        try {
+            clienteDao.alterar(clienteEmEdicao);
+            new Alert(AlertType.INFORMATION, "Alterações salva!", ButtonType.OK).show();
+            abas.getSelectionModel().getSelectedItem().setDisable(true);
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getSelectionModel().selectFirst();
+            limparCamposEditar();
+        } catch (SQLException ex) {
+            new Alert(AlertType.ERROR, "Erro ao salvar cliente. Contate o suporte!", ButtonType.OK).show();
+            System.out.println("Falha ao alterar cliente: " + ex.getMessage());
+        }
+    }
 }
