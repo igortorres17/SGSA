@@ -95,7 +95,7 @@
                         <Button fx:id="vis_btnModificar" layoutX="227.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Modificar" />
                         <Button fx:id="vis_btnImprimir" disable="true" layoutX="418.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Imprimir" />
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Visualizar" />
-                        <Label layoutX="12.0" layoutY="68.0" styleClass="title2" text="Informações Pessoais" />
+                        <Label layoutX="12.0" layoutY="68.0" styleClass="title2" text="Informações" />
                         <Label layoutX="613.0" layoutY="68.0" styleClass="title2" text="Contato" />
                         <Label layoutX="327.0" layoutY="68.0" styleClass="title2" text="Endereço" />
                         <Label layoutX="12.0" layoutY="107.0" text="Nome:" />

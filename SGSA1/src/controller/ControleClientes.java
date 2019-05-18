@@ -254,62 +254,65 @@ public class ControleClientes extends ControleBase implements Initializable{
         }
     }
     
-    private void validarCampos(){
+    private boolean validarCampos(){
         if(txtNome.getText().isEmpty()){
             txtNome.getStyleClass().add("text-prompt-erro");
             new Alert(AlertType.ERROR, "Campo nome é obrigatório!", ButtonType.OK).showAndWait();
-            return;
+            return false;
         }
         
         if(txtCpf.getText().length() < 11){
             new Alert(AlertType.ERROR, "Campo CPF/CNPJ deve conter pelo menos 11 dígitos", ButtonType.OK).showAndWait();
-            return;
+            return false;
         }
         
         if(txtNascimento.getText().isEmpty()){
             txtNascimento.getStyleClass().add("text-prompt-erro");
             new Alert(AlertType.ERROR, "Campo Data de Nascimento é obrigatório", ButtonType.OK).showAndWait();
-            return;
+            return false;
         }
         
         if(txtEmail.getText().isEmpty()){
             txtEmail.getStyleClass().add("text-prompt-erro");
             new Alert(AlertType.ERROR, "Campo Email é obrigatório", ButtonType.OK).showAndWait();
-            return;
+            return false;
         }
         
         if(!txtEmail.getText().contains("@")){
             new Alert(AlertType.ERROR, "Campo Email deve conter pelo menos um '@'", ButtonType.OK).showAndWait();
-            return;
+            return false;
         }
         
         if(txtTelefone.getText().isEmpty()){
             txtTelefone.getStyleClass().add("text-prompt-erro");
             new Alert(AlertType.ERROR, "Campo Telefone é obrigatório", ButtonType.OK).showAndWait();
-            return;
+            return false;
         }
         
         if(txtLogradouro.getText().isEmpty()){
             txtLogradouro.getStyleClass().add("text-prompt-erro");
             new Alert(AlertType.ERROR, "Campo Logradouro é obrigatório", ButtonType.OK).showAndWait();
-            return;
+            return false;
         }
         
         if(txtBairro.getText().isEmpty()){
             txtBairro.getStyleClass().add("text-prompt-erro");
             new Alert(AlertType.ERROR, "Campo Bairro é obrigatório", ButtonType.OK).showAndWait();
-            return;
+            return false;
         }
         
         if(txtCidade.getText().isEmpty()){
             txtCidade.getStyleClass().add("text-prompt-erro");
             new Alert(AlertType.ERROR, "Campo Cidade é obrigatório", ButtonType.OK).showAndWait();
-            return;
+            return false;
         }
         
         if(cbEstado.getSelectionModel().getSelectedItem() == null || cbEstado.getSelectionModel().getSelectedItem() == cbEstado.getItems().get(cbEstado.getItems().size()-1)){
             new Alert(AlertType.ERROR, "Selecione uma Unidade Federativa", ButtonType.OK).showAndWait();
+            return false;
         }
+        
+        return true;
     }
     /*
     * Tratamento de eventos
@@ -348,7 +351,46 @@ public class ControleClientes extends ControleBase implements Initializable{
     
     @FXML
     protected void btnCadastrar_pressed(ActionEvent event){
-        validarCampos();
+        if(!validarCampos())
+                return;
+        Cliente pessoa;
+        if(rbFisica.isSelected()){
+            pessoa = new PessoaFisica();
+            PessoaFisica pf = (PessoaFisica) pessoa;
+            pf.setNome(txtNome.getText());
+            pf.setCpf(txtCpf.getText());
+        }else{
+            pessoa = new PessoaJuridica();
+            PessoaJuridica pj = (PessoaJuridica) pessoa;
+            pj.setCnpj(txtCpf.getText());
+            pj.setRazaoSocial(txtNome.getText());
+        }
+        
+        pessoa.setData_nascimento(txtNascimento.getText());
+        pessoa.setEmail(txtEmail.getText());
+        pessoa.setTelefone(txtTelefone.getText());
+        pessoa.setLogradouro(txtLogradouro.getText());
+        pessoa.setNumero(Integer.parseInt(txtNumero.getText()));
+        pessoa.setComplemento(txtComplemento.getText());
+        pessoa.setBairro(txtBairro.getText());
+        pessoa.setMunicipio(txtCidade.getText());
+        pessoa.setEstado(cbEstado.getSelectionModel().getSelectedItem().toString());
+        try {
+            ClienteDAO clienteDao = new ClienteDAO();
+            clienteDao.inserir(pessoa);
+            Alert alert = new Alert(AlertType.INFORMATION, "Cliente cadastrado com sucesso. Deseja fazer outra cadastro?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+            if(alert.getResult() == ButtonType.NO){
+                abas.getSelectionModel().selectFirst();
+                buscarCliente("");
+            }
+            
+            limparCampos();
+        } catch (SQLException e) {
+            new Alert(AlertType.ERROR, "Ocorreu um erro ao inserir o registro. Se o problema persistir, contate o suporte!", ButtonType.OK).showAndWait();
+            System.out.println("Erro ao cadastrar cliente: " + e.getMessage());
+        }
+        
     }
     
     @FXML
