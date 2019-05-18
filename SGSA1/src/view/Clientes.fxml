@@ -47,7 +47,7 @@
                         <TextField fx:id="txtNome" layoutX="14.0" layoutY="91.0" prefWidth="189.0" promptText="Nome ou Razão Social" styleClass="light-input" />
                         <Label layoutX="15.0" layoutY="135.0" text="CPF/CNPJ" />
                         <TextField fx:id="txtCpf" layoutX="15.0" layoutY="153.0" prefWidth="189.0" promptText="CPF ou CNPJ" styleClass="light-input" />
-                        <Label layoutX="16.0" layoutY="265.0" text="Email" />
+                        <Label layoutX="16.0" layoutY="265.0" text="E-mail" />
                         <TextField fx:id="txtEmail" layoutX="16.0" layoutY="283.0" prefWidth="189.0" promptText="nome@provedor.com" styleClass="light-input" />
                         <Label layoutX="15.0" layoutY="328.0" text="Telefone" />
                         <TextField fx:id="txtTelefone" layoutX="15.0" layoutY="346.0" prefWidth="189.0" promptText="(XX) XXXXX - XXXX" styleClass="light-input" />
@@ -64,7 +64,7 @@
                         <Label layoutX="496.0" layoutY="265.0" text="UF" />
                         <ComboBox fx:id="cbEstado" layoutX="492.0" layoutY="283.0" prefWidth="77.0" promptText="Selecionar" />
                         <Label layoutX="16.0" layoutY="202.0" text="Data de Nascimento" />
-                        <TextField fx:id="txtNascimento" layoutX="16.0" layoutY="220.0" prefWidth="189.0" promptText="DD/MM/AA" styleClass="light-input" />
+                        <TextField fx:id="txtNascimento" layoutX="16.0" layoutY="220.0" prefWidth="189.0" promptText="DD/MM/AAAA" styleClass="light-input" />
                         <Button fx:id="btnCadastrar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnCadastrar_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Cadastrar" />
                         <Button fx:id="btnLimpar" layoutX="548.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnLimpar_pressed" prefHeight="0.0" prefWidth="106.0" styleClass="orange-button" text="Limpar" />
                         <RadioButton fx:id="rbFisica" layoutX="277.0" layoutY="353.0" mnemonicParsing="false" selected="true" text="Pessoa Física">
@@ -84,6 +84,30 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Editar" />
+                        <Label layoutX="14.0" layoutY="69.0" text="Nome" />
+                        <TextField fx:id="txtEditNome" layoutX="14.0" layoutY="86.0" prefWidth="189.0" promptText="Nome ou Razão Social" />
+                        <Label layoutX="14.0" layoutY="128.0" text="CPF/ CNPJ" />
+                        <TextField fx:id="txtEditCpf" layoutX="14.0" layoutY="145.0" prefWidth="189.0" promptText="CPF ou CNPJ" />
+                        <Label layoutX="14.0" layoutY="191.0" text="Data de Nascimento" />
+                        <TextField fx:id="txtEditNasc" layoutX="14.0" layoutY="208.0" prefWidth="189.0" promptText="DD/MM/AAAA" />
+                        <Label layoutX="14.0" layoutY="253.0" text="E-mail" />
+                        <TextField fx:id="txtEditEmail" layoutX="14.0" layoutY="270.0" prefWidth="189.0" promptText="nome@provedor.com" />
+                        <Label layoutX="14.0" layoutY="311.0" text="Telefone" />
+                        <TextField fx:id="txtEditTel" layoutX="14.0" layoutY="328.0" prefWidth="189.0" promptText="(XX) X XXXX-XXXX" />
+                        <Label layoutX="266.0" layoutY="69.0" text="Logradouro" />
+                        <TextField fx:id="txtEditLogradouro" layoutX="266.0" layoutY="86.0" prefWidth="189.0" promptText="Rua, avenida e etc..." />
+                        <Label layoutX="481.0" layoutY="69.0" text="Número" />
+                        <TextField fx:id="txtEditNumero" layoutX="481.0" layoutY="86.0" prefWidth="70.0" promptText="Ex: 65" />
+                        <Label layoutX="266.0" layoutY="128.0" text="Complemento" />
+                        <TextField fx:id="txtEditComplemento" layoutX="266.0" layoutY="145.0" prefWidth="189.0" promptText="Casa, Apto..." />
+                        <Label layoutX="266.0" layoutY="191.0" text="Bairro" />
+                        <TextField fx:id="txtEditBairro" layoutX="266.0" layoutY="208.0" prefWidth="189.0" promptText="Bairro, quadra" />
+                        <Label layoutX="266.0" layoutY="253.0" text="Cidade" />
+                        <TextField fx:id="txtEditCidade" layoutX="266.0" layoutY="270.0" prefWidth="189.0" promptText="Município de moradia" />
+                        <ComboBox fx:id="cbEditEstado" layoutX="478.0" layoutY="270.0" prefWidth="77.0" promptText="Selecionar" />
+                        <Label layoutX="481.0" layoutY="252.0" text="UF" />
+                        <Button layoutX="649.0" layoutY="400.0" mnemonicParsing="false" prefWidth="110.0" text="Salvar" />
+                        <Button layoutX="517.0" layoutY="400.0" mnemonicParsing="false" prefWidth="110.0" text="Cancelar" />
                      </children></AnchorPane>
                </content>
             </Tab>

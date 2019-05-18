@@ -20,7 +20,7 @@
                </font>
             </Label>
             <Label layoutY="238.0" prefHeight="15.0" prefWidth="322.0" style="-fx-alignment: center;" text="Sistema de Ger. de Serviços Automotivos" textFill="WHITE" />
-            <Label layoutX="-1.0" layoutY="415.0" prefHeight="15.0" prefWidth="322.0" style="-fx-alignment: center;" text="Caregando" textFill="WHITE" />
+            <Label layoutX="-1.0" layoutY="415.0" prefHeight="15.0" prefWidth="322.0" style="-fx-alignment: center;" text="Carregando" textFill="WHITE" />
             <Label layoutY="430.0" prefHeight="15.0" prefWidth="322.0" style="-fx-alignment: center;" text=". . ." textFill="WHITE" />
          </children>
       </AnchorPane>
