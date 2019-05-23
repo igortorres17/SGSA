@@ -443,7 +443,7 @@ public class ControleClientes extends ControleBase implements Initializable{
             return false;
         }
         
-        if(cbEditEstado.getSelectionModel().getSelectedItem() == null || cbEstado.getSelectionModel().getSelectedItem() == cbEstado.getItems().get(cbEstado.getItems().size()-1)){
+        if(cbEditEstado.getSelectionModel().getSelectedItem() == null || cbEditEstado.getSelectionModel().getSelectedItem() == cbEditEstado.getItems().get(cbEditEstado.getItems().size()-1)){
             new Alert(AlertType.ERROR, "Selecione uma Unidade Federativa", ButtonType.OK).showAndWait();
             return false;
         }
