@@ -45,10 +45,11 @@ public class ServicoDAO extends BaseDAO{
         return null;
     }
     
-    public ArrayList<Servico> buscar(String nome) throws SQLException{
-        String sqlQuery = "SELECT * FROM " + tabela + " WHERE nome like ?";
+    public ArrayList<Servico> buscar(String nome, int limite) throws SQLException{
+        String sqlQuery = "SELECT * FROM " + tabela + " WHERE nome like ? LIMIT ?";
         PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
         instrucaoPreparada.setString(1, "%"+nome+"%");
+        instrucaoPreparada.setInt(2, limite);
         ResultSet resultado = instrucaoPreparada.executeQuery();
         
         ArrayList<Servico> servicos = new ArrayList();
