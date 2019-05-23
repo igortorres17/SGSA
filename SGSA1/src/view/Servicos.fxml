@@ -1,10 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="854.0" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleDashboard">
    <children>
       <Label layoutX="14.0" layoutY="14.0" styleClass="title2" text="Serviços" />
+      <TabPane fx:id="abas" layoutX="24.0" layoutY="56.0" prefHeight="551.0" prefWidth="824.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Pesquisar">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="518.0" prefWidth="806.0">
+                     <children>
+                        <TableView fx:id="tabelaServicos" layoutX="14.0" layoutY="69.0" prefHeight="318.0" prefWidth="798.0">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="ID" />
+                              <TableColumn prefWidth="398.0" text="Nome" />
+                              <TableColumn prefWidth="184.0" text="Código Serial" />
+                              <TableColumn prefWidth="139.0" text="Preço" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="txtPesquisar" layoutX="558.0" layoutY="30.0" onKeyPressed="#txtPesquisar_keypressed" prefHeight="27.0" prefWidth="252.0" promptText="Pesquisar . . ." styleClass="pesquisar-cinza-icon" />
+                        <Button fx:id="btnEditar" disable="true" layoutX="635.0" layoutY="392.0" mnemonicParsing="false" onAction="#btnEditar_pressed" prefHeight="25.0" prefWidth="77.0" styleClass="blue-button" text="Editar" />
+                        <Button fx:id="btnVisualizar" disable="true" layoutX="722.0" layoutY="392.0" mnemonicParsing="false" onAction="#btnVisualizar_pressed" prefHeight="25.0" prefWidth="77.0" styleClass="blue-button" text="Visualizar" />
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Pesquisar" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Cadastrar">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="73.0" text="Nome" />
+                        <TextField fx:id="txtNome" layoutX="14.0" layoutY="91.0" prefHeight="29.0" prefWidth="250.0" promptText="Anel de vedação" styleClass="light-input" />
+                        <Label layoutX="15.0" layoutY="135.0" text="Código Serial" />
+                        <TextField fx:id="txtSerial" layoutX="15.0" layoutY="153.0" prefHeight="29.0" prefWidth="250.0" promptText="SN XXXXXXXXXX" styleClass="light-input" />
+                        <Label layoutX="16.0" layoutY="202.0" text="Preço" />
+                        <TextField fx:id="txtPreco" layoutX="16.0" layoutY="220.0" prefWidth="250.0" promptText="150,00" styleClass="light-input" />
+                        <Button fx:id="btnCadastrar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnCadastrar_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Cadastrar" />
+                        <Button fx:id="btnLimpar" layoutX="548.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnLimpar_pressed" prefHeight="0.0" prefWidth="106.0" styleClass="orange-button" text="Limpar" />
+                        <Label layoutX="16.0" layoutY="14.0" styleClass="title1" text="Cadastrar" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab disable="true" text="Editar">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Editar" />
+                        <Label layoutX="14.0" layoutY="73.0" text="Nome" />
+                        <TextField fx:id="txtEditNome" layoutX="14.0" layoutY="90.0" prefWidth="250.0" promptText="Nome" />
+                        <Label layoutX="14.0" layoutY="132.0" text="Código Serial" />
+                        <TextField fx:id="txtEditSerial" layoutX="14.0" layoutY="149.0" prefWidth="250.0" promptText="SN XXXXXXXXXX" />
+                        <Label layoutX="14.0" layoutY="195.0" text="Preço" />
+                        <TextField fx:id="txtEditPreco" layoutX="14.0" layoutY="212.0" prefWidth="250.0" promptText="150,00" />
+                        <Button fx:id="btnEditSalvar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditSalvar_pressed" prefWidth="110.0" text="Salvar" />
+                        <Button fx:id="btnEditCancelar" layoutX="541.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditCancelar_pressed" prefWidth="110.0" text="Cancelar" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab disable="true" text="Visualizar">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnVisVoltar" layoutX="613.0" layoutY="385.0" mnemonicParsing="false" onAction="#vis_btnVoltar_pressed" prefHeight="25.0" prefWidth="180.0" text="Voltar" />
+                        <Button fx:id="btnVisModificar" layoutX="227.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Modificar" />
+                        <Button fx:id="btnVisImprimir" disable="true" layoutX="418.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Imprimir" />
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Visualizar" />
+                        <Label layoutX="12.0" layoutY="68.0" styleClass="title2" text="Informações" />
+                        <Label layoutX="12.0" layoutY="107.0" text="Nome:" />
+                        <Label layoutX="12.0" layoutY="129.0" text="Serial:" />
+                        <Label layoutX="12.0" layoutY="150.0" text="Preço:" />
+                        <Label fx:id="lblNome" layoutX="85.0" layoutY="107.0" text="Biela" />
+                        <Label fx:id="lblSerial" layoutX="85.0" layoutY="129.0" text="SN XXXXXXXXXX" />
+                        <Label fx:id="lblPreco" layoutX="85.0" layoutY="150.0" text="150,00" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
