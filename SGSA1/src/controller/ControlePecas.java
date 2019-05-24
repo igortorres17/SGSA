@@ -1,6 +1,5 @@
 package controller;
 
-import com.mysql.cj.result.ValueFactory;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,7 +9,10 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -119,6 +121,54 @@ public class ControlePecas implements Initializable {
         }
     }
     
+    private boolean validarCamposCadastro(){
+        if(txtNome.getText().isEmpty()){
+            new Alert(AlertType.ERROR, "Campo nome é obrigatório!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtPreco.getText().isEmpty()){
+            new Alert(AlertType.ERROR, "Campo preço é obrigatório!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        try{
+            Float.parseFloat(txtPreco.getText());
+        }catch(NumberFormatException ex){
+            new Alert(AlertType.ERROR, "Campo preço tem que ser numérico", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        return true;
+    }
+    
+        private boolean validarCamposEditar(){
+        if(txtEditNome.getText().isEmpty()){
+            new Alert(AlertType.ERROR, "Campo nome é obrigatório!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtEditPreco.getText().isEmpty()){
+            new Alert(AlertType.ERROR, "Campo preço é obrigatório!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        try{
+            Float.parseFloat(txtEditPreco.getText());
+        }catch(NumberFormatException ex){
+            new Alert(AlertType.ERROR, "Campo preço tem que ser numérico", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private void limparCamposCadastro(){
+        txtNome.setText("");
+        txtCodigo.setText("");
+        txtPreco.setText("");
+    }
+        
     /**
      * Tratamento de Eventos
      */
@@ -145,13 +195,27 @@ public class ControlePecas implements Initializable {
         abas.getTabs().get(0).setDisable(true);
         abas.getTabs().get(1).setDisable(true);
     }
-
+    
     @FXML
     private void btnCadastrar_pressed(ActionEvent event) {
+        if(!validarCamposCadastro())
+            return;
+        Peca peca = new Peca(txtNome.getText(), txtCodigo.getText(), Float.parseFloat(txtPreco.getText()));
+        PecaDAO pecaDAO = new PecaDAO();
+        try {
+            pecaDAO.inserir(peca);
+            new Alert(AlertType.INFORMATION, "Cadastro realizado com sucesso!", ButtonType.OK).showAndWait();
+            limparCamposCadastro();
+            abas.getSelectionModel().selectFirst();
+        } catch (SQLException ex) {
+            new Alert(AlertType.ERROR, "Erro ao efetuar cadastro. Contate o suporte", ButtonType.OK).showAndWait();
+            System.out.println("Erro ao cadastrar peca: " + ex.getMessage());
+        }
     }
 
     @FXML
     private void btnLimpar_pressed(ActionEvent event) {
+        limparCamposCadastro();
     }
 
     @FXML
