@@ -65,7 +65,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Button layoutX="95.0" layoutY="569.0" mnemonicParsing="false" text="Deslogar-se" />
+                  <Button fx:id="btnDeslogar" layoutX="95.0" layoutY="569.0" mnemonicParsing="false" onAction="#btnDeslogar_pressed" text="Deslogar-se" />
                </children>
             </Pane>
             <AnchorPane fx:id="contentPane" layoutX="282.0" prefHeight="610.0" prefWidth="844.0" style="-fx-background-color: #FFFFFF;" />

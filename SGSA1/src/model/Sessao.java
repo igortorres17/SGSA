@@ -18,7 +18,7 @@ public class Sessao {
         return usuario;
     }
     
-    public void logoff(){
+    public static void logoff(){
         usuario = null;
     }
     

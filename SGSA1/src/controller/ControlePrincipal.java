@@ -50,6 +50,10 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     
     @FXML
     private Label lblLogadoDesde;
+    
+    @FXML
+    private Button bbtnDeslogar;
+    
     // Custom
     AnchorPane paneLoading;
     
@@ -145,5 +149,12 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     protected void btnPecas_pressed(ActionEvent event){
         abrirSubForm("/view/Pecas.fxml");
         selecionarBtn(btnPecas);
+    }
+    
+    @FXML
+    private void btnDeslogar_pressed(ActionEvent event){
+        Sessao.logoff();
+        abrirJanela("/view/Login.fxml");
+        getStage().close();
     }
 }
