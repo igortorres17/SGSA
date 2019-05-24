@@ -18,12 +18,12 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="518.0" prefWidth="806.0">
                      <children>
-                        <TableView fx:id="tabelaServicos" layoutX="14.0" layoutY="69.0" prefHeight="318.0" prefWidth="798.0">
+                        <TableView fx:id="tabelaPecas" layoutX="14.0" layoutY="69.0" prefHeight="318.0" prefWidth="798.0">
                            <columns>
                               <TableColumn prefWidth="45.0" text="ID" />
                               <TableColumn prefWidth="361.0" text="Nome" />
                               <TableColumn prefWidth="260.0" text="Número Serial" />
-                              <TableColumn prefWidth="131.0" text="Preço" />
+                              <TableColumn prefWidth="130.0" text="Preço" />
                            </columns>
                         </TableView>
                         <TextField fx:id="txtPesquisar" layoutX="558.0" layoutY="30.0" onKeyPressed="#txtPesquisar_keypressed" prefHeight="27.0" prefWidth="252.0" promptText="Pesquisar . . ." styleClass="pesquisar-cinza-icon" />

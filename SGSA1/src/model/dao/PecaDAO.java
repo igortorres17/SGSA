@@ -47,12 +47,13 @@ public class PecaDAO extends BaseDAO {
     return null;   
    }
    
-   public ArrayList<Peca> buscar(String nome) throws SQLException {
+   public ArrayList<Peca> buscar(String nome, int limite) throws SQLException {
        ArrayList<Peca> pecas = new ArrayList();
        
-       String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome like ?";
+       String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome like ? LIMIT ?";
        PreparedStatement instrucaoPreparada = conexao.prepareStatement(selectSqlQuery);
        instrucaoPreparada.setString(1, "%"+nome+"%");
+       instrucaoPreparada.setInt(2, limite);
        ResultSet resultado = instrucaoPreparada.executeQuery();
        
        while(resultado.next())
