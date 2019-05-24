@@ -4,6 +4,7 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -48,6 +49,25 @@ public abstract class ControleBase {
         stage.initStyle(style);
         stage.show();
         return stage;
+    }
+    
+    protected ControleBase abrirModal(String caminho_fxml){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho_fxml));
+        try {
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.initOwner(getStage());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            ControleBase controller = (ControleBase) loader.getController();
+            controller.setStage(stage);
+            return controller;
+        } catch (IOException ex) {
+            System.out.println("Falha ao abrir modal: " + ex.getMessage());
+            return null;
+        }  
     }
     
     public void setStage(Stage stage){
