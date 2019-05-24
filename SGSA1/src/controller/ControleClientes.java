@@ -163,7 +163,7 @@ public class ControleClientes extends ControleBase implements Initializable{
                 
     // Custom
     ClienteDAO clienteDao;
-    private final int LIMITE_CLIENTES = 10;
+    private final int LIMITE_CLIENTES = 8;
     Cliente clienteEmEdicao = null;
 
     @Override

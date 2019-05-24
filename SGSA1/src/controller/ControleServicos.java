@@ -76,7 +76,7 @@ public class ControleServicos extends ControleBase implements Initializable {
     private Label lblPreco;
     
     // CUSTOM
-    private final int LIMITE_REGISTRO = 10;
+    private final int LIMITE_REGISTRO = 8;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
