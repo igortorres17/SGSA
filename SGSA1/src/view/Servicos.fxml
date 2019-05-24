@@ -38,8 +38,8 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Label layoutX="14.0" layoutY="73.0" text="Nome" />
-                        <TextField fx:id="txtNome" layoutX="14.0" layoutY="91.0" prefHeight="29.0" prefWidth="250.0" promptText="Anel de vedação" styleClass="light-input" />
-                        <Label layoutX="15.0" layoutY="135.0" text="Código Serial" />
+                        <TextField fx:id="txtNome" layoutX="14.0" layoutY="91.0" prefHeight="29.0" prefWidth="250.0" promptText="Ex: Troca de óleo" styleClass="light-input" />
+                        <Label layoutX="15.0" layoutY="135.0" text="Preço" />
                         <TextField fx:id="txtPreco" layoutX="16.0" layoutY="152.0" prefWidth="250.0" promptText="150,00" styleClass="light-input" />
                         <Button fx:id="btnCadastrar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnCadastrar_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Cadastrar" />
                         <Button fx:id="btnLimpar" layoutX="548.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnLimpar_pressed" prefHeight="0.0" prefWidth="106.0" styleClass="orange-button" text="Limpar" />
@@ -59,6 +59,7 @@
                         <TextField fx:id="txtEditPreco" layoutX="14.0" layoutY="149.0" prefWidth="250.0" promptText="150,00" />
                         <Button fx:id="btnEditSalvar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditSalvar_pressed" prefWidth="110.0" text="Salvar" />
                         <Button fx:id="btnEditCancelar" layoutX="541.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditCancelar_pressed" prefWidth="110.0" text="Cancelar" />
+                        <Button fx:id="btnEditExcluir" layoutX="412.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditExcluir_pressed" prefWidth="110.0" text="Excluir Reg." />
                      </children>
                   </AnchorPane>
                </content>
@@ -68,8 +69,6 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btnVisVoltar" layoutX="613.0" layoutY="385.0" mnemonicParsing="false" onAction="#btnVisVoltar_pressed" prefHeight="25.0" prefWidth="180.0" text="Voltar" />
-                        <Button fx:id="btnVisModificar" layoutX="227.0" layoutY="385.0" mnemonicParsing="false" onAction="#btnVisModificar_pressed" prefHeight="25.0" prefWidth="180.0" text="Modificar" />
-                        <Button fx:id="btnVisImprimir" disable="true" layoutX="418.0" layoutY="385.0" mnemonicParsing="false" onAction="#btnVisImprimir_pressed" prefHeight="25.0" prefWidth="180.0" text="Imprimir" />
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Visualizar" />
                         <Label layoutX="12.0" layoutY="68.0" styleClass="title2" text="Informações" />
                         <Label layoutX="12.0" layoutY="107.0" text="Nome:" />

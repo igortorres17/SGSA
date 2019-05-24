@@ -14,7 +14,10 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -59,6 +62,8 @@ public class ControleServicos extends ControleBase implements Initializable {
     private Button btnEditSalvar;
     @FXML
     private Button btnEditCancelar;
+    @FXML
+    private Button btnEditExcluir;
     @FXML
     private Button btnVisVoltar;
     @FXML
@@ -116,6 +121,56 @@ public class ControleServicos extends ControleBase implements Initializable {
         }
     }
     
+    private boolean validarCamposCadastro(){
+        if(txtNome.getText().isEmpty()){
+            new Alert(AlertType.ERROR, "Campo nome é obrigatório!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtPreco.getText().isEmpty()){
+            new Alert(AlertType.ERROR, "Campo preço é obrigatório!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        try{
+            float preco = Float.parseFloat(txtPreco.getText());
+        }catch(NumberFormatException ex){
+            new Alert(AlertType.ERROR, "Campo preço é numérico!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validarCamposEditar(){
+        if(txtEditNome.getText().isEmpty()){
+            new Alert(AlertType.ERROR, "Campo nome é obrigatório!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtEditPreco.getText().isEmpty()){
+            new Alert(AlertType.ERROR, "Campo preço é obrigatório!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        try{
+            float preco = Float.parseFloat(txtEditPreco.getText());
+        }catch(NumberFormatException ex){
+            new Alert(AlertType.ERROR, "Campo preço é numérico!", ButtonType.OK).showAndWait();
+            return false;
+        }
+        return true;
+    }
+        
+    private void limparCamposCadastro(){
+        txtNome.setText("");
+        txtPreco.setText("");
+    }
+    
+    private void limparCamposEditar(){
+        txtEditNome.setText("");
+        txtEditPreco.setText("");
+    }
+    
     /*
     *   Tratamento de Eventos
     */
@@ -128,6 +183,13 @@ public class ControleServicos extends ControleBase implements Initializable {
 
     @FXML
     private void btnEditar_pressed(ActionEvent event) {
+        Servico servico = (Servico) tabelaServicos.getSelectionModel().getSelectedItem();
+        txtEditNome.setText(servico.getNome());
+        txtEditPreco.setText(servico.getValor() + "");
+        abas.getSelectionModel().select(2);        
+        abas.getTabs().get(0).setDisable(true);
+        abas.getTabs().get(1).setDisable(true);
+        abas.getTabs().get(2).setDisable(false);
     }
 
     @FXML
@@ -143,18 +205,78 @@ public class ControleServicos extends ControleBase implements Initializable {
 
     @FXML
     private void btnCadastrar_pressed(ActionEvent event) {
+        if(validarCamposCadastro()){
+            Servico servico = new Servico(txtNome.getText(), Float.parseFloat(txtPreco.getText()));
+            ServicoDAO servicoDAO = new ServicoDAO();
+            try {
+                servicoDAO.inserir(servico);
+                new Alert(AlertType.INFORMATION, "Serviço inserido com sucesso!", ButtonType.OK).showAndWait();
+                limparCamposCadastro();
+                abas.getSelectionModel().selectFirst();
+            } catch (SQLException ex) {
+                new Alert(AlertType.ERROR, "Falha ao inserir. Contate o suporte!", ButtonType.OK).showAndWait();
+                System.out.println("Falha ao inserir: " + ex.getMessage());
+            }
+        }
     }
 
     @FXML
     private void btnLimpar_pressed(ActionEvent event) {
+        limparCamposCadastro();
     }
 
     @FXML
     private void btnEditSalvar_pressed(ActionEvent event) {
+        if(!validarCamposEditar())
+            return;
+        Servico servico = (Servico) tabelaServicos.getSelectionModel().getSelectedItem();
+        servico.setNome(txtEditNome.getText());
+        servico.setValor(Float.parseFloat(txtEditPreco.getText()));
+        ServicoDAO servicoDAO = new ServicoDAO();
+        try {
+            servicoDAO.alterar(servico);
+            new Alert(AlertType.INFORMATION, "Serviço alterado com sucesso!", ButtonType.OK).showAndWait();
+            tabelaServicos.refresh();
+            abas.getSelectionModel().selectFirst();
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getTabs().get(2).setDisable(true);
+        } catch (SQLException ex) {
+            new Alert(AlertType.ERROR, "Falha ao alterar. Contate o suporte!", ButtonType.OK).showAndWait();
+            System.out.println("Falha ao alterar: " + ex.getMessage());
+        }
     }
 
     @FXML
     private void btnEditCancelar_pressed(ActionEvent event) {
+        limparCamposEditar();
+        abas.getTabs().get(0).setDisable(false);
+        abas.getTabs().get(1).setDisable(false);
+        abas.getTabs().get(2).setDisable(true);
+        abas.getSelectionModel().selectFirst();
+    }
+    
+    @FXML
+    private void btnEditExcluir_pressed(ActionEvent event){
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja excluir este registro?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if(alert.getResult() != ButtonType.YES)
+            return;
+        
+        ServicoDAO servicoDAO = new ServicoDAO();
+        try {
+            Servico servico = (Servico)tabelaServicos.getSelectionModel().getSelectedItem();
+            servicoDAO.excluir(servico);
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getTabs().get(2).setDisable(true);
+            abas.getSelectionModel().selectFirst();
+            tabelaServicos.getItems().remove(servico);
+            tabelaServicos.refresh();
+        } catch (SQLException ex) {
+            new Alert(AlertType.ERROR, "Erro ao excluir serviço. Contate o suporte!", ButtonType.OK).showAndWait();
+            System.out.println("Falha ao excluir serviço: " + ex.getMessage());
+        }
     }
 
     @FXML
@@ -167,10 +289,6 @@ public class ControleServicos extends ControleBase implements Initializable {
 
     @FXML
     private void btnVisModificar_pressed(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnVisImprimir_pressed(ActionEvent event) {
     }
     
 }
