@@ -26,6 +26,7 @@ public abstract class ControleBase {
             controller.setStage(stage);
             
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
             return stage;
         } catch (IOException ex) {

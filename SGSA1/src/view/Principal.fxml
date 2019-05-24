@@ -57,7 +57,7 @@
                               </ImageView>
                            </children>
                         </Pane>
-                        <Label layoutX="89.0" layoutY="42.0" prefHeight="15.0" prefWidth="192.0" style="-fx-alignment: center-left;" text="Logado desde: 16.04.19 às 09:25" textFill="#c9c9c9" wrapText="true" />
+                        <Label fx:id="lblLogadoDesde" layoutX="89.0" layoutY="42.0" prefHeight="15.0" prefWidth="192.0" style="-fx-alignment: center-left;" text="Logado desde: 16.04.19 às 09:25" textFill="#c9c9c9" wrapText="true" />
                         <Label fx:id="lblUsuario" layoutX="90.0" layoutY="17.0" prefHeight="27.0" prefWidth="192.0" style="-fx-alignment: center-left;" text="Hercules M." textFill="WHITE">
                            <font>
                               <Font size="14.0" />

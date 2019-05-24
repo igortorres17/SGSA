@@ -2,6 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -44,6 +48,8 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     @FXML
     private Label lblUsuario;
     
+    @FXML
+    private Label lblLogadoDesde;
     // Custom
     AnchorPane paneLoading;
     
@@ -53,6 +59,9 @@ public class ControlePrincipal extends ControleBase implements Initializable{
         
         abrirSubForm("/view/Dashboard.fxml");
         btnDashboard.getStyleClass().add("side-button-active");
+        SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
+        String data = dataFormatada.format(Calendar.getInstance().getTime());
+        lblLogadoDesde.setText(data);
     }
     
     private void removerBtnActiveTodos(){

@@ -179,7 +179,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         }
         
         tabelaClientes.getSelectionModel().selectFirst();
-        if(tabelaClientes.getItems().size() > 0)
+        if(tabelaClientes.getItems().size() > 0)    
             habilitarBotoesEditarVisualizar(true);
         
         cbEstado.getItems().addAll("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO", "Selecionar");
