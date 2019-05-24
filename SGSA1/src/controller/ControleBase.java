@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 /**
@@ -14,7 +15,7 @@ import javafx.stage.WindowEvent;
 public abstract class ControleBase {
     private Stage stage;
     
-    protected Stage abrirJanela(String caminho_fxml){
+    private Stage instanciarJanela(String caminho_fxml){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho_fxml));
             Parent root = loader.load();
@@ -26,14 +27,27 @@ public abstract class ControleBase {
             controller.setStage(stage);
             
             stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
             return stage;
         } catch (IOException ex) {
             System.out.println("Falha ao abrir janela: " + ex.getMessage());
         }     
         
         return null;
+    }
+    
+    protected Stage abrirJanela(String caminho_fxml){
+        Stage stage = instanciarJanela(caminho_fxml);
+        stage.setResizable(false);
+        stage.show();
+        return stage;
+    }
+    
+    protected Stage abrirJanela(String caminho_fxml, StageStyle style){
+        Stage stage = instanciarJanela(caminho_fxml);
+        stage.setResizable(false);
+        stage.initStyle(style);
+        stage.show();
+        return stage;
     }
     
     public void setStage(Stage stage){
