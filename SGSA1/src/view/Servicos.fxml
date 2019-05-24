@@ -12,7 +12,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="854.0" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleServicos">
    <children>
       <Label layoutX="14.0" layoutY="14.0" styleClass="title2" text="Serviços" />
-      <TabPane fx:id="abas" layoutX="24.0" layoutY="56.0" prefHeight="551.0" prefWidth="824.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="abas" layoutX="15.0" layoutY="45.0" prefHeight="551.0" prefWidth="824.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Pesquisar">
                <content>
@@ -20,8 +20,8 @@
                      <children>
                         <TableView fx:id="tabelaServicos" layoutX="14.0" layoutY="69.0" prefHeight="318.0" prefWidth="798.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="ID" />
-                              <TableColumn prefWidth="398.0" text="Nome" />
+                              <TableColumn prefWidth="38.0" text="ID" />
+                              <TableColumn prefWidth="435.0" text="Nome" />
                               <TableColumn prefWidth="323.0" text="Preço" />
                            </columns>
                         </TableView>

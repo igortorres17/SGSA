@@ -9,10 +9,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="854.0" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControleDashboard">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="854.0" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlePecas">
    <children>
       <Label layoutX="14.0" layoutY="14.0" styleClass="title2" text="Peças" />
-      <TabPane fx:id="abas" layoutX="34.0" layoutY="66.0" prefHeight="551.0" prefWidth="824.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="abas" layoutX="15.0" layoutY="45.0" prefHeight="551.0" prefWidth="824.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Pesquisar">
                <content>
@@ -20,9 +20,9 @@
                      <children>
                         <TableView fx:id="tabelaServicos" layoutX="14.0" layoutY="69.0" prefHeight="318.0" prefWidth="798.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="ID" />
-                              <TableColumn prefWidth="382.0" text="Nome" />
-                              <TableColumn prefWidth="209.0" text="Número Serial" />
+                              <TableColumn prefWidth="45.0" text="ID" />
+                              <TableColumn prefWidth="361.0" text="Nome" />
+                              <TableColumn prefWidth="260.0" text="Número Serial" />
                               <TableColumn prefWidth="131.0" text="Preço" />
                            </columns>
                         </TableView>
@@ -81,7 +81,7 @@
                         <Label fx:id="lblNome" layoutX="85.0" layoutY="107.0" text="Biela" />
                         <Label fx:id="lblPreco" layoutX="83.0" layoutY="134.0" text="150,00" />
                         <Label layoutX="11.0" layoutY="161.0" text="Serial" />
-                        <Label fx:id="lblPreco1" layoutX="83.0" layoutY="161.0" text="SN XXXXX" />
+                        <Label fx:id="lblSerial" layoutX="83.0" layoutY="161.0" text="SN XXXXX" />
                      </children>
                   </AnchorPane>
                </content>
