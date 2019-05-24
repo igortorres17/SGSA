@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.Servico;
 import model.dao.ServicoDAO;
@@ -76,12 +77,7 @@ public class ControleServicos extends ControleBase implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTableView();
         ServicoDAO servicoDAO = new ServicoDAO();
-        try {
-            ArrayList<Servico> servicos = servicoDAO.buscar("", LIMITE_REGISTRO);
-            preencherTableView(servicos);
-        } catch (Exception ex) {
-            System.out.println("Falha ao buscar serviços: " + ex.getMessage());
-        }
+        buscar("");
     }    
     
     private void configurarTableView(){
@@ -96,8 +92,27 @@ public class ControleServicos extends ControleBase implements Initializable {
     }
     
     private void preencherTableView(ArrayList<Servico> servicos){
+        tabelaServicos.getItems().clear();
         for(int i = 0; i < servicos.size(); i++){
             tabelaServicos.getItems().add(servicos.get(i));
+        }
+        
+        if(!tabelaServicos.getItems().isEmpty()){
+            tabelaServicos.getSelectionModel().selectFirst();
+            btnVisualizar.setDisable(false);
+            btnEditar.setDisable(false);
+        }else{
+           btnVisualizar.setDisable(true); 
+           btnEditar.setDisable(true);
+        }
+    }
+    
+    private void buscar(String nome){
+        ServicoDAO servicoDAO = new ServicoDAO();
+        try {
+            preencherTableView(servicoDAO.buscar(nome, LIMITE_REGISTRO));
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar serviços: " + ex.getMessage());
         }
     }
     
@@ -106,6 +121,9 @@ public class ControleServicos extends ControleBase implements Initializable {
     */
     @FXML
     private void txtPesquisar_keypressed(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER){
+            buscar(txtPesquisar.getText());
+        }
     }
 
     @FXML
@@ -114,6 +132,13 @@ public class ControleServicos extends ControleBase implements Initializable {
 
     @FXML
     private void btnVisualizar_pressed(ActionEvent event) {
+        Servico servico = (Servico)tabelaServicos.getSelectionModel().getSelectedItem();
+        lblNome.setText(servico.getNome());
+        lblPreco.setText(servico.getValor() + "");
+        abas.getSelectionModel().selectLast();
+        abas.getSelectionModel().getSelectedItem().setDisable(false);
+        abas.getTabs().get(0).setDisable(true);
+        abas.getTabs().get(1).setDisable(true);
     }
 
     @FXML
@@ -134,6 +159,10 @@ public class ControleServicos extends ControleBase implements Initializable {
 
     @FXML
     private void btnVisVoltar_pressed(ActionEvent event) {
+        abas.getSelectionModel().getSelectedItem().setDisable(true);
+        abas.getSelectionModel().selectFirst();
+        abas.getTabs().get(0).setDisable(false);
+        abas.getTabs().get(1).setDisable(false);
     }
 
     @FXML
