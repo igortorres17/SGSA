@@ -105,6 +105,7 @@ public class ControlePecas implements Initializable {
         }else{
            btnVisualizar.setDisable(true); 
            btnEditar.setDisable(true);
+           tabelaPecas.getSelectionModel().selectFirst();
         }
     }
     
@@ -134,6 +135,15 @@ public class ControlePecas implements Initializable {
 
     @FXML
     private void btnVisualizar_pressed(ActionEvent event) {
+        Peca peca = (Peca) tabelaPecas.getSelectionModel().getSelectedItem();
+        lblNome.setText(peca.getNome());
+        lblSerial.setText(peca.getSerial());
+        lblPreco.setText(peca.getValor() + "");
+        
+        abas.getSelectionModel().selectLast();
+        abas.getSelectionModel().getSelectedItem().setDisable(false);
+        abas.getTabs().get(0).setDisable(true);
+        abas.getTabs().get(1).setDisable(true);
     }
 
     @FXML
@@ -158,6 +168,10 @@ public class ControlePecas implements Initializable {
 
     @FXML
     private void btnVisVoltar_pressed(ActionEvent event) {
+        abas.getSelectionModel().getSelectedItem().setDisable(true);
+        abas.getSelectionModel().selectFirst();
+        abas.getTabs().get(0).setDisable(false);
+        abas.getTabs().get(1).setDisable(false);
     }
     
 }
