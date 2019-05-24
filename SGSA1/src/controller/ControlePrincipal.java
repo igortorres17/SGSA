@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
 import model.Sessao;
 
 /**
@@ -154,7 +155,7 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     @FXML
     private void btnDeslogar_pressed(ActionEvent event){
         Sessao.logoff();
-        abrirJanela("/view/Login.fxml");
+        abrirJanela("/view/Login.fxml", StageStyle.TRANSPARENT);
         getStage().close();
     }
 }

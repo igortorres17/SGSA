@@ -82,4 +82,10 @@ public class ControleLogin extends ControleBase{
         super.abrirJanela("/view/Principal.fxml");        
          getStage().close();
     }
+    
+    @FXML
+    private void btnClose_pressed(ActionEvent event) {
+        getStage().close();
+        Runtime.getRuntime().exit(0);
+    }
 }

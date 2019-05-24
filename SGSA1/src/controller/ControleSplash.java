@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import model.dao.Conexao;
 
@@ -47,7 +48,7 @@ public class ControleSplash extends ControleBase{
     private void conectar(){
         try {
             Conexao.get();
-            abrirJanela("/view/Login.fxml");
+            abrirJanela("/view/Login.fxml", StageStyle.TRANSPARENT);
             getStage().close();
         } catch (SQLException ex) {
             new Alert(AlertType.ERROR, "O Sistema falhou em conectar-se. Tente novamente mais tarde!", ButtonType.OK).showAndWait();
