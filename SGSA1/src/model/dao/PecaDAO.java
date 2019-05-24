@@ -63,11 +63,12 @@ public class PecaDAO extends BaseDAO {
    }
    
    public void alterar(Peca peca) throws SQLException {
-       String updateSqlQuery = "UPDATE "+tabela+" SET nome = ?, codigo = ?, valor = ?";
+       String updateSqlQuery = "UPDATE "+tabela+" SET nome = ?, codigo = ?, valor = ? WHERE id = ?";
        PreparedStatement instrucaoPreparada = conexao.prepareStatement(updateSqlQuery);
        instrucaoPreparada.setString(1, peca.getNome());
        instrucaoPreparada.setString(2, peca.getSerial());
        instrucaoPreparada.setFloat(3, peca.getValor());
+       instrucaoPreparada.setInt(4, peca.getId());
        instrucaoPreparada.execute();
    }
    

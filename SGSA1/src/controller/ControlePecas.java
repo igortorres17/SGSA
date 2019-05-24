@@ -168,6 +168,12 @@ public class ControlePecas implements Initializable {
         txtCodigo.setText("");
         txtPreco.setText("");
     }
+    
+    private void limparCamposEditar(){
+        txtEditNome.setText("");
+        txtEditCodigo.setText("");
+        txtEditPreco.setText("");
+    }
         
     /**
      * Tratamento de Eventos
@@ -181,6 +187,14 @@ public class ControlePecas implements Initializable {
 
     @FXML
     private void btnEditar_pressed(ActionEvent event) {
+        Peca peca = (Peca) tabelaPecas.getSelectionModel().getSelectedItem();
+        txtEditNome.setText(peca.getNome());
+        txtEditCodigo.setText(peca.getSerial());
+        txtEditPreco.setText(peca.getValor() + "");
+        abas.getSelectionModel().select(2);        
+        abas.getTabs().get(0).setDisable(true);
+        abas.getTabs().get(1).setDisable(true);
+        abas.getTabs().get(2).setDisable(false);
     }
 
     @FXML
@@ -220,14 +234,57 @@ public class ControlePecas implements Initializable {
 
     @FXML
     private void btnEditSalvar_pressed(ActionEvent event) {
+        if(!validarCamposEditar())
+            return;
+        Peca peca = (Peca) tabelaPecas.getSelectionModel().getSelectedItem();
+        peca.setNome(txtEditNome.getText());
+        peca.setSerial(txtEditCodigo.getText());
+        peca.setValor(Float.parseFloat(txtEditPreco.getText()));
+        PecaDAO pecaDAO = new PecaDAO();
+        try {
+            pecaDAO.alterar(peca);
+            new Alert(AlertType.INFORMATION, "Peça alterado com sucesso!", ButtonType.OK).showAndWait();
+            tabelaPecas.refresh();
+            abas.getSelectionModel().selectFirst();
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getTabs().get(2).setDisable(true);
+        } catch (SQLException ex) {
+            new Alert(AlertType.ERROR, "Falha ao alterar. Contate o suporte!", ButtonType.OK).showAndWait();
+            System.out.println("Falha ao alterar: " + ex.getMessage());
+        }
     }
 
     @FXML
     private void btnEditCancelar_pressed(ActionEvent event) {
+        limparCamposEditar();
+        abas.getTabs().get(0).setDisable(false);
+        abas.getTabs().get(1).setDisable(false);
+        abas.getTabs().get(2).setDisable(true);
+        abas.getSelectionModel().selectFirst();
     }
 
     @FXML
     private void btnEditExcluir_pressed(ActionEvent event) {
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja excluir este registro?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if(alert.getResult() != ButtonType.YES)
+            return;
+        
+        PecaDAO pecaDAO = new PecaDAO();
+        try {
+            Peca peca = (Peca)tabelaPecas.getSelectionModel().getSelectedItem();
+            pecaDAO.excluir(peca);
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getTabs().get(2).setDisable(true);
+            abas.getSelectionModel().selectFirst();
+            tabelaPecas.getItems().remove(peca);
+            tabelaPecas.refresh();
+        } catch (SQLException ex) {
+            new Alert(AlertType.ERROR, "Erro ao excluir peça. Contate o suporte!", ButtonType.OK).showAndWait();
+            System.out.println("Falha ao excluir peça: " + ex.getMessage());
+        }
     }
 
     @FXML
