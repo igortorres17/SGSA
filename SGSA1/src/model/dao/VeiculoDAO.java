@@ -142,23 +142,31 @@ public class VeiculoDAO extends BaseDAO{
     }
     
     public ArrayList<Veiculo> buscar(String placa, int limite) throws SQLException {
-        String SQL = "SELECT * FROM veiculo WHERE placa LIKE ? LIMIT ?";
+        String SQL = "SELECT veiculo.*, modelo.* FROM veiculo JOIN modelo ON veiculo.modelo_id = modelo.id WHERE placa LIKE ? LIMIT ?";
         stmt = conexao.prepareStatement(SQL);
-        stmt.setString(1, "%"+placa+"%");
+        stmt.setString(1, placa+"%");
         stmt.setInt(2, limite);
         rs = stmt.executeQuery();
         
         ArrayList<Veiculo> veiculos = new ArrayList();
         while( rs.next() ) {
-            int iden = rs.getInt("id");
-            String _placa = rs.getString("placa");
-            String chassi = rs.getString("chassi");
-            int ano = rs.getInt("ano");
-            int quilometragem = rs.getInt("quilometragem");
-            int idProprietario = rs.getInt("cliente_id");
-            int idModelo = rs.getInt("modelo_id");
+            int iden = rs.getInt(1);
+            String _placa = rs.getString(2);
+            String chassi = rs.getString(3);
+            int ano = rs.getInt(4);
+            int quilometragem = rs.getInt(5);
+            int idProprietario = rs.getInt(6);
+            int idModelo = rs.getInt(7);
             Cliente cli = cliDao.buscar(idProprietario); 
-            Modelo mod = modDao.buscar(idModelo); 
+            Modelo mod = new Modelo(
+                    rs.getInt(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getInt(12),
+                    rs.getString(13),
+                    rs.getInt(14)
+            );
             Veiculo veic = new Veiculo(iden,_placa,chassi,ano,quilometragem,cli,mod);
             veiculos.add(veic);
         }
