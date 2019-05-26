@@ -115,16 +115,16 @@ public class VeiculoDAO extends BaseDAO{
         return null;
     }
     
-        public Veiculo buscar(String placas) throws SQLException {
-        String SQL = "SELECT * FROM veiculo WHERE placa LIKE ?";
+    public Veiculo buscar(String placa) throws SQLException {
+        String SQL = "SELECT * FROM veiculo WHERE placa = ?";
         stmt = conexao.prepareStatement(SQL);
-        stmt.setString(1, placas+"%");
+        stmt.setString(1, placa);
         rs = stmt.executeQuery();
 
         if (rs.next()) {
 
             int iden = rs.getInt("id");
-           String placa = rs.getString("placa");
+           String _placa = rs.getString("placa");
            String chassi = rs.getString("chassi");
            int ano = rs.getInt("ano");
            int quilometragem = rs.getInt("quilometragem");
@@ -135,10 +135,34 @@ public class VeiculoDAO extends BaseDAO{
             stmt.close();
             rs.close();
 
-            Veiculo veic = new Veiculo(iden,placa,chassi,ano,quilometragem,cli,mod);
+            Veiculo veic = new Veiculo(iden,_placa,chassi,ano,quilometragem,cli,mod);
             return veic;
         }
         return null;
+    }
+    
+    public ArrayList<Veiculo> buscar(String placa, int limite) throws SQLException {
+        String SQL = "SELECT * FROM veiculo WHERE placa LIKE ? LIMIT ?";
+        stmt = conexao.prepareStatement(SQL);
+        stmt.setString(1, "%"+placa+"%");
+        stmt.setInt(2, limite);
+        rs = stmt.executeQuery();
+        
+        ArrayList<Veiculo> veiculos = new ArrayList();
+        while( rs.next() ) {
+            int iden = rs.getInt("id");
+            String _placa = rs.getString("placa");
+            String chassi = rs.getString("chassi");
+            int ano = rs.getInt("ano");
+            int quilometragem = rs.getInt("quilometragem");
+            int idProprietario = rs.getInt("cliente_id");
+            int idModelo = rs.getInt("modelo_id");
+            Cliente cli = cliDao.buscar(idProprietario); 
+            Modelo mod = modDao.buscar(idModelo); 
+            Veiculo veic = new Veiculo(iden,_placa,chassi,ano,quilometragem,cli,mod);
+            veiculos.add(veic);
+        }
+        return veiculos;
     }
 
     public void alterar(Veiculo veic) throws SQLException {
