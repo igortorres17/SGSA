@@ -5,7 +5,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
@@ -13,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import model.Servico;
 import model.Veiculo;
 
 /**
@@ -29,11 +33,11 @@ public class ControleOS extends ControleBase implements Initializable {
     @FXML
     private Button btnLimpar;
     @FXML
-    private ListView<?> listvServicos;
+    private ListView listvServicos;
     @FXML
     private Button btnAddServico;
     @FXML
-    private ListView<?> listvPecas;
+    private ListView listvPecas;
     @FXML
     private Button btnAddPeca;
     @FXML
@@ -58,10 +62,14 @@ public class ControleOS extends ControleBase implements Initializable {
     private Button btnVisVoltar;
     @FXML
     private Button btnVisImprimir;
+    @FXML
+    private Button btnRemoverServico;
+    @FXML
+    private Button btnRemoverPeca;
     
     // Custom
-    Veiculo veiculoSelecionado = null;
-    
+    private Veiculo veiculoSelecionado = null;
+    private float valorTotal = 0;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -77,6 +85,19 @@ public class ControleOS extends ControleBase implements Initializable {
 
     @FXML
     private void btnAddServico_pressed(ActionEvent event) {
+        SelecionarServicoModal controller = (SelecionarServicoModal) abrirModal("/view/SelecionarServicoModal.fxml");
+        controller.getStage().setTitle("Incluir Serviço");
+        controller.getStage().showAndWait();
+        Servico servicoSelecionado = controller.getServicoSelecionado();
+        if(servicoSelecionado == null)
+            return;
+        
+        this.listvServicos.getItems().add(servicoSelecionado);
+        this.listvServicos.getSelectionModel().selectFirst();
+        
+        valorTotal += servicoSelecionado.getValor();
+        lblTotal.setText(valorTotal + "");
+       
     }
 
     @FXML
@@ -117,6 +138,23 @@ public class ControleOS extends ControleBase implements Initializable {
 
     @FXML
     private void btnVisImprimir_pressed(ActionEvent event) {
+    }
+    
+    @FXML
+    private void btnRemoverServico_pressed(ActionEvent event){
+        Servico servico = (Servico) listvServicos.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Remover '" + servico.getNome() + "' da OS?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        
+        if(alert.getResult() == ButtonType.YES){
+            listvServicos.getItems().remove(servico);
+            valorTotal -= servico.getValor();
+            lblTotal.setText(valorTotal + "");
+        }
+    }
+    
+    @FXML
+    private void btnRemoverPeca_pressed(ActionEvent event){
     }
     
 }

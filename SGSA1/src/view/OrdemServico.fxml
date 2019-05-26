@@ -26,16 +26,18 @@
                         <Button fx:id="btnLimpar" layoutX="503.0" layoutY="434.0" mnemonicParsing="false" onAction="#btnLimpar_pressed" prefHeight="29.0" prefWidth="307.0" styleClass="orange-button" text="Limpar" />
                         <Label layoutX="16.0" layoutY="14.0" styleClass="title1" text="Emitir Ordem de Serviço" />
                         <ListView fx:id="listvServicos" layoutX="17.0" layoutY="152.0" prefHeight="123.0" prefWidth="452.0" />
-                        <Button fx:id="btnAddServico" layoutX="359.0" layoutY="284.0" mnemonicParsing="false" onAction="#btnAddServico_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Adicionar" />
+                        <Button fx:id="btnAddServico" layoutX="359.0" layoutY="284.0" mnemonicParsing="false" onAction="#btnAddServico_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Incluir" />
                         <Label layoutX="22.0" layoutY="320.0" text="Peças" />
                         <ListView fx:id="listvPecas" layoutX="17.0" layoutY="337.0" prefHeight="123.0" prefWidth="452.0" />
-                        <Button fx:id="btnAddPeca" layoutX="359.0" layoutY="467.0" mnemonicParsing="false" onAction="#btnAddPeca_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Adicionar" />
+                        <Button fx:id="btnAddPeca" layoutX="359.0" layoutY="467.0" mnemonicParsing="false" onAction="#btnAddPeca_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Incluir" />
                         <TextArea fx:id="txtObs" layoutX="503.0" layoutY="94.0" prefHeight="183.0" prefWidth="307.0" />
                         <Label layoutX="503.0" layoutY="74.0" text="Observações" />
                         <TextField fx:id="txtVeiculo" disable="true" layoutX="14.0" layoutY="90.0" prefHeight="29.0" prefWidth="324.0" />
                         <Button fx:id="btnSelecionarVeiculo" layoutX="358.0" layoutY="90.0" mnemonicParsing="false" onAction="#btnSelecionarVeiculo_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Selecionar" />
                         <Label layoutX="503.0" layoutY="290.0" text="Total:" />
-                        <Label fx:id="lblTotal" layoutX="537.0" layoutY="290.0" text="1500,00" />
+                        <Label fx:id="lblTotal" layoutX="537.0" layoutY="290.0" text="0,0" />
+                        <Button fx:id="btnRemoverServico" layoutX="243.0" layoutY="284.0" mnemonicParsing="false" onAction="#btnRemoverServico_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Remover" />
+                        <Button fx:id="btnRemoverPeca" layoutX="243.0" layoutY="467.0" mnemonicParsing="false" onAction="#btnRemoverPeca_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Remover" />
                      </children>
                   </AnchorPane>
                </content>
