@@ -16,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import model.Peca;
 import model.Servico;
 import model.Veiculo;
 
@@ -102,6 +103,19 @@ public class ControleOS extends ControleBase implements Initializable {
 
     @FXML
     private void btnAddPeca_pressed(ActionEvent event) {
+        SelecionarPecaModal controller = (SelecionarPecaModal) abrirModal("/view/SelecionarPecaModal.fxml");
+        controller.getStage().setTitle("Incluir Serviço");
+        controller.getStage().showAndWait();
+        Peca pecaSelecionada = controller.getPecaSelecionada();
+        
+        if(pecaSelecionada == null)
+            return;
+        
+        this.listvPecas.getItems().add(pecaSelecionada);
+        this.listvPecas.getSelectionModel().selectFirst();
+        
+        valorTotal += pecaSelecionada.getValor();
+        lblTotal.setText(valorTotal + "");
     }
 
     @FXML
@@ -155,6 +169,15 @@ public class ControleOS extends ControleBase implements Initializable {
     
     @FXML
     private void btnRemoverPeca_pressed(ActionEvent event){
+        Peca peca = (Peca) listvPecas.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Remover '" + peca.getNome() + "' da OS?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        
+        if(alert.getResult() == ButtonType.YES){
+            listvPecas.getItems().remove(peca);
+            valorTotal -= peca.getValor();
+            lblTotal.setText(valorTotal + "");
+        }
     }
     
 }
