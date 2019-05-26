@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import model.Veiculo;
 
 /**
  * FXML Controller class
@@ -57,7 +58,10 @@ public class ControleOS extends ControleBase implements Initializable {
     private Button btnVisVoltar;
     @FXML
     private Button btnVisImprimir;
-
+    
+    // Custom
+    Veiculo veiculoSelecionado = null;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -82,7 +86,13 @@ public class ControleOS extends ControleBase implements Initializable {
     @FXML
     private void btnSelecionarVeiculo_pressed(ActionEvent event) {
         SelecionarVeiculoModal controller = (SelecionarVeiculoModal) abrirModal("/view/SelecionarVeiculoModal.fxml");
+        controller.getStage().setTitle("Selecionar Veículo");
         controller.getStage().showAndWait();
+        veiculoSelecionado = controller.getVeiculoSelecionado();
+        if(veiculoSelecionado == null)
+            return;
+        String txt = veiculoSelecionado.getModelo().getMarca() + " " + veiculoSelecionado.getNomeModelo() + " (" + veiculoSelecionado.getPlaca() +")" + " - " + veiculoSelecionado.getNomeProprietario();
+        txtVeiculo.setText(txt);
     }
 
     @FXML
