@@ -83,6 +83,21 @@ public class Veiculo {
     public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
-   
+    
+    public String getNomeProprietario(){
+        if(Cliente.ePessoaJuridica(proprietario)){
+            PessoaJuridica pj = (PessoaJuridica) proprietario;
+            return pj.getRazaoSocial();
+        }
+        
+        PessoaFisica pf = (PessoaFisica) proprietario;
+        return pf.getNome();
+    }
+    
+    
+    
+    public String getNomeModelo(){
+        return this.modelo.getNome();
+    }
     
 }
