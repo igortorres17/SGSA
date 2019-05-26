@@ -54,10 +54,17 @@ public class OrdemServicoDAO extends BaseDAO{
             throw new Exception("Falha ao obter último ID");
         
         int id = resultado.getInt(1);
-        OrdemTemPecaDAO ordemTemPeca = new OrdemTemPecaDAO();
-        OrdemTemServicoDAO ordemTemServico = new OrdemTemServicoDAO();
-        ordemTemPeca.inserir(ordemServico.getPecas(), id);
-        ordemTemServico.inserir(ordemServico.getServicos(), id);        
+        
+        if(ordemServico.getServicos() != null && !ordemServico.getServicos().isEmpty()){            
+            OrdemTemServicoDAO ordemTemServico = new OrdemTemServicoDAO();
+            ordemTemServico.inserir(ordemServico.getServicos(), id);
+        }
+        
+        if(ordemServico.getPecas() != null && !ordemServico.getPecas().isEmpty()){ 
+            OrdemTemPecaDAO ordemTemPeca = new OrdemTemPecaDAO();
+            ordemTemPeca.inserir(ordemServico.getPecas(), id);
+        }
+                
     }
         
     public ArrayList<OrdemServico> buscar(String placa) throws SQLException, Exception{

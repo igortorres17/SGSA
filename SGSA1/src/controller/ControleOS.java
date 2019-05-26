@@ -1,7 +1,12 @@
 package controller;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,9 +21,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import model.OrdemServico;
 import model.Peca;
 import model.Servico;
 import model.Veiculo;
+import model.dao.OrdemServicoDAO;
 
 /**
  * FXML Controller class
@@ -75,13 +82,55 @@ public class ControleOS extends ControleBase implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
     }    
-
+    
+    private void limparCampos(){        
+        listvPecas.getItems().clear();
+        listvServicos.getItems().clear();
+        veiculoSelecionado = null;
+        txtVeiculo.setText("");
+        txtObs.setText("");
+    }
+    
     @FXML
     private void btnEmitirOS_pressed(ActionEvent event) {
+        if(veiculoSelecionado == null){
+            new Alert(AlertType.ERROR, "Selecione um veículo!").showAndWait();
+            return;
+        }
+        
+        if(listvPecas.getItems().isEmpty() && listvServicos.getItems().isEmpty()){
+            new Alert(AlertType.ERROR, "Você deve incluir pelo menos um serviço ou peça!").showAndWait();
+            return;
+        }
+        
+        ArrayList<Servico> servicos = new ArrayList(listvServicos.getItems());
+        ArrayList<Peca> pecas = new ArrayList(listvPecas.getItems());
+        int status = OrdemServico.ABERTA;
+        SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
+        String data = formatador.format(Calendar.getInstance().getTime());
+        OrdemServico os = new OrdemServico(veiculoSelecionado, valorTotal, servicos, pecas, txtObs.getText(), status, data);
+        
+        OrdemServicoDAO osDAO = new OrdemServicoDAO();
+        try {
+            osDAO.inserir(os);
+            Alert alert = new Alert(AlertType.INFORMATION, "OS emitida com sucesso. Deseja visualizar e/ou imprimir OS?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+            limparCampos();
+            
+        } catch (Exception ex) {
+            new Alert(AlertType.ERROR, "Não foi possível registrar OS. Contate o suporte!", ButtonType.OK).showAndWait();
+            System.out.println("Não foi possível inserir OS: " + ex.getMessage() );
+            
+        }
     }
 
     @FXML
     private void btnLimpar_pressed(ActionEvent event) {
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Deseja realmente limpar todos os campos?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+        if(alert.getResult() != ButtonType.YES)
+            return;
+        limparCampos();
     }
 
     @FXML
