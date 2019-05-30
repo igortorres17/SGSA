@@ -6,6 +6,7 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,9 +14,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import model.Veiculo;
+import model.dao.VeiculoDAO;
 
 /**
  * FXML Controller class
@@ -27,7 +32,7 @@ public class ControleVeiculo implements Initializable {
     @FXML
     private TabPane abas;
     @FXML
-    private TableView<?> tabelaVeiculo;
+    private TableView tabelaVeiculo;
     @FXML
     private TextField txtPesquisar;
     @FXML
@@ -92,6 +97,8 @@ public class ControleVeiculo implements Initializable {
     private Label viewProprietario;
     @FXML
     private Label viewAno1;
+    
+    private VeiculoDAO daoveic;
 
     /**
      * Initializes the controller class.
@@ -99,7 +106,50 @@ public class ControleVeiculo implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+        daoveic = new VeiculoDAO();
+        ArrayList<Veiculo> veic = new ArrayList<>();
+        try{
+            veic=daoveic.buscar("", 8);
+        }
+        catch(Exception ex){
+            System.out.println("Erro ao buscar veiculos: "+ex.getMessage());
+            ex.printStackTrace();
+        }
+        tabelaVeiculo.getItems().clear();
+        configurarTableView();
+        atualizarTabela(veic);
+        
+    }
+
+    public void configurarTableView(){
+      TableColumn colId = (TableColumn) tabelaVeiculo.getColumns().get(0);
+        TableColumn colPlaca = (TableColumn) tabelaVeiculo.getColumns().get(1);
+        TableColumn colChassi = (TableColumn) tabelaVeiculo.getColumns().get(2);
+        TableColumn colAno = (TableColumn) tabelaVeiculo.getColumns().get(3);
+        TableColumn colQuilometragem = (TableColumn) tabelaVeiculo.getColumns().get(4);
+        TableColumn colProprietario = (TableColumn) tabelaVeiculo.getColumns().get(5);
+        TableColumn colModelo = (TableColumn) tabelaVeiculo.getColumns().get(6);
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
+        colChassi.setCellValueFactory(new PropertyValueFactory<>("chassi"));
+        colAno.setCellValueFactory(new PropertyValueFactory<>("ano"));
+        colQuilometragem.setCellValueFactory(new PropertyValueFactory<>("quilometragem"));
+        colProprietario.setCellValueFactory(new PropertyValueFactory<>("nomeProprietario"));
+        colModelo.setCellValueFactory(new PropertyValueFactory<>("nomeModelo"));  
+    }
+    
+    public void atualizarTabela(ArrayList<Veiculo> veic){
+        if(veic == null){
+            return;
+        }
+        else{
+        
+        for(int i = 0; i<veic.size(); i++){
+            tabelaVeiculo.getItems().add(veic.get(i));
+        }    
+        }
+        
+    }
 
     @FXML
     private void txtPesquisar_keypressed(KeyEvent event) {
