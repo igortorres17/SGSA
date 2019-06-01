@@ -57,7 +57,7 @@ public class ControleOS extends ControleBase implements Initializable {
     @FXML
     private Label lblTotal;
     @FXML
-    private TableView<?> tabelaOS;
+    private TableView tabelaOS;
     @FXML
     private TextField txtPesquisar;
     @FXML
@@ -87,8 +87,10 @@ public class ControleOS extends ControleBase implements Initializable {
         listvPecas.getItems().clear();
         listvServicos.getItems().clear();
         veiculoSelecionado = null;
+        valorTotal = 0;
         txtVeiculo.setText("");
         txtObs.setText("");
+        lblTotal.setText("0.0");
     }
     
     @FXML
