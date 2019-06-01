@@ -1,10 +1,13 @@
 package controller;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -101,7 +104,7 @@ public class ControleOS extends ControleBase implements Initializable {
         cVeiculo.setCellValueFactory(new PropertyValueFactory("veiculoStr"));
         cObs.setCellValueFactory(new PropertyValueFactory("Observacao"));
         cValor.setCellValueFactory(new PropertyValueFactory("valor"));
-        cStatus.setCellValueFactory(new PropertyValueFactory("status"));
+        cStatus.setCellValueFactory(new PropertyValueFactory("StatusName"));
     }
     
     private void preencherTableView(ArrayList<OrdemServico> ordens){
@@ -253,6 +256,17 @@ public class ControleOS extends ControleBase implements Initializable {
 
     @FXML
     private void btnDarBaixaOS_pressed(ActionEvent event) {
+        OrdemServicoDAO osDAO = new OrdemServicoDAO();
+        try {
+            OrdemServico os = (OrdemServico) tabelaOS.getSelectionModel().getSelectedItem();
+            os.setStatus(OrdemServico.CONCLUIDA);
+            osDAO.concluir(os);
+            tabelaOS.refresh();
+            new Alert(AlertType.INFORMATION, "O Status da OS foi alterado para CONCLUÍDO", ButtonType.OK).showAndWait();
+        } catch (SQLException ex) {
+            new Alert(AlertType.ERROR, "Erro ao baixar OS. Contate o suporte!", ButtonType.OK).showAndWait();
+            ex.printStackTrace();
+        }
     }
 
     @FXML
@@ -261,6 +275,17 @@ public class ControleOS extends ControleBase implements Initializable {
 
     @FXML
     private void btnCancelarOS_pressed(ActionEvent event) {
+            OrdemServicoDAO osDAO = new OrdemServicoDAO();
+        try {
+            OrdemServico os = (OrdemServico) tabelaOS.getSelectionModel().getSelectedItem();
+            os.setStatus(OrdemServico.CANCELADA);
+            osDAO.cancelar(os);
+            tabelaOS.refresh();
+            new Alert(AlertType.INFORMATION, "O Status da OS foi alterado para CANCELADO", ButtonType.OK).showAndWait();
+        } catch (SQLException ex) {
+            new Alert(AlertType.ERROR, "Erro ao cancelar OS. Contate o suporte!", ButtonType.OK).showAndWait();
+            ex.printStackTrace();
+        }
     }
 
     @FXML

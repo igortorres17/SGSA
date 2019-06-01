@@ -214,6 +214,14 @@ public class OrdemServicoDAO extends BaseDAO{
         instrucaoPreparada.execute();
     }
     
+    public void concluir(OrdemServico ordemServico) throws SQLException{
+        String sqlQuery = "UPDATE " + tabela + " SET status = ? WHERE id = ?";
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
+        instrucaoPreparada.setInt(1, OrdemServico.CONCLUIDA);
+        instrucaoPreparada.setInt(2, ordemServico.getId());
+        instrucaoPreparada.execute();
+    }
+    
     public void excluir(int id) throws SQLException{
         String sqlQuery = "DELETE FROM " + tabela + " WHERE id = ?";
         PreparedStatement instrucaoPreparada = conexao.prepareCall(sqlQuery);
