@@ -97,13 +97,15 @@ public class ModeloDAO extends BaseDAO {
         return null;
     }
     
-        public Modelo buscar(String nomes) throws SQLException {
-        String SQL = "SELECT * FROM modelo WHERE nome LIKE ?";
+        public ArrayList<Modelo> buscar(String nomes, int limite) throws SQLException {
+        ArrayList<Modelo> modelos = new ArrayList<>();
+        String SQL = "SELECT * FROM modelo WHERE nome LIKE ? LIMIT ?";
         stmt = conexao.prepareStatement(SQL);
         stmt.setString(1, nomes+"%");
+        stmt.setInt(2, limite);
         rs = stmt.executeQuery();
 
-        if (rs.next()) {
+        while (rs.next()) {
 
             int ident = rs.getInt("id");
             String tipo = rs.getString("tipo");
@@ -115,10 +117,9 @@ public class ModeloDAO extends BaseDAO {
             stmt.close();
             rs.close();
 
-            Modelo mod = new Modelo(ident, tipo, nome, marca, qtdPortas, motor, combustivel);
-            return mod;
+            modelos.add(new Modelo(ident, tipo, nome, marca, qtdPortas, motor, combustivel));
         }
-        return null;
+        return modelos;
     }
 
     public void alterar(Modelo mod) throws SQLException {

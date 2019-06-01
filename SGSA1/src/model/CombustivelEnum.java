@@ -6,7 +6,7 @@ package model;
  */
 public enum CombustivelEnum {
     GASOLINA,
-    ALCOOL,
+    ETANOL,
     FLEX,
     DIESEL,
     GNV
