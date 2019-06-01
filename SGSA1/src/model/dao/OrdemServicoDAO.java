@@ -67,20 +67,22 @@ public class OrdemServicoDAO extends BaseDAO{
                 
     }
         
-    public ArrayList<OrdemServico> buscar(String placa) throws SQLException, Exception{
-        Veiculo veiculo = new VeiculoDAO().buscar(placa);
-        if(veiculo == null)
+    public ArrayList<OrdemServico> buscar(String placa, int limite) throws SQLException, Exception{
+        ArrayList<OrdemServico> ordens = new ArrayList();
+        ArrayList<Veiculo> veiculos = new VeiculoDAO().buscar(placa, limite);
+        if(veiculos == null)
             throw new Exception("Placa não encontrada");
         
         String sqlQuery = "SELECT * FROM " + tabela + " WHERE veiculo_id = ?";
-        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
-        instrucaoPreparada.setInt(1, veiculo.getId());
         
-        ResultSet resultado = instrucaoPreparada.executeQuery();
-        ArrayList<OrdemServico> ordens = new ArrayList();
-        
-        while(resultado.next())
-            ordens.add(converterResultSetEmOrdemServico(resultado, veiculo));
+        for(int i = 0; i < veiculos.size(); i++){
+            PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
+            instrucaoPreparada.setInt(1, veiculos.get(i).getId());
+            ResultSet resultado = instrucaoPreparada.executeQuery();
+            while(resultado.next())
+                ordens.add(converterResultSetEmOrdemServico(resultado, veiculos.get(i)));
+        }
+
         
         return ordens;
     }

@@ -100,4 +100,8 @@ public class OrdemServico {
         this.data = data;
     }
     
+    public String getVeiculoStr(){
+        return veiculo.getModelo().getNome() + " (" + veiculo.getPlaca() + ") / " + veiculo.getNomeProprietario();
+    }
+    
 }

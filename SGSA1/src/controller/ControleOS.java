@@ -5,8 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,10 +15,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.OrdemServico;
 import model.Peca;
@@ -74,14 +77,74 @@ public class ControleOS extends ControleBase implements Initializable {
     private Button btnRemoverServico;
     @FXML
     private Button btnRemoverPeca;
+    @FXML
+    private ProgressIndicator progresso;
     
     // Custom
+    private final int LIMITE_REGISTROS = 8;
     private Veiculo veiculoSelecionado = null;
     private float valorTotal = 0;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        configurarTableView();
+        buscar("");
     }    
+    
+    private void configurarTableView(){
+        TableColumn cId = (TableColumn) tabelaOS.getColumns().get(0);
+        TableColumn cVeiculo = (TableColumn) tabelaOS.getColumns().get(1);
+        TableColumn cObs = (TableColumn) tabelaOS.getColumns().get(2);
+        TableColumn cValor = (TableColumn) tabelaOS.getColumns().get(3);
+        TableColumn cStatus = (TableColumn) tabelaOS.getColumns().get(4);
+        
+        cId.setCellValueFactory(new PropertyValueFactory("id"));
+        cVeiculo.setCellValueFactory(new PropertyValueFactory("veiculoStr"));
+        cObs.setCellValueFactory(new PropertyValueFactory("Observacao"));
+        cValor.setCellValueFactory(new PropertyValueFactory("valor"));
+        cStatus.setCellValueFactory(new PropertyValueFactory("status"));
+    }
+    
+    private void preencherTableView(ArrayList<OrdemServico> ordens){
+        tabelaOS.getItems().clear();
+        for(int i = 0; i < ordens.size(); i++){
+            tabelaOS.getItems().add(ordens.get(i));
+        }
+        
+        if(tabelaOS.getItems().size() > 0){
+            btnCancelarOS.setDisable(false);
+            btnDarBaixaOS.setDisable(false);
+            btnVisualizarOS.setDisable(false);
+            tabelaOS.getSelectionModel().selectFirst();
+            return;
+        }
+        
+            btnCancelarOS.setDisable(true);
+            btnDarBaixaOS.setDisable(true);
+            btnVisualizarOS.setDisable(true);
+    }
+    
+    private void buscar(String placa){
+        progresso.setVisible(true);
+        txtPesquisar.setDisable(true);
+        Task task = new Task(){
+            public Void call(){
+                OrdemServicoDAO osDAO = new OrdemServicoDAO();
+                try {
+                    ArrayList<OrdemServico> os;
+                    os = osDAO.buscar(placa, LIMITE_REGISTROS);
+                    preencherTableView(os);
+                    progresso.setVisible(false);
+                    txtPesquisar.setDisable(false);
+                } catch (Exception ex) {
+                    System.out.println("Falha ao buscar OS's: " + ex.getMessage());
+                    ex.printStackTrace();
+                }
+               return null; 
+            }
+        };
+        
+        new Thread(task).start();
+    }
     
     private void limparCampos(){        
         listvPecas.getItems().clear();
@@ -183,6 +246,9 @@ public class ControleOS extends ControleBase implements Initializable {
 
     @FXML
     private void txtPesquisar_keypressed(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER){
+            buscar(txtPesquisar.getText());
+        }
     }
 
     @FXML
