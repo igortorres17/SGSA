@@ -131,7 +131,7 @@ public class ControleOS extends ControleBase implements Initializable {
                 OrdemServicoDAO osDAO = new OrdemServicoDAO();
                 try {
                     ArrayList<OrdemServico> os;
-                    os = osDAO.buscar(placa, LIMITE_REGISTROS);
+                    os = osDAO.bucar_em_high_speed(placa);
                     preencherTableView(os);
                     progresso.setVisible(false);
                     txtPesquisar.setDisable(false);
