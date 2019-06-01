@@ -116,9 +116,9 @@ public class VeiculoDAO extends BaseDAO{
     }
     
     public Veiculo buscar(String placa) throws SQLException {
-        String SQL = "SELECT * FROM veiculo WHERE placa = ?";
+        String SQL = "SELECT * FROM veiculo WHERE placa LIKE ?";
         stmt = conexao.prepareStatement(SQL);
-        stmt.setString(1, placa);
+        stmt.setString(1, placa+"%");
         rs = stmt.executeQuery();
 
         if (rs.next()) {

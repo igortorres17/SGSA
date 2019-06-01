@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="289.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelecionarClienteModal">
+   <children>
+      <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefWidth="509.0">
+         <children>
+            <TextField fx:id="txtPesquisar" layoutX="14.0" layoutY="14.0" onKeyPressed="#txtPesquisar_keyPressed" prefHeight="29.0" prefWidth="482.0" promptText="Pesquisar placa . . . " />
+            <Button fx:id="btnSelecionar" layoutX="347.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnSelecionar_pressed" prefHeight="29.0" prefWidth="148.0" text="Selecionar" />
+            <TableView fx:id="tabelaCliente" layoutX="14.0" layoutY="50.0" prefHeight="200.0" prefWidth="482.0">
+              <columns>
+                <TableColumn editable="false" prefWidth="75.0" text="ID" />
+                <TableColumn editable="false" prefWidth="203.0" text="NOME / RAZÃO SOCIAL" />
+                  <TableColumn editable="false" minWidth="0.0" prefWidth="203.0" text="CPF / CNPJ" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
