@@ -86,6 +86,30 @@ public class Modelo {
     public void setCombustivel(int combustivel) {
         this.combustivel = combustivel;
     }
+    
+    public String nomeCombustivel(){
+       String nomeCombustivel;
+        switch(getCombustivel()){
+            case 0:
+                nomeCombustivel="GASOLINA";
+               break;
+            case 1:
+                nomeCombustivel="ETANOL";
+               break;
+            case 2:
+                nomeCombustivel="FLEX";
+               break;
+            case 3:
+                nomeCombustivel="DIESEL";
+               break;
+            case 4:
+                nomeCombustivel="GNV";
+               break;
+            default:
+                nomeCombustivel="Não encontrado";
+        }
+        return nomeCombustivel;
+    }
 
     
 }
