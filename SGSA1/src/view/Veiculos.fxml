@@ -54,7 +54,7 @@
                         <Label layoutX="16.0" layoutY="14.0" styleClass="title1" text="Cadastrar" />
                         <Label layoutX="17.0" layoutY="71.0" text="Nome do Cliente" />
                         <TextField fx:id="txtModelo" editable="false" layoutX="14.0" layoutY="339.0" promptText="Modelo" />
-                        <Button fx:id="btnSelecionarModelo" layoutX="217.0" layoutY="341.0" mnemonicParsing="false" text="Selecionar" />
+                        <Button fx:id="btnSelecionarModelo" layoutX="217.0" layoutY="341.0" mnemonicParsing="false" onAction="#btnSelecionarModelo_press" text="Selecionar" />
                         <TextField fx:id="txtNomeCliente" layoutX="14.0" layoutY="116.0" prefHeight="30.0" prefWidth="450.0" />
                         <Button fx:id="btnSelecionarCliente" layoutX="497.0" layoutY="118.0" mnemonicParsing="false" onAction="#btnSelecionarCliente_pressed" text="Selecionar" />
                      </children>

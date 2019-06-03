@@ -87,7 +87,7 @@ public class Modelo {
         this.combustivel = combustivel;
     }
     
-    public String nomeCombustivel(){
+    public String getNomeCombustivel(){
        String nomeCombustivel;
         switch(getCombustivel()){
             case 0:

@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -21,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import model.Cliente;
+import model.Modelo;
 import model.PessoaFisica;
 import model.PessoaJuridica;
 import model.Veiculo;
@@ -32,7 +32,7 @@ import model.dao.VeiculoDAO;
  * @author root
  */
 public class ControleVeiculo extends ControleBase implements Initializable {
-    
+
     @FXML
     private TabPane abas;
     @FXML
@@ -44,17 +44,45 @@ public class ControleVeiculo extends ControleBase implements Initializable {
     @FXML
     private Button btnVisualizar;
     @FXML
+    private TextField txtPlaca;
+    @FXML
+    private TextField txtChassi;
+    @FXML
+    private TextField txtAno;
+    @FXML
+    private TextField txtQuilometragem;
+    @FXML
     private Button btnCadastrar;
     @FXML
     private Button btnLimpar;
     @FXML
+    private TextField txtModelo;
+    @FXML
+    private Button btnSelecionarModelo;
+    @FXML
     private TextField txtNomeCliente;
     @FXML
+    private Button btnSelecionarCliente;
+    @FXML
     private TextField txtEditPlaca;
+    @FXML
+    private TextField txtEditChassi;
+    @FXML
+    private TextField txtEditQuilo;
+    @FXML
+    private TextField txtEditAno;
+    @FXML
+    private TextField txtEditModelo;
+    @FXML
+    private TextField txtEditProprietario;
     @FXML
     private Button btnEditSalvar;
     @FXML
     private Button btnEditCancelar;
+    @FXML
+    private Button btnEditModelo;
+    @FXML
+    private Button btnEditProprietario;
     @FXML
     private Button btnViewVoltar;
     @FXML
@@ -73,12 +101,11 @@ public class ControleVeiculo extends ControleBase implements Initializable {
     private Label viewProprietario;
     @FXML
     private Label viewAno1;
-    
+
     private VeiculoDAO daoveic;
     private Cliente clienteSelecionado;
     private boolean controle = false;
-    
-    
+    private Modelo modeloSelecionado;
 
     /**
      * Initializes the controller class.
@@ -89,9 +116,9 @@ public class ControleVeiculo extends ControleBase implements Initializable {
         tabelaVeiculo.getItems().clear();
         configurarTableView();
         atualizarTabela();
-        
+
     }
-    
+
     public void configurarTableView() {
         TableColumn colId = (TableColumn) tabelaVeiculo.getColumns().get(0);
         TableColumn colPlaca = (TableColumn) tabelaVeiculo.getColumns().get(1);
@@ -106,120 +133,133 @@ public class ControleVeiculo extends ControleBase implements Initializable {
         colAno.setCellValueFactory(new PropertyValueFactory<>("ano"));
         colQuilometragem.setCellValueFactory(new PropertyValueFactory<>("quilometragem"));
         colProprietario.setCellValueFactory(new PropertyValueFactory<>("nomeProprietario"));
-        colModelo.setCellValueFactory(new PropertyValueFactory<>("nomeModelo"));        
+        colModelo.setCellValueFactory(new PropertyValueFactory<>("nomeModelo"));
     }
-    
+
     public void atualizarTabela() {
         ArrayList<Veiculo> veic = new ArrayList<>();
         daoveic = new VeiculoDAO();
         try {
-            veic = daoveic.buscar("", 10);            
+            veic = daoveic.buscar("", 10);
         } catch (Exception ex) {
             System.out.println("Erro ao buscar veiculos: " + ex.getMessage());
             ex.printStackTrace();
         }
         configurarTableView();
-        
+
         if (veic == null) {
             return;
         } else {
-            
+
             for (int i = 0; i < veic.size(); i++) {
                 tabelaVeiculo.getItems().add(veic.get(i));
-            }            
+            }
         }
-        
+
     }
-    
+
     @FXML
     private void txtPesquisar_keypressed(KeyEvent event) {
-        
+
         if (event.getCode().toString().equals("ENTER")) {
             tabelaVeiculo.getItems().clear();
             daoveic = new VeiculoDAO();
             ArrayList<Veiculo> veiculos = new ArrayList<>();
-            try {                
+            try {
                 veiculos = daoveic.buscar(txtPesquisar.getText().toUpperCase(), 10);
             } catch (Exception ex) {
                 System.out.println("Erro ao buscar o Veículo: " + ex.getMessage());
             }
 
             if (!veiculos.isEmpty()) {
-                for(int i=0; i<veiculos.size();i++){
-                tabelaVeiculo.getItems().add(veiculos.get(i));    
+                for (int i = 0; i < veiculos.size(); i++) {
+                    tabelaVeiculo.getItems().add(veiculos.get(i));
                 }
-                controle=true;
+                controle = true;
             } else {
-                System.out.println("Veículo não encontrado.");                
+                System.out.println("Veículo não encontrado.");
             }
         } else if (event.getCode().toString().equals("BACK_SPACE")) {
-            
-            if (txtPesquisar.getText().isEmpty() && controle) {           
+
+            if (txtPesquisar.getText().isEmpty() && controle) {
                 tabelaVeiculo.getItems().clear();
                 atualizarTabela();
                 controle = false;
             }
-            
+
         }
     }
-    
+
     @FXML
     private void btnEditar_pressed(ActionEvent event) {
     }
-    
+
     @FXML
-    private void btnSelecionarCliente_pressed(ActionEvent event){
+    private void btnSelecionarCliente_pressed(ActionEvent event) {
         SelecionarClienteModal climodal = (SelecionarClienteModal) abrirModal("/view/SelecionarClienteModal.fxml");
         climodal.getStage().setTitle("Selecionar Cliente");
         climodal.getStage().showAndWait();
         clienteSelecionado = climodal.buscaCliente();
-        if(clienteSelecionado == null)
+        if (clienteSelecionado == null) {
             return;
-        if(clienteSelecionado instanceof PessoaFisica){
+        }
+        if (clienteSelecionado instanceof PessoaFisica) {
             PessoaFisica pf = (PessoaFisica) clienteSelecionado;
-            txtNomeCliente.setText(pf.getId()+"-"+pf.getNome()+" /"+ pf.getCpf());
-        }
-        else{
+            txtNomeCliente.setText(pf.getId() + "-" + pf.getNome() + " /" + pf.getCpf());
+        } else {
             PessoaJuridica pj = (PessoaJuridica) clienteSelecionado;
-            txtNomeCliente.setText(pj.getId()+"-"+pj.getRazaoSocial()+" /"+ pj.getCnpj());
+            txtNomeCliente.setText(pj.getId() + "-" + pj.getRazaoSocial() + " /" + pj.getCnpj());
         }
-    
+
     }
-    
+
+    @FXML
+    private void btnSelecionarModelo_press(ActionEvent event) {
+        SelecionarModeloModal modeloModal = (SelecionarModeloModal) abrirModal("/view/SelecionarModeloModal.fxml");
+
+        modeloModal.getStage().setTitle("Selecionar Modelo");
+        modeloModal.getStage().showAndWait();
+        modeloSelecionado = modeloModal.buscarModelo();
+        if (modeloSelecionado == null) {
+            return;
+        }
+
+        txtModelo.setText(modeloSelecionado.getNome() + "/" + modeloSelecionado.getMarca() + "/Portas:" + modeloSelecionado.getQuantidade_portas());
+
+    }
+
     @FXML
     private void btnVisualizar_pressed(ActionEvent event) {
     }
-    
+
     @FXML
     private void btnCadastrar_pressed(ActionEvent event) {
     }
-    
+
     @FXML
     private void btnLimpar_pressed(ActionEvent event) {
     }
-    
+
     @FXML
     private void btnEditSalvar_pressed(ActionEvent event) {
     }
-    
+
     @FXML
     private void btnEditCancelar_pressed(ActionEvent event) {
     }
-    
-    
+
     @FXML
     private void btnViewVoltar_press(ActionEvent event) {
     }
-    
+
     @FXML
-    private void btnEditModelo_pres(ActionEvent event){
-        
+    private void btnEditModelo_pres(ActionEvent event) {
+
     }
-    
+
     @FXML
-    private void btnEditProprietario_press(ActionEvent event){
-   
+    private void btnEditProprietario_press(ActionEvent event) {
+
     }
-    
-    
+
 }
