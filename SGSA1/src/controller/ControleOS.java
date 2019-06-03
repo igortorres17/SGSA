@@ -27,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.web.WebView;
 import model.OrdemServico;
 import model.Peca;
 import model.Servico;
@@ -73,15 +74,15 @@ public class ControleOS extends ControleBase implements Initializable {
     @FXML
     private Button btnCancelarOS;
     @FXML
-    private Button btnVisVoltar;
-    @FXML
-    private Button btnVisImprimir;
-    @FXML
     private Button btnRemoverServico;
     @FXML
     private Button btnRemoverPeca;
     @FXML
     private ProgressIndicator progresso;
+    @FXML
+    private Button btnVoltar;
+    @FXML
+    private Label lblVisualizar;
     
     // Custom
     private final int LIMITE_REGISTROS = 8;
@@ -106,7 +107,7 @@ public class ControleOS extends ControleBase implements Initializable {
         cValor.setCellValueFactory(new PropertyValueFactory("valor"));
         cStatus.setCellValueFactory(new PropertyValueFactory("StatusName"));
     }
-    
+        
     private void preencherTableView(ArrayList<OrdemServico> ordens){
         tabelaOS.getItems().clear();
         for(int i = 0; i < ordens.size(); i++){
@@ -134,7 +135,7 @@ public class ControleOS extends ControleBase implements Initializable {
                 OrdemServicoDAO osDAO = new OrdemServicoDAO();
                 try {
                     ArrayList<OrdemServico> os;
-                    os = osDAO.bucar_em_high_speed(placa);
+                    os = osDAO.bucar_em_high_speed(placa, LIMITE_REGISTROS);
                     preencherTableView(os);
                     progresso.setVisible(false);
                     txtPesquisar.setDisable(false);
@@ -157,6 +158,20 @@ public class ControleOS extends ControleBase implements Initializable {
         txtVeiculo.setText("");
         txtObs.setText("");
         lblTotal.setText("0.0");
+    }
+    
+    private  void preencherListViewServico(ArrayList<Servico> servicos){
+        listvServicos.getItems().clear();
+        for(int i = 0; i < servicos.size(); i++){
+            listvServicos.getItems().add(servicos.get(i));
+        }
+    }
+    
+    private void preencherListViewPeca(ArrayList<Peca> pecas){
+        listvPecas.getItems().clear();
+        for(int i = 0; i < pecas.size(); i++){
+            listvPecas.getItems().add(pecas.get(i));
+        }
     }
     
     @FXML
@@ -183,6 +198,10 @@ public class ControleOS extends ControleBase implements Initializable {
             osDAO.inserir(os);
             Alert alert = new Alert(AlertType.INFORMATION, "OS emitida com sucesso. Deseja visualizar e/ou imprimir OS?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
+            if(alert.getResult() == ButtonType.YES){
+                abas.getSelectionModel().selectLast();
+                txtPesquisar.setText(os.getVeiculo().getPlaca());
+            }
             limparCampos();
             
         } catch (Exception ex) {
@@ -271,6 +290,31 @@ public class ControleOS extends ControleBase implements Initializable {
 
     @FXML
     private void btnVisualizarOS_pressed(ActionEvent event) {
+        
+        // Controles
+        btnEmitirOS.setVisible(false);
+        btnLimpar.setVisible(false);
+        btnAddPeca.setVisible(false);
+        btnAddServico.setVisible(false);
+        btnRemoverPeca.setVisible(false);
+        btnRemoverServico.setVisible(false);
+        btnSelecionarVeiculo.setVisible(false);
+        btnVoltar.setVisible(true);
+        lblVisualizar.setText("Visualizar Ordem de Serviço");
+        
+        listvPecas.setDisable(true);
+        listvServicos.setDisable(true);
+        txtObs.setDisable(true);
+        
+        OrdemServico os = (OrdemServico) tabelaOS.getSelectionModel().getSelectedItem();
+        preencherListViewServico(os.getServicos());
+        preencherListViewPeca(os.getPecas());
+        txtVeiculo.setText(os.getVeiculoStr());
+        txtObs.setText(os.getObservacao());
+        lblTotal.setText(os.getValor() + "");
+        abas.getTabs().get(0).setText("Visualizar");
+        abas.getTabs().get(1).setDisable(true);
+        abas.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -286,14 +330,6 @@ public class ControleOS extends ControleBase implements Initializable {
             new Alert(AlertType.ERROR, "Erro ao cancelar OS. Contate o suporte!", ButtonType.OK).showAndWait();
             ex.printStackTrace();
         }
-    }
-
-    @FXML
-    private void btnVisVoltar_pressed(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnVisImprimir_pressed(ActionEvent event) {
     }
     
     @FXML
@@ -320,6 +356,31 @@ public class ControleOS extends ControleBase implements Initializable {
             valorTotal -= peca.getValor();
             lblTotal.setText(valorTotal + "");
         }
+    }
+    
+    
+    @FXML
+    void btnVoltar_pressed(ActionEvent event) {
+        limparCampos();
+        abas.getSelectionModel().selectLast();
+        abas.getSelectionModel().getSelectedItem().setDisable(false);
+        abas.getTabs().get(0).setText("Emitir OS");
+        btnVoltar.setVisible(false);
+        
+        // Controles
+        btnEmitirOS.setVisible(true);
+        btnLimpar.setVisible(true);
+        btnAddPeca.setVisible(true);
+        btnAddServico.setVisible(true);
+        btnRemoverPeca.setVisible(true);
+        btnRemoverServico.setVisible(true);
+        btnSelecionarVeiculo.setVisible(true);
+        btnVoltar.setVisible(false);
+        lblVisualizar.setText("Emitir Ordem de Serviço");
+        
+        listvPecas.setDisable(false);
+        listvServicos.setDisable(false);
+        txtObs.setDisable(false);
     }
     
 }

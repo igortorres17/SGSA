@@ -92,20 +92,17 @@ public class OrdemServicoDAO extends BaseDAO{
         return ordens;
     }
     
-        public ArrayList<OrdemServico> bucar_em_high_speed(String placa) throws SQLException{
-        String sql = "CALL obter_os_json(?)";
+        public ArrayList<OrdemServico> bucar_em_high_speed(String placa, int limite) throws SQLException{
+        String sql = "CALL obter_os_json(?, ?)";
         PreparedStatement instrucaoPreparada = conexao.prepareStatement(sql);
         instrucaoPreparada.setString(1, placa);
+        instrucaoPreparada.setInt(2, limite);
         ResultSet resultado = instrucaoPreparada.executeQuery();
         int i = 0;
         ArrayList<OrdemServico> ordens = new ArrayList();
         while(resultado.next()){
             JSONObject json_veiculo = new JSONObject(resultado.getString("veiculo_json"));
-            JSONObject json_servicos = new JSONObject(resultado.getString("servicos_json"));            
-            JSONObject json_pecas = new JSONObject(resultado.getString("pecas_json"));
-            JSONArray servicos_array = json_servicos.getJSONArray("servicos");
-            JSONArray pecas_array = json_pecas.getJSONArray("pecas");
-            
+                        
             // Parse proprietário
             JSONObject json_cliente = json_veiculo.getJSONObject("cliente");
             Cliente cliente = new Cliente(
@@ -166,28 +163,39 @@ public class OrdemServicoDAO extends BaseDAO{
                     modelo
             );
             
-            ArrayList<Servico> servicos = new ArrayList();            
-            for(int j = 0; j < servicos_array.length(); j++){
-                JSONObject servico_object = (JSONObject) servicos_array.get(i);
-                Servico servico = new Servico(
-                       servico_object.getInt("id"),
-                       servico_object.getString("nome"),
-                       servico_object.getFloat("valor")
-                );
-                servicos.add(servico);
-            }
-            
+            JSONObject json_servicos = null;
+            JSONArray servicos_array = null;
+            JSONObject json_pecas = null;
+            JSONArray pecas_array = null;
+            ArrayList<Servico> servicos = new ArrayList(); 
             ArrayList<Peca> pecas = new ArrayList();
-            for(int j = 0; j < pecas_array.length(); j++){
-                JSONObject peca_object = (JSONObject) pecas_array.get(i);
-                Peca peca = new Peca(
+            if(resultado.getString("servicos_json") != null && !resultado.getString("servicos_json").isEmpty()){
+                json_servicos = new JSONObject(resultado.getString("servicos_json"));
+                servicos_array = json_servicos.getJSONArray("servicos");
+                for(int j = 0; j < servicos_array.length(); j++){
+                    JSONObject servico_object = (JSONObject) servicos_array.get(j);
+                        Servico servico = new Servico(
+                        servico_object.getInt("id"),
+                        servico_object.getString("nome"),
+                     servico_object.getFloat("valor")
+                    );
+                    servicos.add(servico);
+                }
+            }
+            if(resultado.getString("pecas_json") != null && !resultado.getString("pecas_json").isEmpty()){
+                json_pecas = new JSONObject(resultado.getString("pecas_json"));
+                pecas_array = json_pecas.getJSONArray("pecas");
+                for(int j = 0; j < pecas_array.length(); j++){
+                    JSONObject peca_object = (JSONObject) pecas_array.get(j);
+                    Peca peca = new Peca(
                        peca_object.getInt("id"),
                        peca_object.getString("nome"),
                        peca_object.getString("codigo"),
                        peca_object.getFloat("valor")
-                );
-                pecas.add(peca);
-            }
+                    );
+                    pecas.add(peca);
+                }
+            }          
             
             OrdemServico os = new OrdemServico(
                     resultado.getInt("id"), 
