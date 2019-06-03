@@ -5,11 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import model.Cliente;
+import model.Mecanico;
+import model.Modelo;
 import model.Peca;
 import model.Servico;
 import model.Veiculo;
 import model.OrdemServico;
-
+import model.PessoaFisica;
+import model.PessoaJuridica;
+import org.json.*;
 
 /**
  *
@@ -87,10 +92,140 @@ public class OrdemServicoDAO extends BaseDAO{
         return ordens;
     }
     
+        public ArrayList<OrdemServico> bucar_em_high_speed(String placa, int limite) throws SQLException{
+        String sql = "CALL obter_os_json(?, ?)";
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sql);
+        instrucaoPreparada.setString(1, placa);
+        instrucaoPreparada.setInt(2, limite);
+        ResultSet resultado = instrucaoPreparada.executeQuery();
+        int i = 0;
+        ArrayList<OrdemServico> ordens = new ArrayList();
+        while(resultado.next()){
+            JSONObject json_veiculo = new JSONObject(resultado.getString("veiculo_json"));
+                        
+            // Parse proprietário
+            JSONObject json_cliente = json_veiculo.getJSONObject("cliente");
+            Cliente cliente = new Cliente(
+                json_cliente.getInt("id"), 
+                json_cliente.getString("email"), 
+                json_cliente.getString("telefone"), 
+                json_cliente.getString("logradouro"), 
+                json_cliente.getInt("numero"), 
+                json_cliente.getString("complemento"), 
+                json_cliente.getString("bairro"), 
+                json_cliente.getString("municipio"), 
+                json_cliente.getString("estado"), 
+                json_cliente.getString("data_nascimento")
+            );
+            int tipo = json_cliente.getInt("tipo");
+            
+            if(tipo == Cliente.MECANICO){
+                cliente = new Mecanico(
+                        cliente, 
+                        json_cliente.getString("nome_rzsocial"), 
+                        json_cliente.getString("cpf_cnpj"),
+                        json_cliente.getString("senha")
+                );
+            }else if(tipo == Cliente.PESSOA_FISICA || tipo == Cliente.MECANICO){
+                cliente = new PessoaFisica(
+                        cliente, 
+                        json_cliente.getString("nome_rzsocial"), 
+                        json_cliente.getString("cpf_cnpj")
+                );
+            }else if(tipo == Cliente.PESSOA_JURIDICA){
+                cliente = new PessoaJuridica(
+                        cliente,
+                        json_cliente.getString("nome_rzsocial"),
+                        json_cliente.getString("cpf_cnpj")
+                );
+            }
+            
+            // Parse modelo
+            JSONObject modelo_json = json_veiculo.getJSONObject("modelo");
+            Modelo modelo = new Modelo(
+                    modelo_json.getInt("id"), 
+                    modelo_json.getString("tipo"), 
+                    modelo_json.getString("nome"), 
+                    modelo_json.getString("marca"), 
+                    modelo_json.getInt("quantidade_portas"), 
+                    modelo_json.getString("motor"), 
+                    modelo_json.getInt("combustivel")
+            );
+            
+            // Parse veículo
+            Veiculo veiculo = new Veiculo(
+                    json_veiculo.getInt("id"),
+                    json_veiculo.getString("placa"),
+                    json_veiculo.getString("chassi"),
+                    json_veiculo.getInt("ano"),
+                    json_veiculo.getInt("quilometragem"),
+                    cliente,
+                    modelo
+            );
+            
+            JSONObject json_servicos = null;
+            JSONArray servicos_array = null;
+            JSONObject json_pecas = null;
+            JSONArray pecas_array = null;
+            ArrayList<Servico> servicos = new ArrayList(); 
+            ArrayList<Peca> pecas = new ArrayList();
+            if(resultado.getString("servicos_json") != null && !resultado.getString("servicos_json").isEmpty()){
+                json_servicos = new JSONObject(resultado.getString("servicos_json"));
+                servicos_array = json_servicos.getJSONArray("servicos");
+                for(int j = 0; j < servicos_array.length(); j++){
+                    JSONObject servico_object = (JSONObject) servicos_array.get(j);
+                        Servico servico = new Servico(
+                        servico_object.getInt("id"),
+                        servico_object.getString("nome"),
+                     servico_object.getFloat("valor")
+                    );
+                    servicos.add(servico);
+                }
+            }
+            if(resultado.getString("pecas_json") != null && !resultado.getString("pecas_json").isEmpty()){
+                json_pecas = new JSONObject(resultado.getString("pecas_json"));
+                pecas_array = json_pecas.getJSONArray("pecas");
+                for(int j = 0; j < pecas_array.length(); j++){
+                    JSONObject peca_object = (JSONObject) pecas_array.get(j);
+                    Peca peca = new Peca(
+                       peca_object.getInt("id"),
+                       peca_object.getString("nome"),
+                       peca_object.getString("codigo"),
+                       peca_object.getFloat("valor")
+                    );
+                    pecas.add(peca);
+                }
+            }          
+            
+            OrdemServico os = new OrdemServico(
+                    resultado.getInt("id"), 
+                    veiculo, 
+                    resultado.getFloat("valor"), 
+                    servicos, 
+                    pecas, 
+                    resultado.getString("obs"), 
+                    resultado.getInt("status"), 
+                    resultado.getString("data")
+            );
+            
+            ordens.add(os);
+        }
+        
+        return ordens;
+    }
+    
     public void cancelar(OrdemServico ordemServico) throws SQLException{
         String sqlQuery = "UPDATE " + tabela + " SET status = ? WHERE id = ?";
         PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
         instrucaoPreparada.setInt(1, OrdemServico.CANCELADA);
+        instrucaoPreparada.setInt(2, ordemServico.getId());
+        instrucaoPreparada.execute();
+    }
+    
+    public void concluir(OrdemServico ordemServico) throws SQLException{
+        String sqlQuery = "UPDATE " + tabela + " SET status = ? WHERE id = ?";
+        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
+        instrucaoPreparada.setInt(1, OrdemServico.CONCLUIDA);
         instrucaoPreparada.setInt(2, ordemServico.getId());
         instrucaoPreparada.execute();
     }

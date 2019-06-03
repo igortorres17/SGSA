@@ -87,6 +87,16 @@ public class OrdemServico {
     public int getStatus() {
         return status;
     }
+    
+    public String getStatusName(){
+        if(status == CONCLUIDA)
+            return "Concluída";
+        
+        if(status == CANCELADA)
+            return "Cancelada";
+        
+        return "Aberta";
+    }
 
     public void setStatus(int status) {
         this.status = status;

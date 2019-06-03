@@ -25,7 +25,7 @@
                         <Label layoutX="15.0" layoutY="135.0" text="Serviços" />
                         <Button fx:id="btnEmitirOS" layoutX="503.0" layoutY="471.0" mnemonicParsing="false" onAction="#btnEmitirOS_pressed" prefHeight="29.0" prefWidth="307.0" styleClass="blue-button" text="Emitir OS" />
                         <Button fx:id="btnLimpar" layoutX="503.0" layoutY="434.0" mnemonicParsing="false" onAction="#btnLimpar_pressed" prefHeight="29.0" prefWidth="307.0" styleClass="orange-button" text="Limpar" />
-                        <Label layoutX="16.0" layoutY="14.0" styleClass="title1" text="Emitir Ordem de Serviço" />
+                        <Label fx:id="lblVisualizar" layoutX="16.0" layoutY="14.0" styleClass="title1" text="Emitir Ordem de Serviço" />
                         <ListView fx:id="listvServicos" layoutX="17.0" layoutY="152.0" prefHeight="123.0" prefWidth="452.0" />
                         <Button fx:id="btnAddServico" layoutX="359.0" layoutY="284.0" mnemonicParsing="false" onAction="#btnAddServico_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Incluir" />
                         <Label layoutX="22.0" layoutY="320.0" text="Peças" />
@@ -39,6 +39,7 @@
                         <Label fx:id="lblTotal" layoutX="537.0" layoutY="290.0" text="0,0" />
                         <Button fx:id="btnRemoverServico" layoutX="243.0" layoutY="284.0" mnemonicParsing="false" onAction="#btnRemoverServico_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Remover" />
                         <Button fx:id="btnRemoverPeca" layoutX="243.0" layoutY="467.0" mnemonicParsing="false" onAction="#btnRemoverPeca_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Remover" />
+                        <Button fx:id="btnVoltar" layoutX="503.0" layoutY="399.0" mnemonicParsing="false" onAction="#btnVoltar_pressed" prefHeight="29.0" prefWidth="307.0" styleClass="orange-button" text="Voltar" visible="false" />
                      </children>
                   </AnchorPane>
                </content>
@@ -62,17 +63,6 @@
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Pesquisar" />
                         <Button fx:id="btnCancelarOS" disable="true" layoutX="498.0" layoutY="393.0" mnemonicParsing="false" onAction="#btnCancelarOS_pressed" prefHeight="29.0" prefWidth="93.0" styleClass="blue-button" text="Cancelar OS" />
                         <ProgressIndicator fx:id="progresso" layoutX="525.0" layoutY="35.0" prefHeight="20.0" prefWidth="20.0" visible="false" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab text="Visualizar">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="btnVisVoltar" layoutX="627.0" layoutY="467.0" mnemonicParsing="false" onAction="#btnVisVoltar_pressed" prefHeight="25.0" prefWidth="180.0" text="Voltar" />
-                        <Button fx:id="btnVisImprimir" disable="true" layoutX="432.0" layoutY="467.0" mnemonicParsing="false" onAction="#btnVisImprimir_pressed" prefHeight="25.0" prefWidth="180.0" text="Imprimir" />
-                        <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Visualizar" />
                      </children>
                   </AnchorPane>
                </content>

@@ -31,6 +31,7 @@ public abstract class ControleBase {
             return stage;
         } catch (IOException ex) {
             System.out.println("Falha ao abrir janela: " + ex.getMessage());
+            ex.printStackTrace();
         }     
         
         return null;
