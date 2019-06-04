@@ -52,7 +52,7 @@
                         <Button fx:id="btnCadastrar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnCadastrar_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Cadastrar" />
                         <Button fx:id="btnLimpar" layoutX="548.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnLimpar_pressed" prefHeight="0.0" prefWidth="106.0" styleClass="orange-button" text="Limpar" />
                         <Label layoutX="16.0" layoutY="14.0" styleClass="title1" text="Cadastrar" />
-                        <Label layoutX="17.0" layoutY="71.0" text="Nome do Cliente" />
+                        <Label layoutX="17.0" layoutY="91.0" text="Proprietário" />
                         <TextField fx:id="txtModelo" editable="false" layoutX="14.0" layoutY="339.0" promptText="Modelo" />
                         <Button fx:id="btnSelecionarModelo" layoutX="217.0" layoutY="341.0" mnemonicParsing="false" onAction="#btnSelecionarModelo_press" text="Selecionar" />
                         <TextField fx:id="txtNomeCliente" layoutX="14.0" layoutY="116.0" prefHeight="30.0" prefWidth="450.0" />
@@ -66,22 +66,25 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Editar" />
-                        <Label layoutX="35.0" layoutY="198.0" prefHeight="16.0" prefWidth="48.0" text="Placa" />
-                        <TextField fx:id="txtEditPlaca" layoutX="35.0" layoutY="215.0" prefWidth="189.0" promptText="HHH-1111" />
-                        <Label layoutX="35.0" layoutY="267.0" text="Chassi" />
-                        <TextField fx:id="txtEditChassi" layoutX="35.0" layoutY="284.0" prefWidth="189.0" promptText="Chassi" />
-                        <Label layoutX="309.0" layoutY="267.0" text="Quilometragem KM" />
-                        <TextField fx:id="txtEditQuilo" layoutX="309.0" layoutY="284.0" prefWidth="189.0" promptText="km" />
-                        <Label layoutX="309.0" layoutY="198.0" text="Ano" />
-                        <TextField fx:id="txtEditAno" layoutX="309.0" layoutY="215.0" prefWidth="189.0" promptText="YYYY/YY" />
-                        <Label layoutX="35.0" layoutY="69.0" text="Modelo" />
-                        <TextField fx:id="txtEditModelo" layoutX="35.0" layoutY="86.0" prefHeight="30.0" prefWidth="300.0" promptText="Modelo do Veículo" />
-                        <Label layoutX="35.0" layoutY="132.0" text="Proprietário" />
-                        <TextField fx:id="txtEditProprietario" layoutX="35.0" layoutY="149.0" prefHeight="30.0" prefWidth="300.0" promptText="Proprietário" />
+                        <Label layoutX="35.0" layoutY="248.0" prefHeight="16.0" prefWidth="48.0" text="Placa" />
+                        <TextField fx:id="txtEditPlaca" layoutX="35.0" layoutY="265.0" prefWidth="189.0" promptText="HHH-1111" />
+                        <Label layoutX="35.0" layoutY="317.0" text="Chassi" />
+                        <TextField fx:id="txtEditChassi" layoutX="35.0" layoutY="334.0" prefWidth="189.0" promptText="Chassi" />
+                        <Label layoutX="309.0" layoutY="317.0" text="Quilometragem KM" />
+                        <TextField fx:id="txtEditQuilo" layoutX="309.0" layoutY="334.0" prefWidth="189.0" promptText="km" />
+                        <Label layoutX="309.0" layoutY="248.0" text="Ano" />
+                        <TextField fx:id="txtEditAno" layoutX="309.0" layoutY="265.0" prefWidth="189.0" promptText="YYYY/YY" />
+                        <Label layoutX="35.0" layoutY="187.0" text="Modelo" />
+                        <TextField fx:id="txtEditModelo" editable="false" layoutX="35.0" layoutY="204.0" prefHeight="30.0" prefWidth="300.0" promptText="Modelo do Veículo" />
+                        <Label layoutX="35.0" layoutY="128.0" text="Proprietário" />
+                        <TextField fx:id="txtEditProprietario" editable="false" layoutX="35.0" layoutY="145.0" prefHeight="30.0" prefWidth="300.0" promptText="Proprietário" />
                         <Button fx:id="btnEditSalvar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditSalvar_pressed" prefWidth="110.0" text="Salvar" />
                         <Button fx:id="btnEditCancelar" layoutX="541.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditCancelar_pressed" prefWidth="110.0" text="Cancelar" />
-                        <Button fx:id="btnEditModelo" layoutX="358.0" layoutY="86.0" mnemonicParsing="false" onAction="#btnEditModelo_pres" text="Selecionar" />
-                        <Button fx:id="btnEditProprietario" layoutX="358.0" layoutY="149.0" mnemonicParsing="false" onAction="#btnEditProprietario_press" text="Selecionar" />
+                        <Button fx:id="btnEditModelo" layoutX="358.0" layoutY="204.0" mnemonicParsing="false" onAction="#btnEditModelo_pres" text="Selecionar" />
+                        <Button fx:id="btnEditProprietario" layoutX="358.0" layoutY="145.0" mnemonicParsing="false" onAction="#btnEditProprietario_press" text="Selecionar" />
+                        <TextField fx:id="txtId" editable="false" layoutX="35.0" layoutY="87.0" />
+                        <Label layoutX="34.0" layoutY="62.0" text="ID" />
+                        <Button fx:id="btnExcluir" layoutX="415.0" layoutY="404.0" mnemonicParsing="false" onAction="#btnExcluir_press" prefHeight="30.0" prefWidth="105.0" text="Excluir" />
                      </children>
                   </AnchorPane>
                </content>
@@ -91,7 +94,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btnViewVoltar" layoutX="613.0" layoutY="385.0" mnemonicParsing="false" onAction="#btnViewVoltar_press" prefHeight="25.0" prefWidth="180.0" text="Voltar" />
-                        <Button fx:id="btnViewModificar" layoutX="227.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Modificar" />
+                        <Button fx:id="btnViewModificar" layoutX="227.0" layoutY="385.0" mnemonicParsing="false" onAction="#btnViewModificar_pressed" prefHeight="25.0" prefWidth="180.0" text="Modificar" />
                         <Button fx:id="btnViewImprimir" disable="true" layoutX="418.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Imprimir" />
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Visualizar" />
                         <Label layoutX="12.0" layoutY="68.0" styleClass="title2" text="Informações" />
@@ -106,7 +109,7 @@
                         <Label fx:id="viewModelo" layoutX="327.0" layoutY="103.0" text="ModeloVeiculo" />
                         <Label fx:id="viewProprietario" layoutX="628.0" layoutY="103.0" text="Proprietário" />
                         <Label layoutX="17.0" layoutY="178.0" text="KM:" />
-                        <Label fx:id="viewAno1" layoutX="85.0" layoutY="178.0" text="viewQuilometragem" />
+                        <Label fx:id="viewQuilometragem" layoutX="85.0" layoutY="178.0" text="viewQuilometragem" />
                      </children>
                   </AnchorPane>
                </content>

@@ -11,7 +11,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -84,6 +86,10 @@ public class ControleVeiculo extends ControleBase implements Initializable {
     @FXML
     private Button btnEditProprietario;
     @FXML
+    private TextField txtId;
+    @FXML
+    private Button btnExcluir;
+    @FXML
     private Button btnViewVoltar;
     @FXML
     private Button btnViewModificar;
@@ -100,7 +106,7 @@ public class ControleVeiculo extends ControleBase implements Initializable {
     @FXML
     private Label viewProprietario;
     @FXML
-    private Label viewAno1;
+    private Label viewQuilometragem;
 
     private VeiculoDAO daoveic;
     private Cliente clienteSelecionado;
@@ -113,6 +119,8 @@ public class ControleVeiculo extends ControleBase implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        btnEditar.setDisable(false);
+        btnVisualizar.setDisable(false);
         tabelaVeiculo.getItems().clear();
         configurarTableView();
         atualizarTabela();
@@ -139,6 +147,7 @@ public class ControleVeiculo extends ControleBase implements Initializable {
     public void atualizarTabela() {
         ArrayList<Veiculo> veic = new ArrayList<>();
         daoveic = new VeiculoDAO();
+        tabelaVeiculo.getItems().clear();
         try {
             veic = daoveic.buscar("", 10);
         } catch (Exception ex) {
@@ -170,12 +179,12 @@ public class ControleVeiculo extends ControleBase implements Initializable {
             } catch (Exception ex) {
                 System.out.println("Erro ao buscar o Veículo: " + ex.getMessage());
             }
-
+                controle = true;
             if (!veiculos.isEmpty()) {
                 for (int i = 0; i < veiculos.size(); i++) {
                     tabelaVeiculo.getItems().add(veiculos.get(i));
                 }
-                controle = true;
+                
             } else {
                 System.out.println("Veículo não encontrado.");
             }
@@ -192,6 +201,36 @@ public class ControleVeiculo extends ControleBase implements Initializable {
 
     @FXML
     private void btnEditar_pressed(ActionEvent event) {
+        btnEditSalvar.setDisable(false);
+        btnEditCancelar.setDisable(false);
+        Veiculo veic = (Veiculo) tabelaVeiculo.getSelectionModel().getSelectedItem();
+        if (veic != null) {
+            abas.getSelectionModel().select(2);
+            abas.getTabs().get(0).setDisable(true);
+            abas.getTabs().get(1).setDisable(true);
+            abas.getTabs().get(2).setDisable(false);
+            preencherEditar(veic);
+        } else {
+            Alert mens = new Alert(Alert.AlertType.INFORMATION, "Selecione um Modelo na Tabela.", ButtonType.OK);
+            mens.showAndWait();
+        }
+    }
+    
+    private void preencherEditar(Veiculo veic){
+        
+        txtId.setText(String.valueOf(veic.getId()));
+        txtEditAno.setText(String.valueOf(veic.getAno()));
+        txtEditChassi.setText(veic.getChassi());
+        txtEditModelo.setText(veic.getModelo().getNome() + "/" + veic.getModelo().getMarca() + "/" + veic.getModelo().getQuantidade_portas()+" portas");
+        if (veic.getProprietario() instanceof PessoaFisica) {
+            PessoaFisica pf = (PessoaFisica) veic.getProprietario();
+            txtEditProprietario.setText(pf.getId() + "-" + pf.getNome() + " /" + pf.getCpf());
+        } else {
+            PessoaJuridica pj = (PessoaJuridica) veic.getProprietario();
+            txtEditProprietario.setText(pj.getId() + "-" + pj.getRazaoSocial() + " /" + pj.getCnpj());
+        }
+        txtEditQuilo.setText(String.valueOf(veic.getQuilometragem()));
+        txtEditPlaca.setText(veic.getPlaca());
     }
 
     @FXML
@@ -224,42 +263,255 @@ public class ControleVeiculo extends ControleBase implements Initializable {
             return;
         }
 
-        txtModelo.setText(modeloSelecionado.getNome() + "/" + modeloSelecionado.getMarca() + "/Portas:" + modeloSelecionado.getQuantidade_portas());
+        txtModelo.setText(modeloSelecionado.getNome() + "/" + modeloSelecionado.getMarca() + "/" + modeloSelecionado.getQuantidade_portas()+" portas");
 
     }
 
     @FXML
     private void btnVisualizar_pressed(ActionEvent event) {
+        Veiculo veic = (Veiculo) tabelaVeiculo.getSelectionModel().getSelectedItem();
+        if (veic != null) {
+            abas.getSelectionModel().select(3);
+            abas.getTabs().get(0).setDisable(true);
+            abas.getTabs().get(1).setDisable(true);
+            abas.getTabs().get(2).setDisable(true);
+            abas.getTabs().get(3).setDisable(false);
+            preencherView(veic);
+            preencherEditar(veic);
+        } else {
+            Alert mens = new Alert(Alert.AlertType.INFORMATION, "Selecione um Modelo na Tabela.", ButtonType.OK);
+            mens.showAndWait();
+        }
+    }
+    
+    private void preencherView(Veiculo veic){
+        viewAno.setText(String.valueOf(veic.getAno()));
+        viewChassi.setText(veic.getChassi());
+        viewModelo.setText(veic.getModelo().getNome() + "/" + veic.getModelo().getMarca() + "/" + veic.getModelo().getQuantidade_portas()+" portas");
+        viewPlaca.setText(veic.getPlaca());
+        viewQuilometragem.setText(String.valueOf(veic.getQuilometragem()));
+         if (veic.getProprietario() instanceof PessoaFisica) {
+            PessoaFisica pf = (PessoaFisica) veic.getProprietario();
+            viewProprietario.setText(pf.getId() + "-" + pf.getNome() + " /" + pf.getCpf());
+        } else {
+            PessoaJuridica pj = (PessoaJuridica) veic.getProprietario();
+            viewProprietario.setText(pj.getId() + "-" + pj.getRazaoSocial() + " /" + pj.getCnpj());
+        }
+    
     }
 
     @FXML
     private void btnCadastrar_pressed(ActionEvent event) {
+        if(validarCadastrar()){
+            try{
+             daoveic.inserir(new Veiculo(txtPlaca.getText(),txtChassi.getText(),Integer.valueOf(txtAno.getText()),Integer.
+                    valueOf(txtQuilometragem.getText()),clienteSelecionado,modeloSelecionado));
+             Alert mens = new Alert(Alert.AlertType.CONFIRMATION, "Cadastro efetuado com sucesso. Gostaria de fazer outro cadastro?", ButtonType.YES,ButtonType.NO);
+             mens.showAndWait();
+             if(mens.getResult() == ButtonType.NO){
+                 limpar();
+                 atualizarTabela();
+            abas.getSelectionModel().select(0);
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getTabs().get(2).setDisable(true);
+            abas.getTabs().get(3).setDisable(true); 
+             }
+             else{
+                 limpar();
+             }
+            }
+            catch(Exception ex){
+                System.out.println("Erro ao tentar inserir veículo: "+ex.getMessage());
+            }
+            
+        }
+    }
+    
+    private boolean validarCadastrar(){
+        try {
+            Integer.parseInt(txtAno.getText());
+        } catch (NumberFormatException ex) {
+            new Alert(Alert.AlertType.ERROR, "Campo ano deve ser preenchido corretamente.", ButtonType.OK).showAndWait();
+            return false;
+        }
+        try {
+            Integer.parseInt(txtQuilometragem.getText());
+        } catch (NumberFormatException ex) {
+            new Alert(Alert.AlertType.ERROR, "Campo Quilometragem deve ser preenchido corretamente.", ButtonType.OK).showAndWait();
+            return false;
+        }
+        if (txtChassi.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Campo chassi é obrigatório", ButtonType.OK).showAndWait();
+            return false;
+        }
+        else if(txtModelo.getText().isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Selecione um modelo para o veículo.", ButtonType.OK).showAndWait();
+            return false;
+        }
+        else if(txtNomeCliente.getText().isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Selecione um proprietário para o veículo.", ButtonType.OK).showAndWait();
+            return false;
+        }
+        else if(txtPlaca.getText().isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Campo Placa é obrigatório.", ButtonType.OK).showAndWait();
+            return false;
+        }
+     return true;   
+    }
+    
+    private boolean validarEditar(){
+        try {
+            Integer.parseInt(txtEditAno.getText());
+        } catch (NumberFormatException ex) {
+            new Alert(Alert.AlertType.ERROR, "Campo ano deve ser preenchido corretamente.", ButtonType.OK).showAndWait();
+            return false;
+        }
+        try {
+            Integer.parseInt(txtEditQuilo.getText());
+        } catch (NumberFormatException ex) {
+            new Alert(Alert.AlertType.ERROR, "Campo Quilometragem deve ser preenchido corretamente.", ButtonType.OK).showAndWait();
+            return false;
+        }
+        if (txtEditChassi.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Campo chassi é obrigatório", ButtonType.OK).showAndWait();
+            return false;
+        }
+        else if(txtEditModelo.getText().isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Selecione um modelo para o veículo.", ButtonType.OK).showAndWait();
+            return false;
+        }
+        else if(txtEditProprietario.getText().isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Selecione um proprietário para o veículo.", ButtonType.OK).showAndWait();
+            return false;
+        }
+        else if(txtEditPlaca.getText().isEmpty()){
+            new Alert(Alert.AlertType.ERROR, "Campo Placa é obrigatório.", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        return true;
     }
 
     @FXML
     private void btnLimpar_pressed(ActionEvent event) {
+        limpar();
+               
+    }
+    private void limpar(){
+        txtAno.setText("");
+        txtChassi.setText("");
+        txtModelo.setText("");
+        modeloSelecionado=null;
+        txtNomeCliente.setText("");
+        txtPlaca.setText("");
+        txtQuilometragem.setText("");
+        clienteSelecionado = null;
     }
 
     @FXML
     private void btnEditSalvar_pressed(ActionEvent event) {
+        if(validarEditar()){
+            try{
+                daoveic.alterar(new Veiculo(Integer.valueOf(txtId.getText()),txtEditPlaca.getText(),txtEditChassi.getText(),Integer.valueOf(txtEditAno.getText()),Integer.
+                    valueOf(txtEditQuilo.getText()),clienteSelecionado,modeloSelecionado));
+               new Alert(Alert.AlertType.INFORMATION, "Registro editado com sucesso.", ButtonType.OK).showAndWait();
+            abas.getSelectionModel().select(0);
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getTabs().get(2).setDisable(true);
+            abas.getTabs().get(3).setDisable(true); 
+             
+            }
+            catch(Exception ex){
+                System.out.println("Erro ao editar o veículo: "+ex.getMessage());
+            }
+        }
+        
     }
 
     @FXML
     private void btnEditCancelar_pressed(ActionEvent event) {
+        abas.getSelectionModel().select(0);
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getTabs().get(2).setDisable(true);
+            abas.getTabs().get(3).setDisable(true);
     }
 
     @FXML
     private void btnViewVoltar_press(ActionEvent event) {
+        abas.getSelectionModel().select(0);
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getTabs().get(2).setDisable(true);
+            abas.getTabs().get(3).setDisable(true);
     }
 
     @FXML
     private void btnEditModelo_pres(ActionEvent event) {
+        SelecionarModeloModal modeloModal = (SelecionarModeloModal) abrirModal("/view/SelecionarModeloModal.fxml");
 
+        modeloModal.getStage().setTitle("Selecionar Modelo");
+        modeloModal.getStage().showAndWait();
+        modeloSelecionado = modeloModal.buscarModelo();
+        if (modeloSelecionado == null) {
+            return;
+        }
+
+        txtEditModelo.setText(modeloSelecionado.getNome() + "/" + modeloSelecionado.getMarca() + "/" + modeloSelecionado.getQuantidade_portas()+" portas");        
     }
 
     @FXML
     private void btnEditProprietario_press(ActionEvent event) {
+        SelecionarClienteModal climodal = (SelecionarClienteModal) abrirModal("/view/SelecionarClienteModal.fxml");
+        climodal.getStage().setTitle("Selecionar Cliente");
+        climodal.getStage().showAndWait();
+        clienteSelecionado = climodal.buscaCliente();
+        if (clienteSelecionado == null) {
+            return;
+        }
+        if (clienteSelecionado instanceof PessoaFisica) {
+            PessoaFisica pf = (PessoaFisica) clienteSelecionado;
+            txtEditProprietario.setText(pf.getId() + "-" + pf.getNome() + " /" + pf.getCpf());
+        } else {
+            PessoaJuridica pj = (PessoaJuridica) clienteSelecionado;
+            txtEditProprietario.setText(pj.getId() + "-" + pj.getRazaoSocial() + " /" + pj.getCnpj());
+        }
 
     }
+    
+    @FXML
+    private void btnExcluir_press(ActionEvent event){
+        Alert mens = new Alert(Alert.AlertType.CONFIRMATION, "Gostaria de excluir este registro?", ButtonType.YES, ButtonType.NO);
+        mens.showAndWait();
+        if (mens.getResult() == ButtonType.YES) {
+            try {
+                daoveic.excluir(Integer.valueOf(txtId.getText()));
+                Alert res = new Alert(Alert.AlertType.INFORMATION, "Excluído com sucesso.", ButtonType.OK);
+                res.showAndWait();
 
+            } catch (Exception ex) {
+                System.out.println("Erro ao excluir o veículo:" + ex.getMessage());
+            }
+            abas.getSelectionModel().select(0);
+            abas.getTabs().get(0).setDisable(false);
+            abas.getTabs().get(1).setDisable(false);
+            abas.getTabs().get(2).setDisable(true);
+            abas.getTabs().get(3).setDisable(true);
+            atualizarTabela();
+        } else {
+            Alert res = new Alert(Alert.AlertType.INFORMATION, "Registro mantido.", ButtonType.OK);
+            res.showAndWait();
+        }
+        
+    }
+    @FXML
+    private void btnViewModificar_pressed(ActionEvent event){
+        abas.getSelectionModel().select(2);
+            abas.getTabs().get(0).setDisable(true);
+            abas.getTabs().get(1).setDisable(true);
+            abas.getTabs().get(2).setDisable(false);
+            abas.getTabs().get(3).setDisable(true);
+    }
 }

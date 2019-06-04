@@ -155,7 +155,7 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
             try {
                 modelos = daoModelo.buscar(txtPesquisar.getText(), 8);
             } catch (Exception ex) {
-                System.out.println("Erro ao buscar o Modelo: " + ex.getMessage());
+                System.out.println("Erro ao buscar o Modelo pesquisar: " + ex.getMessage());
             }
             controle = true;
             for (int i = 0; i < modelos.size(); i++) {
@@ -228,6 +228,7 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
         viewMarca.setText(mod.getMarca());
         viewPortas.setText(String.valueOf(mod.getQuantidade_portas()));
         viewCombustível.setText(mod.getNomeCombustivel());
+        preencherEditar(mod);
     }
 
     @FXML
@@ -273,7 +274,7 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
         } else if (txtMotor.getText().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Campo motor é obrigatório", ButtonType.OK).showAndWait();
             return false;
-        } else if (cboxCombustivel.getSelectionModel().getSelectedIndex() == 5) {
+        } else if (cboxCombustivel.getSelectionModel().isSelected(5)) {
             new Alert(Alert.AlertType.ERROR, "Campo combustível precisa ser selecionado.", ButtonType.OK).showAndWait();
             return false;
         }
@@ -301,7 +302,7 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
         } else if (txtEditMotor.getText().isEmpty()) {
             new Alert(Alert.AlertType.ERROR, "Campo motor é obrigatório", ButtonType.OK).showAndWait();
             return false;
-        } else if (cbEditCombustivel.getSelectionModel().getSelectedIndex() == 5) {
+        } else if (cbEditCombustivel.getSelectionModel().isSelected(5)) {
             new Alert(Alert.AlertType.ERROR, "Campo combustível precisa ser selecionado.", ButtonType.OK).showAndWait();
             return false;
         }
@@ -385,6 +386,16 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
         abas.getTabs().get(2).setDisable(true);
         abas.getTabs().get(3).setDisable(true);
         atualizarTabela();
+    }
+    
+    
+    @FXML
+    private void btnViewModificar_press(ActionEvent event){
+       abas.getSelectionModel().select(2);
+        abas.getTabs().get(0).setDisable(true);
+        abas.getTabs().get(1).setDisable(true);
+        abas.getTabs().get(2).setDisable(false);
+        abas.getTabs().get(3).setDisable(true); 
     }
 
 }

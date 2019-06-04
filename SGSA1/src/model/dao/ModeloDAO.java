@@ -114,11 +114,11 @@ public class ModeloDAO extends BaseDAO {
             int qtdPortas = rs.getInt("quantidade_portas");
             String motor = rs.getString("motor");
             int combustivel = rs.getInt("combustivel");
-            stmt.close();
-            rs.close();
 
             modelos.add(new Modelo(ident, tipo, nome, marca, qtdPortas, motor, combustivel));
         }
+          stmt.close();
+            rs.close();
         return modelos;
     }
 

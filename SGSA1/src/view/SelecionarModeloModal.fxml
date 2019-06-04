@@ -30,7 +30,7 @@
                               <TableColumn prefWidth="441.0" text="Combustível" />
                            </columns>
                         </TableView>
-                        <TextField fx:id="txtPesquisar" layoutX="558.0" layoutY="30.0" onKeyPressed="#txtPesquisar_keypressed" prefHeight="27.0" prefWidth="252.0" promptText="Pesquisar Placa ..." styleClass="pesquisar-cinza-icon" />
+                        <TextField fx:id="txtPesquisar" layoutX="558.0" layoutY="30.0" onKeyPressed="#txtPesquisar_keypressed" prefHeight="27.0" prefWidth="252.0" promptText="Pesquisar Nome ..." styleClass="pesquisar-cinza-icon" />
                         <Button fx:id="btnEditar" disable="true" layoutX="635.0" layoutY="392.0" mnemonicParsing="false" onAction="#btnEditar_pressed" prefHeight="25.0" prefWidth="77.0" styleClass="blue-button" text="Editar" />
                         <Button fx:id="btnVisualizar" disable="true" layoutX="722.0" layoutY="392.0" mnemonicParsing="false" onAction="#btnVisualizar_pressed" prefHeight="25.0" prefWidth="77.0" styleClass="blue-button" text="Visualizar" />
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Pesquisar" />
@@ -93,7 +93,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="btnViewVoltar" layoutX="613.0" layoutY="385.0" mnemonicParsing="false" onAction="#btnViewVoltar_press" prefHeight="25.0" prefWidth="180.0" text="Voltar" />
-                        <Button fx:id="btnViewModificar" layoutX="227.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Modificar" />
+                        <Button fx:id="btnViewModificar" layoutX="227.0" layoutY="385.0" mnemonicParsing="false" onAction="#btnViewModificar_press" prefHeight="25.0" prefWidth="180.0" text="Modificar" />
                         <Button fx:id="btnViewImprimir" disable="true" layoutX="418.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Imprimir" />
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Visualizar" />
                         <Label layoutX="12.0" layoutY="68.0" styleClass="title2" text="Informações" />
