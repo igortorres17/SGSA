@@ -62,7 +62,7 @@
                         <Button fx:id="btnVisualizarOS" disable="true" layoutX="717.0" layoutY="393.0" mnemonicParsing="false" onAction="#btnVisualizarOS_pressed" prefHeight="25.0" prefWidth="93.0" styleClass="blue-button" text="Visualizar" />
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Pesquisar" />
                         <Button fx:id="btnCancelarOS" disable="true" layoutX="498.0" layoutY="393.0" mnemonicParsing="false" onAction="#btnCancelarOS_pressed" prefHeight="29.0" prefWidth="93.0" styleClass="blue-button" text="Cancelar OS" />
-                        <ProgressIndicator fx:id="progresso" layoutX="525.0" layoutY="35.0" prefHeight="20.0" prefWidth="20.0" visible="false" />
+                        <ProgressIndicator fx:id="progresso" layoutX="781.0" layoutY="35.0" prefHeight="20.0" prefWidth="20.0" style="-fx-progress-color: -cor-borda-controle;" visible="false" />
                      </children>
                   </AnchorPane>
                </content>

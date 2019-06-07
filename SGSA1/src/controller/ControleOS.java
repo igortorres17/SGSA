@@ -130,6 +130,11 @@ public class ControleOS extends ControleBase implements Initializable {
     private void buscar(String placa){
         progresso.setVisible(true);
         txtPesquisar.setDisable(true);
+        txtPesquisar.getStyleClass().remove("pesquisar-cinza-icon");
+        tabelaOS.setDisable(true);
+        btnCancelarOS.setDisable(true);
+        btnDarBaixaOS.setDisable(true);
+        btnVisualizarOS.setDisable(true);
         Task task = new Task(){
             public Void call(){
                 OrdemServicoDAO osDAO = new OrdemServicoDAO();
@@ -139,6 +144,8 @@ public class ControleOS extends ControleBase implements Initializable {
                     preencherTableView(os);
                     progresso.setVisible(false);
                     txtPesquisar.setDisable(false);
+                    txtPesquisar.getStyleClass().add("pesquisar-cinza-icon");
+                    tabelaOS.setDisable(false);
                 } catch (Exception ex) {
                     System.out.println("Falha ao buscar OS's: " + ex.getMessage());
                     ex.printStackTrace();
