@@ -149,7 +149,7 @@ public class ControleVeiculo extends ControleBase implements Initializable {
         daoveic = new VeiculoDAO();
         tabelaVeiculo.getItems().clear();
         try {
-            veic = daoveic.buscar("", 10);
+            veic = daoveic.buscar("", 8);
         } catch (Exception ex) {
             System.out.println("Erro ao buscar veiculos: " + ex.getMessage());
             ex.printStackTrace();
@@ -175,7 +175,7 @@ public class ControleVeiculo extends ControleBase implements Initializable {
             daoveic = new VeiculoDAO();
             ArrayList<Veiculo> veiculos = new ArrayList<>();
             try {
-                veiculos = daoveic.buscar(txtPesquisar.getText().toUpperCase(), 10);
+                veiculos = daoveic.buscar(txtPesquisar.getText().toUpperCase(), 8);
             } catch (Exception ex) {
                 System.out.println("Erro ao buscar o Veículo: " + ex.getMessage());
             }
