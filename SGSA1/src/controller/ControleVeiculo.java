@@ -231,6 +231,8 @@ public class ControleVeiculo extends ControleBase implements Initializable {
         }
         txtEditQuilo.setText(String.valueOf(veic.getQuilometragem()));
         txtEditPlaca.setText(veic.getPlaca());
+        clienteSelecionado = veic.getProprietario();
+        modeloSelecionado = veic.getModelo();
     }
 
     @FXML
@@ -304,8 +306,9 @@ public class ControleVeiculo extends ControleBase implements Initializable {
     private void btnCadastrar_pressed(ActionEvent event) {
         if(validarCadastrar()){
             try{
-             daoveic.inserir(new Veiculo(txtPlaca.getText(),txtChassi.getText(),Integer.valueOf(txtAno.getText()),Integer.
-                    valueOf(txtQuilometragem.getText()),clienteSelecionado,modeloSelecionado));
+                Veiculo veic = new Veiculo(txtPlaca.getText(),txtChassi.getText(),Integer.valueOf(txtAno.getText()),Integer.
+                    valueOf(txtQuilometragem.getText()),clienteSelecionado,modeloSelecionado);
+             daoveic.inserir(veic);
              Alert mens = new Alert(Alert.AlertType.CONFIRMATION, "Cadastro efetuado com sucesso. Gostaria de fazer outro cadastro?", ButtonType.YES,ButtonType.NO);
              mens.showAndWait();
              if(mens.getResult() == ButtonType.NO){
@@ -323,6 +326,7 @@ public class ControleVeiculo extends ControleBase implements Initializable {
             }
             catch(Exception ex){
                 System.out.println("Erro ao tentar inserir veículo: "+ex.getMessage());
+                new Alert(Alert.AlertType.ERROR, "Erro ao tentar inserir o registro.", ButtonType.OK).showAndWait();
             }
             
         }
@@ -416,6 +420,7 @@ public class ControleVeiculo extends ControleBase implements Initializable {
                 daoveic.alterar(new Veiculo(Integer.valueOf(txtId.getText()),txtEditPlaca.getText(),txtEditChassi.getText(),Integer.valueOf(txtEditAno.getText()),Integer.
                     valueOf(txtEditQuilo.getText()),clienteSelecionado,modeloSelecionado));
                new Alert(Alert.AlertType.INFORMATION, "Registro editado com sucesso.", ButtonType.OK).showAndWait();
+            atualizarTabela();
             abas.getSelectionModel().select(0);
             abas.getTabs().get(0).setDisable(false);
             abas.getTabs().get(1).setDisable(false);
@@ -425,6 +430,8 @@ public class ControleVeiculo extends ControleBase implements Initializable {
             }
             catch(Exception ex){
                 System.out.println("Erro ao editar o veículo: "+ex.getMessage());
+                new Alert(Alert.AlertType.ERROR, "Erro ao editar o registro.", ButtonType.OK).showAndWait();
+                ex.printStackTrace();
             }
         }
         

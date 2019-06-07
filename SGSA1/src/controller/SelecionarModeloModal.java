@@ -257,6 +257,7 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
                 new Alert(Alert.AlertType.INFORMATION, "Cadastrado com sucesso!", ButtonType.OK);
             } catch (Exception ex) {
                 System.out.println("Erro ao inserir o modelo: " + ex.getMessage());
+                new Alert(Alert.AlertType.ERROR, "Erro ao inserir o registro.", ButtonType.OK).showAndWait();
             }
         }
     }
@@ -280,7 +281,7 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
         }
 
         try {
-            Integer.parseInt(txtEditQtdPortas.getText());
+            Integer.parseInt(txtQtdportas.getText());
         } catch (NumberFormatException ex) {
             new Alert(Alert.AlertType.ERROR, "Campo quantidade de portas é obrigatório", ButtonType.OK).showAndWait();
             return false;

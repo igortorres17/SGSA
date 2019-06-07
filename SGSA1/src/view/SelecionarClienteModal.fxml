@@ -6,13 +6,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="289.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelecionarClienteModal">
+<AnchorPane id="AnchorPane" prefHeight="315.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelecionarClienteModal">
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefWidth="509.0">
          <children>
-            <TextField fx:id="txtPesquisar" layoutX="14.0" layoutY="14.0" onKeyPressed="#txtPesquisar_keyPressed" prefHeight="29.0" prefWidth="482.0" promptText="Pesquisar placa . . . " />
-            <Button fx:id="btnSelecionar" layoutX="347.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnSelecionar_pressed" prefHeight="29.0" prefWidth="148.0" text="Selecionar" />
-            <TableView fx:id="tabelaCliente" layoutX="14.0" layoutY="50.0" prefHeight="200.0" prefWidth="482.0">
+            <TextField fx:id="txtPesquisar" layoutX="28.0" layoutY="21.0" onKeyPressed="#txtPesquisar_keyPressed" prefHeight="29.0" prefWidth="482.0" promptText="Pesquisar placa . . . " />
+            <Button fx:id="btnSelecionar" layoutX="361.0" layoutY="266.0" mnemonicParsing="false" onAction="#btnSelecionar_pressed" prefHeight="29.0" prefWidth="148.0" text="Selecionar" />
+            <TableView fx:id="tabelaCliente" layoutX="28.0" layoutY="57.0" prefHeight="200.0" prefWidth="482.0">
               <columns>
                 <TableColumn editable="false" prefWidth="75.0" text="ID" />
                 <TableColumn editable="false" prefWidth="203.0" text="NOME / RAZÃO SOCIAL" />

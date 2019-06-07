@@ -46,8 +46,8 @@ public class VeiculoDAO extends BaseDAO{
         stmt.setString(2, veic.getChassi());
         stmt.setInt(3, veic.getAno());
         stmt.setInt(4, veic.getQuilometragem());
-        stmt.setInt(6, veic.getProprietario().getId());
-        stmt.setInt(5, veic.getModelo().getId());
+        stmt.setInt(5, veic.getProprietario().getId());
+        stmt.setInt(6, veic.getModelo().getId());
         stmt.execute();
         stmt.close();
 
