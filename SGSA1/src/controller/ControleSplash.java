@@ -27,13 +27,7 @@ public class ControleSplash extends ControleBase{
     public void windowShow(WindowEvent event){
         Task task = new Task<Void>(){
             public Void call(){                    
-                conectar();
-                Platform.runLater(
-                    () -> {
-                        abrirJanela("/view/Login.fxml", StageStyle.TRANSPARENT);
-                        getStage().close();
-                    }
-                );
+                conectar();                
                 return null;
             }
         };
@@ -47,10 +41,20 @@ public class ControleSplash extends ControleBase{
     private void conectar(){
         try {
             Conexao.get();
+            Platform.runLater(
+                () -> {
+                    abrirJanela("/view/Login.fxml", StageStyle.TRANSPARENT);
+                    getStage().close();
+                }
+            );
         } catch (SQLException ex) {
-            new Alert(AlertType.ERROR, "O Sistema falhou em conectar-se. Tente novamente mais tarde!", ButtonType.OK).showAndWait();
-            System.out.println("Falha ao conetar-se: " + ex.getMessage());
-            Runtime.getRuntime().exit(1);            
+            Platform.runLater(
+                () ->{
+                    new Alert(AlertType.ERROR, "O Sistema falhou em conectar-se. Tente novamente mais tarde!", ButtonType.OK).showAndWait();
+                    System.out.println("Falha ao conetar-se: " + ex.getMessage());
+                    Runtime.getRuntime().exit(1);     
+                }
+            );
         }
     }
     
