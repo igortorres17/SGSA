@@ -21,7 +21,7 @@
               </columns>
             </TableView>
             <Button fx:id="btnSelecionar" layoutX="347.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnSelecionar_pressed" prefHeight="29.0" prefWidth="148.0" text="Selecionar" />
-            <ProgressIndicator fx:id="progresso" layoutX="465.0" layoutY="19.0" prefHeight="20.0" prefWidth="20.0" />
+            <ProgressIndicator fx:id="progresso" layoutX="465.0" layoutY="19.0" prefHeight="20.0" prefWidth="20.0" style="-fx-progress-color: -cor-borda-controle;" />
          </children></AnchorPane>
   </children>
 </VBox>
