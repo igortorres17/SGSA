@@ -57,7 +57,7 @@
                               <TableColumn prefWidth="157.0" text="Status" />
                            </columns>
                         </TableView>
-                        <TextField fx:id="txtPesquisar" layoutX="558.0" layoutY="30.0" onKeyPressed="#txtPesquisar_keypressed" prefHeight="27.0" prefWidth="252.0" promptText="Pesquisar . . ." styleClass="pesquisar-cinza-icon" />
+                        <TextField fx:id="txtPesquisar" layoutX="558.0" layoutY="30.0" onKeyPressed="#txtPesquisar_keypressed" prefHeight="27.0" prefWidth="252.0" promptText="Pesquisar por placa. . ." styleClass="pesquisar-cinza-icon" />
                         <Button fx:id="btnDarBaixaOS" disable="true" layoutX="609.0" layoutY="393.0" mnemonicParsing="false" onAction="#btnDarBaixaOS_pressed" prefHeight="29.0" prefWidth="93.0" styleClass="blue-button" text="Dar Baixa" />
                         <Button fx:id="btnVisualizarOS" disable="true" layoutX="717.0" layoutY="393.0" mnemonicParsing="false" onAction="#btnVisualizarOS_pressed" prefHeight="25.0" prefWidth="93.0" styleClass="blue-button" text="Visualizar" />
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title1" text="Pesquisar" />
