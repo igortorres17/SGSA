@@ -158,4 +158,15 @@ public class ControlePrincipal extends ControleBase implements Initializable{
         abrirJanela("/view/Login.fxml", StageStyle.TRANSPARENT);
         getStage().close();
     }
+    
+    @FXML
+    private void btnClose_pressed(ActionEvent event){
+        getStage().close();
+    }
+    
+    @FXML
+    private void btnMinimize_pressed(ActionEvent event){
+        getStage().setIconified(true);
+       // getStage().toBack();
+    }
 }

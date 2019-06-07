@@ -9,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
+import javafx.stage.StageStyle;
 import model.Cliente;
 import model.PessoaFisica;
 
@@ -79,7 +80,7 @@ public class ControleLogin extends ControleBase{
         }
             
         
-        super.abrirJanela("/view/Principal.fxml");        
+        super.abrirJanela("/view/Principal.fxml", StageStyle.TRANSPARENT);
          getStage().close();
     }
     
