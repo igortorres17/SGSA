@@ -63,6 +63,28 @@ ComboBox:hover{
     -fx-border-color:-cor-borda-controle-hover; 
 }
 
+ListView{
+    -fx-background-insets:0;
+    -fx-background-color: -cor-bg-controle;
+    -fx-border-color: -cor-borda-controle;
+    -fx-border-width: 2px;
+}
+
+ListView:hover{
+    -fx-border-color:-cor-borda-controle-hover;
+}
+
+TextArea{
+   -fx-background-insets:0;
+   -fx-background-color: -cor-bg-controle;
+   -fx-border-color: -cor-borda-controle;
+   -fx-border-width: 2px; 
+}
+
+TextArea:hover{
+    -fx-border-color:-cor-borda-controle-hover;
+}
+
 RadioButton .radio{
     -fx-background-color:-cor-bg-controle;
     -fx-background-insets:0;
