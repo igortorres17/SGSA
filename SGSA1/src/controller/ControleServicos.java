@@ -89,6 +89,9 @@ public class ControleServicos extends ControleBase implements Initializable {
         TableColumn tId = (TableColumn) tabelaServicos.getColumns().get(0);
         TableColumn tNome = (TableColumn) tabelaServicos.getColumns().get(1);
         TableColumn tPreco = (TableColumn) tabelaServicos.getColumns().get(2);
+        tId.setResizable(false);
+        tNome.setResizable(false);
+        tPreco.setResizable(false);
         
         tId.setCellValueFactory(new PropertyValueFactory("id"));
         tNome.setCellValueFactory(new PropertyValueFactory("nome"));

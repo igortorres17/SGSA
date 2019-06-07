@@ -51,6 +51,9 @@ public class SelecionarPecaModal extends ControleBase implements Initializable {
         TableColumn cID = (TableColumn) tabelaPecas.getColumns().get(0);
         TableColumn cNome = (TableColumn) tabelaPecas.getColumns().get(1);
         TableColumn cPreco = (TableColumn) tabelaPecas.getColumns().get(2);
+        cID.setResizable(false);
+        cNome.setResizable(false);
+        cPreco.setResizable(false);
         
         cID.setCellValueFactory(new PropertyValueFactory("id"));
         cNome.setCellValueFactory(new PropertyValueFactory("nome"));

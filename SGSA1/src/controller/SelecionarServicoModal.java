@@ -52,6 +52,9 @@ public class SelecionarServicoModal extends ControleBase implements Initializabl
         TableColumn cID = (TableColumn) tabelaServicos.getColumns().get(0);
         TableColumn cNome = (TableColumn) tabelaServicos.getColumns().get(1);
         TableColumn cPreco = (TableColumn) tabelaServicos.getColumns().get(2);
+        cID.setResizable(false);
+        cNome.setResizable(false);
+        cPreco.setResizable(false);
         
         cID.setCellValueFactory(new PropertyValueFactory("id"));
         cNome.setCellValueFactory(new PropertyValueFactory("nome"));

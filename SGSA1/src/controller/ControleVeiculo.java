@@ -135,6 +135,13 @@ public class ControleVeiculo extends ControleBase implements Initializable {
         TableColumn colQuilometragem = (TableColumn) tabelaVeiculo.getColumns().get(4);
         TableColumn colProprietario = (TableColumn) tabelaVeiculo.getColumns().get(5);
         TableColumn colModelo = (TableColumn) tabelaVeiculo.getColumns().get(6);
+        colId.setResizable(false);
+        colPlaca.setResizable(false);
+        colChassi.setResizable(false);
+        colAno.setResizable(false);
+        colQuilometragem.setResizable(false);
+        colProprietario.setResizable(false);
+        colModelo.setResizable(false);
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
         colChassi.setCellValueFactory(new PropertyValueFactory<>("chassi"));

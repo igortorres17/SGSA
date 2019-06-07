@@ -100,6 +100,11 @@ public class ControleOS extends ControleBase implements Initializable {
         TableColumn cObs = (TableColumn) tabelaOS.getColumns().get(2);
         TableColumn cValor = (TableColumn) tabelaOS.getColumns().get(3);
         TableColumn cStatus = (TableColumn) tabelaOS.getColumns().get(4);
+        cId.setResizable(false);
+        cVeiculo.setResizable(false);
+        cObs.setResizable(false);
+        cValor.setResizable(false);
+        cStatus.setResizable(false);
         
         cId.setCellValueFactory(new PropertyValueFactory("id"));
         cVeiculo.setCellValueFactory(new PropertyValueFactory("veiculoStr"));

@@ -124,6 +124,13 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
         TableColumn colQtdPortas = (TableColumn) tabelaModelo.getColumns().get(4);
         TableColumn colMotor = (TableColumn) tabelaModelo.getColumns().get(5);
         TableColumn colCombustivel = (TableColumn) tabelaModelo.getColumns().get(6);
+        colId.setResizable(false);
+        colTipo.setResizable(false);
+        colNome.setResizable(false);
+        colMarca.setResizable(false);
+        colQtdPortas.setResizable(false);
+        colMotor.setResizable(false);
+        colCombustivel.setResizable(false);
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));

@@ -54,6 +54,10 @@ public class SelecionarVeiculoModal extends ControleBase implements Initializabl
         TableColumn cProprietario = (TableColumn) tabelaVeiculos.getColumns().get(0);
         TableColumn cModelo = (TableColumn) tabelaVeiculos.getColumns().get(1);
         TableColumn cPlaca = (TableColumn) tabelaVeiculos.getColumns().get(2);
+        cProprietario.setResizable(false);
+        cModelo.setResizable(false);
+        cPlaca.setResizable(false);
+        
         
         cProprietario.setCellValueFactory(new PropertyValueFactory("nomeProprietario"));
         cModelo.setCellValueFactory(new PropertyValueFactory("nomeModelo"));

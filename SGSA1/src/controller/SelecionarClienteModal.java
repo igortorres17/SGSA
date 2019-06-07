@@ -55,6 +55,9 @@ public class SelecionarClienteModal extends ControleBase implements Initializabl
     TableColumn colId = (TableColumn) tabelaCliente.getColumns().get(0);
         TableColumn colNome = (TableColumn) tabelaCliente.getColumns().get(1);
         TableColumn colCpf = (TableColumn) tabelaCliente.getColumns().get(2);
+        colId.setResizable(false);
+        colNome.setResizable(false);
+        colCpf.setResizable(false);
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));

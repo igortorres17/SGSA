@@ -200,6 +200,12 @@ public class ControleClientes extends ControleBase implements Initializable{
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        colId.setResizable(false);
+        colNome.setResizable(false);
+        colCpf.setResizable(false);
+        colEmail.setResizable(false);
+        colTelefone.setResizable(false);
+        colTipo.setResizable(false);
     }
     
     private void preencherTableView(ArrayList<Cliente> clientes){

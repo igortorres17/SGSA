@@ -86,6 +86,10 @@ public class ControlePecas implements Initializable {
         TableColumn cNome = (TableColumn) tabelaPecas.getColumns().get(1);
         TableColumn cSerial = (TableColumn) tabelaPecas.getColumns().get(2);
         TableColumn cPreco = (TableColumn) tabelaPecas.getColumns().get(3);
+        cId.setResizable(false);
+        cNome.setResizable(false);
+        cSerial.setResizable(false);
+        cPreco.setResizable(false);
         
         cId.setCellValueFactory(new PropertyValueFactory("id"));
         cNome.setCellValueFactory(new PropertyValueFactory("nome"));
