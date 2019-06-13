@@ -21,6 +21,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -92,6 +93,36 @@ public class ControleOS extends ControleBase implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         configurarTableView();
         buscar("");
+        
+        tabelaOS.setRowFactory(
+                tv -> {
+                TableRow row = new TableRow<>();
+                row.setOnMouseClicked(event -> {
+                    if( event.getClickCount() == 1 && (! row.isEmpty()) ){
+                        OrdemServico rowData = (OrdemServico)row.getItem();
+                        if(rowData.getStatus() == OrdemServico.CONCLUIDA)
+                            btnDarBaixaOS.setDisable(true);
+                        else
+                            btnDarBaixaOS.setDisable(false);
+                        
+                        if(rowData.getStatus() == OrdemServico.CANCELADA){
+                            btnCancelarOS.setDisable(true);
+                            btnDarBaixaOS.setDisable(true);
+                        }else{
+                            btnCancelarOS.setDisable(false);
+                            btnDarBaixaOS.setDisable(false);
+                        }
+                    }
+                    if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                        OrdemServico rowData = (OrdemServico)row.getItem();
+                        btnVisualizarOS_pressed(null);
+                    }
+                    
+
+                });
+                return row ;
+            }
+        );
     }    
     
     private void configurarTableView(){
@@ -116,6 +147,8 @@ public class ControleOS extends ControleBase implements Initializable {
     private void preencherTableView(ArrayList<OrdemServico> ordens){
         tabelaOS.getItems().clear();
         for(int i = 0; i < ordens.size(); i++){
+            if(ordens.get(i).getStatus() == OrdemServico.CANCELADA)
+                continue;
             tabelaOS.getItems().add(ordens.get(i));
         }
         
@@ -151,7 +184,8 @@ public class ControleOS extends ControleBase implements Initializable {
                     txtPesquisar.setDisable(false);
                     txtPesquisar.getStyleClass().add("pesquisar-cinza-icon");
                     tabelaOS.setDisable(false);
-                } catch (Exception ex) {
+                } catch (SQLException ex) {
+                    exibirErro(ex);
                     System.out.println("Falha ao buscar OS's: " + ex.getMessage());
                     ex.printStackTrace();
                 }
@@ -198,6 +232,13 @@ public class ControleOS extends ControleBase implements Initializable {
             return;
         }
         
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja EMITIR esta Ordem de Serviço?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Emitir OS?");
+        alert.showAndWait();
+        
+        if(alert.getResult() == ButtonType.NO)
+            return;
+        
         ArrayList<Servico> servicos = new ArrayList(listvServicos.getItems());
         ArrayList<Peca> pecas = new ArrayList(listvPecas.getItems());
         int status = OrdemServico.ABERTA;
@@ -208,17 +249,17 @@ public class ControleOS extends ControleBase implements Initializable {
         OrdemServicoDAO osDAO = new OrdemServicoDAO();
         try {
             osDAO.inserir(os);
-            Alert alert = new Alert(AlertType.INFORMATION, "OS emitida com sucesso. Deseja visualizar e/ou imprimir OS?", ButtonType.YES, ButtonType.NO);
+            alert = new Alert(AlertType.INFORMATION, "Ordem de Serviço emitida com sucesso", ButtonType.OK);
+            alert.setHeaderText("Emissão bem sucedida");
             alert.showAndWait();
-            if(alert.getResult() == ButtonType.YES){
-                abas.getSelectionModel().selectLast();
-                txtPesquisar.setText(os.getVeiculo().getPlaca());
-            }
+            
+            abas.getSelectionModel().selectLast();
             limparCampos();
             
         } catch (Exception ex) {
-            new Alert(AlertType.ERROR, "Não foi possível registrar OS. Contate o suporte!", ButtonType.OK).showAndWait();
+            exibirErro(ex);
             System.out.println("Não foi possível inserir OS: " + ex.getMessage() );
+            ex.printStackTrace();
             
         }
     }
@@ -226,6 +267,7 @@ public class ControleOS extends ControleBase implements Initializable {
     @FXML
     private void btnLimpar_pressed(ActionEvent event) {
         Alert alert = new Alert(AlertType.CONFIRMATION, "Deseja realmente limpar todos os campos?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Limpar campos?");
         alert.showAndWait();
         if(alert.getResult() != ButtonType.YES)
             return;
@@ -287,15 +329,24 @@ public class ControleOS extends ControleBase implements Initializable {
 
     @FXML
     private void btnDarBaixaOS_pressed(ActionEvent event) {
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Deseja realmente dar baixa / marcar como concluida esta Ordem de Serviço?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Dar baixa na OS?");
+        alert.showAndWait();
+        
+        if(alert.getResult() == ButtonType.NO)
+            return;
+        
         OrdemServicoDAO osDAO = new OrdemServicoDAO();
         try {
             OrdemServico os = (OrdemServico) tabelaOS.getSelectionModel().getSelectedItem();
             os.setStatus(OrdemServico.CONCLUIDA);
             osDAO.concluir(os);
             tabelaOS.refresh();
-            new Alert(AlertType.INFORMATION, "O Status da OS foi alterado para CONCLUÍDO", ButtonType.OK).showAndWait();
+            alert = new Alert(AlertType.INFORMATION, "A Ordem de Serviço foi baixada / concluída com sucesso", ButtonType.OK);
+            alert.setHeaderText("Baixa de OS bem sucedida");
+            alert.showAndWait();
         } catch (SQLException ex) {
-            new Alert(AlertType.ERROR, "Erro ao baixar OS. Contate o suporte!", ButtonType.OK).showAndWait();
+            exibirErro(ex);
             ex.printStackTrace();
         }
     }
@@ -331,15 +382,21 @@ public class ControleOS extends ControleBase implements Initializable {
 
     @FXML
     private void btnCancelarOS_pressed(ActionEvent event) {
-            OrdemServicoDAO osDAO = new OrdemServicoDAO();
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Esta operação só poderá ser desfeita pela equipe de T.I. Realmente deseja cancelar esta Ordem de Serviço? ", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Cancelar OS?");
+        alert.showAndWait();
+        
+        OrdemServicoDAO osDAO = new OrdemServicoDAO();
         try {
             OrdemServico os = (OrdemServico) tabelaOS.getSelectionModel().getSelectedItem();
             os.setStatus(OrdemServico.CANCELADA);
             osDAO.cancelar(os);
             tabelaOS.refresh();
-            new Alert(AlertType.INFORMATION, "O Status da OS foi alterado para CANCELADO", ButtonType.OK).showAndWait();
+            alert = new Alert(AlertType.INFORMATION, "A Ordem de Serviço foi cancelada com sucesso", ButtonType.OK);
+            alert.setHeaderText("Cancelamento bem sucedido");
+            alert.showAndWait();
         } catch (SQLException ex) {
-            new Alert(AlertType.ERROR, "Erro ao cancelar OS. Contate o suporte!", ButtonType.OK).showAndWait();
+            exibirErro(ex);
             ex.printStackTrace();
         }
     }
@@ -347,26 +404,32 @@ public class ControleOS extends ControleBase implements Initializable {
     @FXML
     private void btnRemoverServico_pressed(ActionEvent event){
         Servico servico = (Servico) listvServicos.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(AlertType.CONFIRMATION, "Remover '" + servico.getNome() + "' da OS?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja remover o serviço '" + servico.getNome() + "' da lista?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Remover serviço?");
         alert.showAndWait();
         
         if(alert.getResult() == ButtonType.YES){
             listvServicos.getItems().remove(servico);
             valorTotal -= servico.getValor();
             lblTotal.setText(valorTotal + "");
+            alert = new Alert(AlertType.CONFIRMATION, "Serviço removido com sucesso da lista", ButtonType.OK);
+            alert.setHeaderText("Remoção bem sucedida");
         }
     }
     
     @FXML
     private void btnRemoverPeca_pressed(ActionEvent event){
         Peca peca = (Peca) listvPecas.getSelectionModel().getSelectedItem();
-        Alert alert = new Alert(AlertType.CONFIRMATION, "Remover '" + peca.getNome() + "' da OS?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja remover a peça '" + peca.getNome() + "' da lista?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Remover peça?");
         alert.showAndWait();
         
         if(alert.getResult() == ButtonType.YES){
             listvPecas.getItems().remove(peca);
             valorTotal -= peca.getValor();
             lblTotal.setText(valorTotal + "");
+            alert = new Alert(AlertType.CONFIRMATION, "Peça removido com sucesso da lista", ButtonType.OK);
+            alert.setHeaderText("Remoção bem sucedida");
         }
     }
     
