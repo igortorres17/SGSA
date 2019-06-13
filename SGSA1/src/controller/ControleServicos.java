@@ -9,8 +9,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -120,7 +118,9 @@ public class ControleServicos extends ControleBase implements Initializable {
         try {
             preencherTableView(servicoDAO.buscar(nome, LIMITE_REGISTRO));
         } catch (SQLException ex) {
+            exibirErro(ex);
             System.out.println("Erro ao buscar serviços: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
     
@@ -213,7 +213,9 @@ public class ControleServicos extends ControleBase implements Initializable {
             ServicoDAO servicoDAO = new ServicoDAO();
             try {
                 servicoDAO.inserir(servico);
-                new Alert(AlertType.INFORMATION, "Serviço inserido com sucesso!", ButtonType.OK).showAndWait();
+                Alert alert = new Alert(AlertType.INFORMATION, "Serviço cadastrado com sucesso!", ButtonType.OK);
+                alert.setHeaderText("Cadastro bem sucedido");
+                alert.showAndWait();
                 limparCamposCadastro();
                 abas.getSelectionModel().selectFirst();
             } catch (SQLException ex) {
@@ -232,21 +234,32 @@ public class ControleServicos extends ControleBase implements Initializable {
     private void btnEditSalvar_pressed(ActionEvent event) {
         if(!validarCamposEditar())
             return;
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Tem certeza que deseja salvar todas as alterações?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Alterar dados do serviço?");
+        alert.showAndWait();
+        
+        if(alert.getResult() == ButtonType.NO)
+            return;
+        
         Servico servico = (Servico) tabelaServicos.getSelectionModel().getSelectedItem();
         servico.setNome(txtEditNome.getText());
         servico.setValor(Float.parseFloat(txtEditPreco.getText()));
         ServicoDAO servicoDAO = new ServicoDAO();
         try {
             servicoDAO.alterar(servico);
-            new Alert(AlertType.INFORMATION, "Serviço alterado com sucesso!", ButtonType.OK).showAndWait();
+            alert = new Alert(AlertType.INFORMATION, "Todos os dados alterados foram salvos com sucesso!", ButtonType.OK);
+            alert.setHeaderText("Serviço alterado");
+            alert.showAndWait();
             tabelaServicos.refresh();
             abas.getSelectionModel().selectFirst();
             abas.getTabs().get(0).setDisable(false);
             abas.getTabs().get(1).setDisable(false);
             abas.getTabs().get(2).setDisable(true);
         } catch (SQLException ex) {
-            new Alert(AlertType.ERROR, "Falha ao alterar. Contate o suporte!", ButtonType.OK).showAndWait();
+            exibirErro(ex);
             System.out.println("Falha ao alterar: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -261,7 +274,8 @@ public class ControleServicos extends ControleBase implements Initializable {
     
     @FXML
     private void btnEditExcluir_pressed(ActionEvent event){
-        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja excluir este registro?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja deletar permanentemente este registro?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Excluir serviço?");
         alert.showAndWait();
         if(alert.getResult() != ButtonType.YES)
             return;
@@ -276,9 +290,13 @@ public class ControleServicos extends ControleBase implements Initializable {
             abas.getSelectionModel().selectFirst();
             tabelaServicos.getItems().remove(servico);
             tabelaServicos.refresh();
+            alert = new Alert(AlertType.INFORMATION, "O serviço foi deletado com sucesso!", ButtonType.OK);
+            alert.setHeaderText("Serviço deletado");
+            alert.showAndWait();
         } catch (SQLException ex) {
-            new Alert(AlertType.ERROR, "Erro ao excluir serviço. Contate o suporte!", ButtonType.OK).showAndWait();
+            exibirErro(ex);
             System.out.println("Falha ao excluir serviço: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

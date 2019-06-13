@@ -46,7 +46,7 @@ public class ServicoDAO extends BaseDAO{
     }
     
     public ArrayList<Servico> buscar(String nome, int limite) throws SQLException{
-        String sqlQuery = "SELECT * FROM " + tabela + " WHERE nome like ? LIMIT ?";
+        String sqlQuery = "SELECT * FROM " + tabela + " WHERE nome like ? AND apagado = 0 ORDER BY id DESC LIMIT ?";
         PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
         instrucaoPreparada.setString(1, "%"+nome+"%");
         instrucaoPreparada.setInt(2, limite);
@@ -70,7 +70,7 @@ public class ServicoDAO extends BaseDAO{
     }
     
     public void excluir(int id) throws SQLException{
-       String sqlQuery = "DELETE FROM " + tabela + " WHERE id = ?"; 
+       String sqlQuery = "UPDATE " + tabela + " SET apagado = 1 WHERE id = ?"; 
        PreparedStatement instrucaoPreparada = conexao.prepareStatement(sqlQuery);
        instrucaoPreparada.setInt(1, id);
        instrucaoPreparada.execute();
