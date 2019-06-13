@@ -36,7 +36,7 @@ public class PecaDAO extends BaseDAO {
    }
    
    public Peca buscar(int id) throws SQLException {
-       String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE id = ?";
+       String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE id = ? AND apagado = 0";
        PreparedStatement instrucaoPreparada = conexao.prepareStatement(selectSqlQuery);
        instrucaoPreparada.setInt(1, id);
        ResultSet resultado = instrucaoPreparada.executeQuery();
@@ -50,7 +50,7 @@ public class PecaDAO extends BaseDAO {
    public ArrayList<Peca> buscar(String nome, int limite) throws SQLException {
        ArrayList<Peca> pecas = new ArrayList();
        
-       String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome like ? LIMIT ?";
+       String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome like ? AND apagado = 0 ORDER BY id DESC LIMIT ? ";
        PreparedStatement instrucaoPreparada = conexao.prepareStatement(selectSqlQuery);
        instrucaoPreparada.setString(1, "%"+nome+"%");
        instrucaoPreparada.setInt(2, limite);
@@ -73,7 +73,7 @@ public class PecaDAO extends BaseDAO {
    }
    
    public void excluir (int id) throws SQLException {
-       String deleteSqlQuery = "DELETE FROM "+tabela+" WHERE id = ?";
+       String deleteSqlQuery = "UPDATE "+tabela+" SET apagado = 1 WHERE id = ?";
        PreparedStatement instrucaoPreparada = conexao.prepareStatement(deleteSqlQuery);
        instrucaoPreparada.setInt(1, id);
        instrucaoPreparada.execute();

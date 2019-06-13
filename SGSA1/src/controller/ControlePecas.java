@@ -218,11 +218,13 @@ public class ControlePecas extends ControleBase implements Initializable {
     private void btnCadastrar_pressed(ActionEvent event) {
         if(!validarCamposCadastro())
             return;
-        Peca peca = new Peca(txtNome.getText(), txtCodigo.getText(), Float.parseFloat(txtPreco.getText()));
+        Peca peca = new Peca(txtNome.getText(), txtCodigo.getText(), Float.parseFloat(txtPreco.getText().trim()));
         PecaDAO pecaDAO = new PecaDAO();
         try {
             pecaDAO.inserir(peca);
-            new Alert(AlertType.INFORMATION, "Cadastro realizado com sucesso!", ButtonType.OK).showAndWait();
+            Alert alert = new Alert(AlertType.INFORMATION, "A peça foi cadastrada com sucesso", ButtonType.OK);
+            alert.setHeaderText("Cadastro de peça");
+            alert.showAndWait();
             limparCamposCadastro();
             abas.getSelectionModel().selectFirst();
         } catch (SQLException ex) {
@@ -241,14 +243,24 @@ public class ControlePecas extends ControleBase implements Initializable {
     private void btnEditSalvar_pressed(ActionEvent event) {
         if(!validarCamposEditar())
             return;
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja salvar todas as alterações?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Salvar dados da peça?");
+        alert.showAndWait();
+        
+        if(alert.getResult() == ButtonType.NO)
+            return;
+        
         Peca peca = (Peca) tabelaPecas.getSelectionModel().getSelectedItem();
         peca.setNome(txtEditNome.getText());
         peca.setSerial(txtEditCodigo.getText());
-        peca.setValor(Float.parseFloat(txtEditPreco.getText()));
+        peca.setValor(Float.parseFloat(txtEditPreco.getText().trim()));
         PecaDAO pecaDAO = new PecaDAO();
         try {
             pecaDAO.alterar(peca);
-            new Alert(AlertType.INFORMATION, "Peça alterado com sucesso!", ButtonType.OK).showAndWait();
+            Alert alert_ = new Alert(AlertType.INFORMATION, "Os dados da peça foram alterados com sucesso!", ButtonType.OK);
+            alert_.setHeaderText("Peça alterada");
+            alert_.showAndWait();
             tabelaPecas.refresh();
             abas.getSelectionModel().selectFirst();
             abas.getTabs().get(0).setDisable(false);
@@ -272,7 +284,8 @@ public class ControlePecas extends ControleBase implements Initializable {
 
     @FXML
     private void btnEditExcluir_pressed(ActionEvent event) {
-        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja excluir este registro?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Realmente deseja deletar o registro desta peça permanentemente?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Excluir registro?");
         alert.showAndWait();
         if(alert.getResult() != ButtonType.YES)
             return;
@@ -281,6 +294,9 @@ public class ControlePecas extends ControleBase implements Initializable {
         try {
             Peca peca = (Peca)tabelaPecas.getSelectionModel().getSelectedItem();
             pecaDAO.excluir(peca);
+            Alert alert_ = new Alert(AlertType.INFORMATION, "O registro da peça foi deletado com sucesso!", ButtonType.OK);
+            alert_.setHeaderText("Deleção bem sucedida");
+            alert_.showAndWait();
             abas.getTabs().get(0).setDisable(false);
             abas.getTabs().get(1).setDisable(false);
             abas.getTabs().get(2).setDisable(true);
@@ -289,7 +305,7 @@ public class ControlePecas extends ControleBase implements Initializable {
             tabelaPecas.refresh();
         } catch (SQLException ex) {
             exibirErro(ex);
-            System.out.println("Falha ao excluir peça: " + ex.getMessage());
+            System.out.println("Falha ao deletar peça: " + ex.getMessage());
             ex.printStackTrace();
         }
     }
@@ -301,5 +317,5 @@ public class ControlePecas extends ControleBase implements Initializable {
         abas.getTabs().get(0).setDisable(false);
         abas.getTabs().get(1).setDisable(false);
     }
-    
+       
 }

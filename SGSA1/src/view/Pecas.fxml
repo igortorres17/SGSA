@@ -41,7 +41,7 @@
                         <Label layoutX="14.0" layoutY="73.0" text="Nome" />
                         <TextField fx:id="txtNome" layoutX="14.0" layoutY="91.0" prefHeight="29.0" prefWidth="250.0" promptText="Ex: Vela de Ignição" styleClass="light-input" />
                         <Label layoutX="15.0" layoutY="135.0" text="Preço" />
-                        <TextField fx:id="txtPreco" layoutX="16.0" layoutY="152.0" prefWidth="250.0" promptText="150,00" styleClass="light-input" />
+                        <TextField fx:id="txtPreco" layoutX="16.0" layoutY="152.0" prefWidth="250.0" promptText="150.00" styleClass="light-input" />
                         <Button fx:id="btnCadastrar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnCadastrar_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Cadastrar" />
                         <Button fx:id="btnLimpar" layoutX="548.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnLimpar_pressed" prefHeight="0.0" prefWidth="106.0" styleClass="orange-button" text="Limpar" />
                         <Label layoutX="16.0" layoutY="14.0" styleClass="title1" text="Cadastrar" />
@@ -59,10 +59,10 @@
                         <Label layoutX="14.0" layoutY="73.0" text="Nome" />
                         <TextField fx:id="txtEditNome" layoutX="14.0" layoutY="90.0" prefWidth="250.0" promptText="Nome" />
                         <Label layoutX="14.0" layoutY="132.0" text="Preço" />
-                        <TextField fx:id="txtEditPreco" layoutX="14.0" layoutY="149.0" prefWidth="250.0" promptText="150,00" />
+                        <TextField fx:id="txtEditPreco" layoutX="14.0" layoutY="149.0" prefWidth="250.0" promptText="150.00" />
                         <Button fx:id="btnEditSalvar" layoutX="671.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditSalvar_pressed" prefWidth="110.0" text="Salvar" />
                         <Button fx:id="btnEditCancelar" layoutX="541.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditCancelar_pressed" prefWidth="110.0" text="Cancelar" />
-                        <Button fx:id="btnEditExcluir" layoutX="412.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditExcluir_pressed" prefWidth="110.0" text="Excluir Reg." />
+                        <Button fx:id="btnEditExcluir" layoutX="412.0" layoutY="403.0" mnemonicParsing="false" onAction="#btnEditExcluir_pressed" prefWidth="110.0" text="Deletar" />
                         <Label layoutX="14.0" layoutY="193.0" text="Número de Serie" />
                         <TextField fx:id="txtEditCodigo" layoutX="14.0" layoutY="210.0" prefWidth="250.0" promptText="SN XXXXXXXX" />
                      </children>
