@@ -4,8 +4,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,7 +27,7 @@ import model.dao.PecaDAO;
  *
  * @author Hércules M.
  */
-public class ControlePecas implements Initializable {
+public class ControlePecas extends ControleBase implements Initializable {
 
     @FXML
     private TabPane abas;
@@ -121,7 +119,9 @@ public class ControlePecas implements Initializable {
             ArrayList<Peca> pecas = pecaDAO.buscar(nome, LIMITE_REGISTRO);
             preencherTableView(pecas);
         } catch (SQLException ex) {
+            exibirErro(ex);
             System.out.println("Falha ao buscar peças: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
     
@@ -226,8 +226,9 @@ public class ControlePecas implements Initializable {
             limparCamposCadastro();
             abas.getSelectionModel().selectFirst();
         } catch (SQLException ex) {
-            new Alert(AlertType.ERROR, "Erro ao efetuar cadastro. Contate o suporte", ButtonType.OK).showAndWait();
+            exibirErro(ex);
             System.out.println("Erro ao cadastrar peca: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -254,8 +255,9 @@ public class ControlePecas implements Initializable {
             abas.getTabs().get(1).setDisable(false);
             abas.getTabs().get(2).setDisable(true);
         } catch (SQLException ex) {
-            new Alert(AlertType.ERROR, "Falha ao alterar. Contate o suporte!", ButtonType.OK).showAndWait();
+            exibirErro(ex);
             System.out.println("Falha ao alterar: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
@@ -286,8 +288,9 @@ public class ControlePecas implements Initializable {
             tabelaPecas.getItems().remove(peca);
             tabelaPecas.refresh();
         } catch (SQLException ex) {
-            new Alert(AlertType.ERROR, "Erro ao excluir peça. Contate o suporte!", ButtonType.OK).showAndWait();
+            exibirErro(ex);
             System.out.println("Falha ao excluir peça: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
