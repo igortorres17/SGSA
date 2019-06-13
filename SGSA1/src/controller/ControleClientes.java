@@ -1,8 +1,12 @@
 package controller;
 
+import java.awt.BorderLayout;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -29,6 +34,7 @@ import model.Cliente;
 import model.PessoaFisica;
 import model.PessoaJuridica;
 import model.dao.ClienteDAO;
+import terceiro.TextFieldFormatter;
 
 /**
  *
@@ -160,12 +166,22 @@ public class ControleClientes extends ControleBase implements Initializable{
     
     @FXML
     private Button btnEditSalvar;
-                
+    
+    @FXML
+    private Label lblCadNome;
+    
+    @FXML 
+    Label lblCadCpf;
+    
+    @FXML
+    private ProgressIndicator progresso;
+    
     // Custom
     ClienteDAO clienteDao;
     private final int LIMITE_CLIENTES = 8;
-    Cliente clienteEmEdicao = null;
-
+    private Cliente clienteEmEdicao = null;
+    private Cliente clienteEmVisualizacao = null;
+    
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {        
         configurarTableView();
@@ -175,7 +191,9 @@ public class ControleClientes extends ControleBase implements Initializable{
             ArrayList<Cliente> clientes = clienteDao.buscar("", LIMITE_CLIENTES);
             preencherTableView(clientes);
         } catch (SQLException ex) {
+            exibirErro(ex);
             System.out.println("Erro ao buscar clientes: " + ex.getMessage());
+            ex.printStackTrace();
         }
         
         tabelaClientes.getSelectionModel().selectFirst();
@@ -223,6 +241,9 @@ public class ControleClientes extends ControleBase implements Initializable{
     }
     
     private void buscarCliente(String nome){
+        progresso.setVisible(true);
+        txtPesquisar.getStyleClass().remove("pesquisar-cinza-icon");
+        habilitarBotoesEditarVisualizar(false);
         Task task = new Task(){
             public Void call() {
                 ArrayList<Cliente> clientes;
@@ -238,9 +259,12 @@ public class ControleClientes extends ControleBase implements Initializable{
                                 habilitarBotoesEditarVisualizar(true);
 
                             tabelaClientes.getSelectionModel().selectFirst();
+                            progresso.setVisible(false);
+                            txtPesquisar.getStyleClass().add("pesquisar-cinza-icon");
                         }
                     );
                 } catch (SQLException ex) {
+                    exibirErro(ex);
                     System.out.println("Falha ao buscar clientes: " + ex.getMessage());
                 }
 
@@ -279,7 +303,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         
         
         cbEstado.getSelectionModel().selectLast();
-        rbFisica.selectedProperty().set(true);
+        //rbFisica.selectedProperty().set(true);
     }    
     
     private void limparCamposEditar(){
@@ -333,6 +357,8 @@ public class ControleClientes extends ControleBase implements Initializable{
             lblNome.setText(pj.getRazaoSocial());
             lblCpf.setText(pj.getCnpj());
         }
+        
+        clienteEmVisualizacao = cliente;
     }
     
     private boolean validarCamposCadastro(){
@@ -342,9 +368,9 @@ public class ControleClientes extends ControleBase implements Initializable{
             return false;
         }
         
-        if(txtCpf.getText().length() < 11){
-            new Alert(AlertType.ERROR, "Campo CPF/CNPJ deve conter pelo menos 11 dígitos", ButtonType.OK).showAndWait();
-            return false;
+        if(txtCpf.getText().isEmpty()){
+            new Alert(AlertType.ERROR, "Campo CPF/CNPJ é obrigatório", ButtonType.OK).showAndWait();
+            return false;              
         }
         
         if(txtNascimento.getText().isEmpty()){
@@ -373,6 +399,12 @@ public class ControleClientes extends ControleBase implements Initializable{
         if(txtLogradouro.getText().isEmpty()){
             txtLogradouro.getStyleClass().add("text-prompt-erro");
             new Alert(AlertType.ERROR, "Campo Logradouro é obrigatório", ButtonType.OK).showAndWait();
+            return false;
+        }
+        
+        if(txtNumero.getText().isEmpty()){
+            txtNumero.getStyleClass().add("text-prompt-erro");
+            new Alert(AlertType.ERROR, "Campo Número é obrigatório", ButtonType.OK).showAndWait();
             return false;
         }
         
@@ -456,7 +488,43 @@ public class ControleClientes extends ControleBase implements Initializable{
         
         return true;
     }
-
+    
+    private void editarCliente(){
+        if(clienteEmEdicao == null)
+            return;
+       
+        try {
+            SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
+            Date data = formatador.parse(clienteEmEdicao.getData_nascimento());
+            String data_str = formatador.format(data);
+            formatador = new SimpleDateFormat("dd/MM/yyyy");
+            data_str = formatador.format(data);
+            txtEditNasc.setText(data_str);
+        } catch (ParseException ex) {
+            exibirErro(ex);
+        }
+        
+        
+        txtEditEmail.setText(clienteEmEdicao.getEmail());
+        txtEditTel.setText(clienteEmEdicao.getTelefone());
+        txtEditLogradouro.setText(clienteEmEdicao.getLogradouro());
+        txtEditNumero.setText(""+clienteEmEdicao.getNumero());
+        txtEditComplemento.setText(clienteEmEdicao.getComplemento());
+        txtEditBairro.setText(clienteEmEdicao.getBairro());
+        txtEditCidade.setText(clienteEmEdicao.getMunicipio());
+        cbEditEstado.getSelectionModel().select(clienteEmEdicao.getEstado());
+        
+        if(clienteEmEdicao instanceof PessoaFisica){
+            PessoaFisica cli = (PessoaFisica) clienteEmEdicao;
+            txtEditNome.setText(cli.getNome());
+            txtEditCpf.setText(cli.getCpf());
+        }else{
+            PessoaJuridica cli = (PessoaJuridica) clienteEmEdicao;
+            txtEditNome.setText(cli.getRazaoSocial());
+            txtEditCpf.setText(cli.getCnpj()); 
+        }        
+        
+    }
     
     /*
     * Tratamento de eventos
@@ -497,6 +565,7 @@ public class ControleClientes extends ControleBase implements Initializable{
     protected void btnCadastrar_pressed(ActionEvent event){
         if(!validarCamposCadastro())
                 return;
+        
         Cliente pessoa;
         if(rbFisica.isSelected()){
             pessoa = new PessoaFisica();
@@ -510,11 +579,22 @@ public class ControleClientes extends ControleBase implements Initializable{
             pj.setRazaoSocial(txtNome.getText());
         }
         
-        pessoa.setData_nascimento(txtNascimento.getText());
+        
+        try {
+            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+            Date data = formatador.parse(txtNascimento.getText());
+            formatador = new SimpleDateFormat("yyyy-MM-dd");
+            pessoa.setData_nascimento(formatador.format(data));
+        } catch (ParseException ex) {
+            new Alert(AlertType.ERROR, "Data de nascimento informada é inválida", ButtonType.OK).showAndWait();
+            return;
+        }
+        
+        
         pessoa.setEmail(txtEmail.getText());
         pessoa.setTelefone(txtTelefone.getText());
         pessoa.setLogradouro(txtLogradouro.getText());
-        pessoa.setNumero(Integer.parseInt(txtNumero.getText()));
+        pessoa.setNumero(Integer.parseInt(txtNumero.getText().trim()));
         pessoa.setComplemento(txtComplemento.getText());
         pessoa.setBairro(txtBairro.getText());
         pessoa.setMunicipio(txtCidade.getText());
@@ -522,7 +602,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         try {
             ClienteDAO clienteDao = new ClienteDAO();
             clienteDao.inserir(pessoa);
-            Alert alert = new Alert(AlertType.INFORMATION, "Cliente cadastrado com sucesso. Deseja fazer outra cadastro?", ButtonType.YES, ButtonType.NO);
+            Alert alert = new Alert(AlertType.INFORMATION, "Cliente cadastrado com sucesso. Deseja fazer outro cadastro?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
             if(alert.getResult() == ButtonType.NO){
                 abas.getSelectionModel().selectFirst();
@@ -530,9 +610,10 @@ public class ControleClientes extends ControleBase implements Initializable{
             }
             
             limparCamposCadastro();
-        } catch (SQLException e) {
-            new Alert(AlertType.ERROR, "Ocorreu um erro ao inserir o registro. Se o problema persistir, contate o suporte!", ButtonType.OK).showAndWait();
+        } catch (SQLException e) { 
+            exibirErro(e);
             System.out.println("Erro ao cadastrar cliente: " + e.getMessage());
+            e.printStackTrace();
         }
         
     }
@@ -552,29 +633,7 @@ public class ControleClientes extends ControleBase implements Initializable{
     @FXML
     protected void btnEditar_pressed(ActionEvent event){
         clienteEmEdicao = (Cliente) tabelaClientes.getSelectionModel().getSelectedItem();
-        if(clienteEmEdicao == null)
-            return;
-        
-        txtEditNasc.setText(clienteEmEdicao.getData_nascimento());
-        txtEditEmail.setText(clienteEmEdicao.getEmail());
-        txtEditTel.setText(clienteEmEdicao.getTelefone());
-        txtEditLogradouro.setText(clienteEmEdicao.getLogradouro());
-        txtEditNumero.setText(""+clienteEmEdicao.getNumero());
-        txtEditComplemento.setText(clienteEmEdicao.getComplemento());
-        txtEditBairro.setText(clienteEmEdicao.getBairro());
-        txtEditCidade.setText(clienteEmEdicao.getMunicipio());
-        cbEditEstado.getSelectionModel().select(clienteEmEdicao.getEstado());
-        
-        if(clienteEmEdicao instanceof PessoaFisica){
-            PessoaFisica cli = (PessoaFisica) clienteEmEdicao;
-            txtEditNome.setText(cli.getNome());
-            txtEditCpf.setText(cli.getCpf());
-        }else{
-            PessoaJuridica cli = (PessoaJuridica) clienteEmEdicao;
-            txtEditNome.setText(cli.getRazaoSocial());
-            txtEditCpf.setText(cli.getCnpj()); 
-        }
-        
+        editarCliente();
         abas.getSelectionModel().select(2);
         abas.getTabs().get(0).setDisable(true);
         abas.getTabs().get(1).setDisable(true);
@@ -588,6 +647,7 @@ public class ControleClientes extends ControleBase implements Initializable{
         abas.getTabs().get(2).setDisable(true);
         abas.getTabs().get(3).setDisable(true);
         abas.getSelectionModel().selectFirst();
+        clienteEmVisualizacao = null;
     }
     
     @FXML
@@ -604,11 +664,26 @@ public class ControleClientes extends ControleBase implements Initializable{
         if(!validarCamposEditar())
             return;
         
-        clienteEmEdicao.setData_nascimento(txtEditNasc.getText());
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Tem certeza que deseja salvar todas as alterações?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Salvar alterações?");
+        alert.showAndWait();
+        if(alert.getResult() == ButtonType.NO)
+            return;
+        
+        try {
+            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
+            Date data = formatador.parse(txtEditNasc.getText());
+            formatador = new SimpleDateFormat("yyyy-MM-dd");
+            clienteEmEdicao.setData_nascimento(formatador.format(data));
+        } catch (ParseException ex) {
+            new Alert(AlertType.ERROR, "Data de nascimento informada é inválida", ButtonType.OK).showAndWait();
+            return;
+        }
+                
         clienteEmEdicao.setEmail(txtEditEmail.getText());
         clienteEmEdicao.setTelefone(txtEditTel.getText());
         clienteEmEdicao.setLogradouro(txtEditLogradouro.getText());
-        clienteEmEdicao.setNumero(Integer.parseInt(txtEditNumero.getText()));
+        clienteEmEdicao.setNumero(Integer.parseInt(txtEditNumero.getText().trim()));
         clienteEmEdicao.setComplemento(txtEditComplemento.getText());
         clienteEmEdicao.setBairro(txtEditBairro.getText());
         clienteEmEdicao.setMunicipio(txtEditCidade.getText());   
@@ -627,15 +702,154 @@ public class ControleClientes extends ControleBase implements Initializable{
         ClienteDAO clienteDao = new ClienteDAO();
         try {
             clienteDao.alterar(clienteEmEdicao);
-            new Alert(AlertType.INFORMATION, "Alterações salva!", ButtonType.OK).show();
+            Alert alert_ = new Alert(AlertType.INFORMATION, "Todas as alterações foram salvas com sucesso!", ButtonType.OK);
+            alert_.setHeaderText("Alterações salvas");
+            alert_.showAndWait();
             abas.getSelectionModel().getSelectedItem().setDisable(true);
             abas.getTabs().get(0).setDisable(false);
             abas.getTabs().get(1).setDisable(false);
             abas.getSelectionModel().selectFirst();
+            txtPesquisar.setText(txtEditNome.getText());
+            buscarCliente(txtEditNome.getText());
             limparCamposEditar();
         } catch (SQLException ex) {
             new Alert(AlertType.ERROR, "Erro ao salvar cliente. Contate o suporte!", ButtonType.OK).show();
             System.out.println("Falha ao alterar cliente: " + ex.getMessage());
         }
     }
+    
+    @FXML
+    private void txtNascimento_keypressed(KeyEvent event){}
+    
+    @FXML 
+    private void txtNascimento_keyReleased(KeyEvent event){
+        TextFieldFormatter formatter = new TextFieldFormatter();
+        formatter.setMask("##/##/####");
+        formatter.setCaracteresValidos("0123456789");
+        formatter.setTf(txtNascimento);
+        formatter.formatter();
+    }
+    
+    @FXML
+    private void txtCpf_keyReleased(KeyEvent event){
+        TextFieldFormatter formatter = new TextFieldFormatter();        
+        formatter.setCaracteresValidos("0123456789");
+        if(rbFisica.isSelected()){
+            formatter.setMask("###.###.###-##");
+        }else {
+            formatter.setMask("##.###.###/####-##");
+        }
+        formatter.setTf(txtCpf);
+        formatter.formatter();
+    }
+    
+    @FXML
+    private void txtTelefone_keyReleased(KeyEvent event){
+        TextFieldFormatter formatter = new TextFieldFormatter();
+        formatter.setMask("(##)#####-####");
+        formatter.setCaracteresValidos("0123456789");
+        formatter.setTf(txtTelefone);
+        formatter.formatter();
+    }
+    
+    @FXML
+    private void txtNumero_keyReleased(KeyEvent event){
+        TextFieldFormatter formatter = new TextFieldFormatter();
+        formatter.setMask("#####");
+        formatter.setCaracteresValidos("0123456789");
+        formatter.setTf(txtNumero);
+        formatter.formatter();
+    }
+    @FXML
+    private void radioTipoClienteCheck(ActionEvent event){
+        if(rbFisica.isSelected()){
+            lblCadCpf.setText("CPF");
+            lblCadNome.setText("Nome Completo");
+            txtCpf.setPromptText("XXX.XXX.XXX-XX");            
+        }else{
+            lblCadCpf.setText("CNPJ");
+            lblCadNome.setText("Razão Social");
+            txtCpf.setPromptText("XX.XXX.XXX/XXXX-XX");
+        }
+    }
+
+    @FXML
+    void vis_btnModificar_pressed(ActionEvent event) {
+        clienteEmEdicao = clienteEmVisualizacao;
+        clienteEmVisualizacao = null;
+        editarCliente();
+        abas.getTabs().get(3).setDisable(true);
+        abas.getSelectionModel().select(2);
+        abas.getSelectionModel().getSelectedItem().setDisable(false);
+        
+    }
+    
+    @FXML
+    private void btnEditDeletar_pressed(ActionEvent event) {
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Tem certeza que deseja apagar permanentemente este cliente?", ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText("Deletar cliente?");
+        alert.showAndWait();
+        
+        if(alert.getResult() == ButtonType.NO)
+            return;
+        
+        
+        try {
+            ClienteDAO clienteDAO = new ClienteDAO();
+            clienteDAO.excluir(clienteEmEdicao);
+            new Alert(AlertType.INFORMATION, "Cliente deletado com sucesso").showAndWait();
+            abas.getSelectionModel().getSelectedItem().setDisable(true);
+            abas.getSelectionModel().selectFirst();
+            abas.getSelectionModel().getSelectedItem().setDisable(false);
+            buscarCliente("");
+        } catch (SQLException ex) {
+            exibirErro(ex);
+            System.out.println("Erro ao apagar cliente: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+    }
+    
+    @FXML
+    void txtEditCpf_keyReleased(KeyEvent event) {
+        TextFieldFormatter formatter = new TextFieldFormatter();        
+        formatter.setCaracteresValidos("0123456789");
+        if(Cliente.ePessoaFisica(clienteEmEdicao)){
+            formatter.setMask("###.###.###-##");
+        }else {
+            formatter.setMask("##.###.###/####-##");
+        }
+        formatter.setTf(txtEditCpf);
+        formatter.formatter();
+    }
+    
+    @FXML
+    void txtEditNasc_keyReleased(KeyEvent event) {
+        TextFieldFormatter formatter = new TextFieldFormatter();
+        formatter.setMask("##/##/####");
+        formatter.setCaracteresValidos("0123456789");
+        formatter.setTf(txtEditNasc);
+        formatter.formatter();
+    }
+    
+    @FXML
+    void txtEditTel_keyReleased(KeyEvent event) {
+        TextFieldFormatter formatter = new TextFieldFormatter();
+        formatter.setMask("(##)#####-####");
+        formatter.setCaracteresValidos("0123456789");
+        formatter.setTf(txtEditTel);
+        formatter.formatter();
+    }
+    
+    
+    @FXML
+    void txtEditNumero_keyReleased(KeyEvent event) {
+        TextFieldFormatter formatter = new TextFieldFormatter();
+        formatter.setMask("#####");
+        formatter.setCaracteresValidos("0123456789");
+        formatter.setTf(txtEditNumero);
+        formatter.formatter();
+    }
+
+    
 }

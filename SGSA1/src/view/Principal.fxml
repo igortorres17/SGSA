@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="610.0" prefWidth="1126.0" style="-fx-border-color: -cor-borda-controle; -fx-background-color: #ffffff;" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlePrincipal">
+<VBox prefHeight="610.0" prefWidth="1126.0" style="-fx-background-color: #ffffff;" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlePrincipal">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefWidth="830.0" VBox.vgrow="ALWAYS">
          <children>
@@ -69,13 +69,13 @@
                </children>
             </Pane>
             <AnchorPane fx:id="contentPane" layoutX="282.0" prefHeight="610.0" prefWidth="844.0" style="-fx-background-color: #FFFFFF;" />
-            <Button fx:id="btnClose" layoutX="1092.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnClose_pressed" prefHeight="15.0" prefWidth="20.0">
+            <Button fx:id="btnClose" layoutX="1092.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnClose_pressed" prefHeight="15.0" prefWidth="20.0" visible="false">
                <styleClass>
                   <String fx:value="icon-button" />
                   <String fx:value="excluir-cinza-icon" />
                </styleClass>
             </Button>
-            <Button fx:id="btnMinimize" layoutX="1049.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnMinimize_pressed" styleClass="icon-button" text="    " textFill="#727272" underline="true" />
+            <Button fx:id="btnMinimize" layoutX="1049.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnMinimize_pressed" styleClass="icon-button" text="    " textFill="#727272" underline="true" visible="false" />
          </children>
     </AnchorPane>
   </children>

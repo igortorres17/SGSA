@@ -132,7 +132,7 @@ public class ClienteDAO extends BaseDAO{
     {
         ArrayList<Cliente> listaClientes = new ArrayList();
         
-        String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome_rzsocial like ? LIMIT ?";
+        String selectSqlQuery = "SELECT * FROM "+tabela+" WHERE nome_rzsocial like ? AND apagado = 0 ORDER BY id DESC LIMIT ?";
         PreparedStatement instrucaoPreparada = conexao.prepareStatement(selectSqlQuery);
         instrucaoPreparada.setString(1, "%"+nome+"%");
         instrucaoPreparada.setInt(2, limite);
@@ -202,7 +202,7 @@ public class ClienteDAO extends BaseDAO{
     }
     
     public void excluir(int id) throws SQLException {
-        String deleteSqlQuery = "DELETE FROM "+tabela+" WHERE id = ?";
+        String deleteSqlQuery = "UPDATE "+tabela+" SET apagado = 1 WHERE id = ?";
         
         PreparedStatement instrucaoPreparada = conexao.prepareStatement(deleteSqlQuery);
         instrucaoPreparada.setInt(1, id);

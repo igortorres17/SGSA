@@ -80,7 +80,7 @@ public class ControleLogin extends ControleBase{
         }
             
         
-        super.abrirJanela("/view/Principal.fxml", StageStyle.TRANSPARENT);
+        super.abrirJanela("/view/Principal.fxml");
          getStage().close();
     }
     
