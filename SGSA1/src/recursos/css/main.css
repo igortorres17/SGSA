@@ -287,3 +287,12 @@ TableView .table-cell{
 .excluir-cinza-icon{ 
     -fx-background-image: url("../icones/excluir_cinza.png");
 }
+
+.lblLink{
+    -fx-font-size:14;
+}
+
+.lblLink:hover{
+    -fx-cursor:hand;
+    -fx-underline:true;
+}

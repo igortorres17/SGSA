@@ -13,11 +13,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import model.Sessao;
 
 /**
@@ -55,6 +63,8 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     @FXML
     private Button bbtnDeslogar;
     
+    @FXML
+    private StackPane stackOpcoes;    
     // Custom
     AnchorPane paneLoading;
     
@@ -67,6 +77,7 @@ public class ControlePrincipal extends ControleBase implements Initializable{
         SimpleDateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
         String data = dataFormatada.format(Calendar.getInstance().getTime());
         lblLogadoDesde.setText(data);
+        
     }
     
     private void removerBtnActiveTodos(){
@@ -114,6 +125,29 @@ public class ControlePrincipal extends ControleBase implements Initializable{
         
         new Thread(task).start();
         
+    }
+
+    @Override
+    public void windowShow(WindowEvent event) {
+        getStage().getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
+            String id = evt.getPickResult().getIntersectedNode().getId();
+            String classe = evt.getPickResult().getIntersectedNode().getClass().getName();
+            System.out.println("--------------------------------------------------");
+            System.out.println("ID: " + id);
+            System.out.println("Classe: " + classe);
+            if(id != null){
+                if(id.equals("dropLblAlterarSenha") || id.equals("dropLblSair") || id.equals("lblUsuario") )
+                    return;
+            }else if(classe.equals("com.sun.javafx.scene.control.LabeledText")){
+                Text txt = (Text) evt.getPickResult().getIntersectedNode();
+                String texto = txt.getText();
+                if(texto.equals("Sair") || texto.equals("Alterar Senha") || texto.equals(Sessao.getUsuario().getNome()))
+                    return;
+            }
+            
+            stackOpcoes.setVisible(false);
+            
+        });
     }
     
     @FXML
@@ -168,5 +202,23 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     private void btnMinimize_pressed(ActionEvent event){
         getStage().setIconified(true);
        // getStage().toBack();
+    }
+    
+    @FXML
+    private void dropLblAlterarSenha(MouseEvent event){
+        new Alert(Alert.AlertType.INFORMATION, "Em breve...").showAndWait();
+    }
+    
+    @FXML
+    private void dropLblSair_pressed(MouseEvent event){
+        Sessao.logoff();
+        abrirJanela("/view/Login.fxml", StageStyle.TRANSPARENT);
+        getStage().close();
+    }
+    
+    
+    @FXML
+    void lblUsuario_pressed(MouseEvent event) {
+        stackOpcoes.setVisible(true);
     }
 }

@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,7 +35,18 @@ public abstract class ControleBase {
             ControleBase controller = (ControleBase) loader.getController();
             controller.setStage(stage);
             
+            stage.addEventHandler(
+                WindowEvent.WINDOW_SHOWN,
+                new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent window){
+                        controller.windowShow(window);
+                    }
+                }
+            );
+            
             stage.setScene(scene);
+            
             return stage;
         } catch (IOException ex) {
             System.out.println("Falha ao abrir janela: " + ex.getMessage());
@@ -58,7 +70,7 @@ public abstract class ControleBase {
         stage.show();
         return stage;
     }
-    
+        
     protected ControleBase abrirModal(String caminho_fxml){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(caminho_fxml));
         try {

@@ -7,12 +7,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="610.0" prefWidth="1126.0" style="-fx-background-color: #ffffff;" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlePrincipal">
+<VBox fx:id="boxPrincipal" prefHeight="610.0" prefWidth="1126.0" style="-fx-background-color: #ffffff;" stylesheets="@../recursos/css/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlePrincipal">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefWidth="830.0" VBox.vgrow="ALWAYS">
+    <AnchorPane fx:id="panePrincipal" maxHeight="-1.0" maxWidth="-1.0" prefWidth="830.0" VBox.vgrow="ALWAYS">
          <children>
             <Pane prefHeight="610.0" prefWidth="282.0" style="-fx-background-color: -cor-azul;">
                <children>
@@ -57,15 +58,38 @@
                               </ImageView>
                            </children>
                         </Pane>
-                        <Label fx:id="lblLogadoDesde" layoutX="89.0" layoutY="42.0" prefHeight="15.0" prefWidth="192.0" style="-fx-alignment: center-left;" text="Logado desde: 16.04.19 às 09:25" textFill="#c9c9c9" wrapText="true" />
-                        <Label fx:id="lblUsuario" layoutX="90.0" layoutY="17.0" prefHeight="27.0" prefWidth="192.0" style="-fx-alignment: center-left;" text="Hercules M." textFill="WHITE">
+                        <Label fx:id="lblLogadoDesde" layoutX="89.0" layoutY="42.0" prefHeight="17.0" prefWidth="192.0" style="-fx-alignment: center-left;" text="-" textFill="#c9c9c9" wrapText="true" />
+                        <Label fx:id="lblUsuario" layoutX="90.0" layoutY="17.0" onMousePressed="#lblUsuario_pressed" prefHeight="27.0" prefWidth="192.0" style="-fx-alignment: center-left;" styleClass="lblLink" text="Hercules M." textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <StackPane fx:id="stackOpcoes" layoutX="89.0" layoutY="44.0" prefHeight="56.0" prefWidth="182.0" style="-fx-background-color: white; -fx-border-color: -cor-borda-controle;">
+                           <children>
+                              <Pane prefHeight="200.0" prefWidth="180.0">
+                                 <children>
+                                    <Label fx:id="dropLblAlterarSenha" layoutX="7.0" onMousePressed="#dropLblAlterarSenha" prefHeight="27.0" prefWidth="174.0" style="-fx-alignment: center-left; -fx-text-fill: -cor-azul;" styleClass="lblLink" text="Alterar Senha" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="dropLblSair" layoutX="7.0" layoutY="25.0" onMousePressed="#dropLblSair_pressed" prefHeight="27.0" prefWidth="174.0" style="-fx-alignment: center-left; -fx-text-fill: -cor-azul;" styleClass="lblLink" text="Sair" textFill="WHITE">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                        <ImageView fitHeight="20.0" fitWidth="39.0" layoutX="248.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../recursos/icones/expandir_cinza.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </Pane>
-                  <Button fx:id="btnDeslogar" layoutX="95.0" layoutY="569.0" mnemonicParsing="false" onAction="#btnDeslogar_pressed" text="Deslogar-se" />
+                  <Button fx:id="btnDeslogar" layoutX="95.0" layoutY="569.0" mnemonicParsing="false" onAction="#btnDeslogar_pressed" text="Deslogar-se" visible="false" />
                </children>
             </Pane>
             <AnchorPane fx:id="contentPane" layoutX="282.0" prefHeight="610.0" prefWidth="844.0" style="-fx-background-color: #FFFFFF;" />
