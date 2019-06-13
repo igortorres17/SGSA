@@ -132,9 +132,9 @@ public class ControlePrincipal extends ControleBase implements Initializable{
         getStage().getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, evt -> {
             String id = evt.getPickResult().getIntersectedNode().getId();
             String classe = evt.getPickResult().getIntersectedNode().getClass().getName();
-            System.out.println("--------------------------------------------------");
-            System.out.println("ID: " + id);
-            System.out.println("Classe: " + classe);
+            //System.out.println("--------------------------------------------------");
+            //System.out.println("ID: " + id);
+            //System.out.println("Classe: " + classe);
             if(id != null){
                 if(id.equals("dropLblAlterarSenha") || id.equals("dropLblSair") || id.equals("lblUsuario") )
                     return;

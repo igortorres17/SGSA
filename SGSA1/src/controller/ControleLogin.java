@@ -9,6 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.StageStyle;
 import model.Cliente;
 import model.PessoaFisica;
@@ -88,5 +90,23 @@ public class ControleLogin extends ControleBase{
     private void btnClose_pressed(ActionEvent event) {
         getStage().close();
         Runtime.getRuntime().exit(0);
+    }
+    
+        @FXML
+    void btnLogin_keyPressed(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER)
+            btnLogin_pressed(null);
+    }
+
+    @FXML
+    void txtSenha_keyPressed(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER)
+            btnLogin_pressed(null);
+    }
+
+    @FXML
+    void txtUsuario_keyPressed(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER)
+            btnLogin_pressed(null);
     }
 }

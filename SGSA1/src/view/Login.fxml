@@ -29,25 +29,25 @@
                   <Label layoutY="238.0" prefHeight="15.0" prefWidth="322.0" style="-fx-alignment: center;" text="Sistema de Ger. de Serviços Automotivos" textFill="WHITE" />
                </children>
             </Pane>
-            <Label layoutX="348.0" layoutY="75.0" text="Logar-se" textFill="#6b6b6b">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtUsuario" layoutX="348.0" layoutY="148.0" prefWidth="231.0" promptText="Usuário" styleClass="usuario-cinza-icon" />
-            <Label layoutX="348.0" layoutY="110.0" text="Insira suas credenciais" textFill="#6b6b6b">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Button fx:id="btnLogin" layoutX="348.0" layoutY="240.0" mnemonicParsing="false" onAction="#btnLogin_pressed" prefHeight="32.0" prefWidth="231.0" text="Continuar" />
-            <PasswordField fx:id="txtSenha" layoutX="348.0" layoutY="192.0" prefWidth="231.0" promptText="Senha" styleClass="senha-cinza-icon" />
             <Button fx:id="btnClose" layoutX="559.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnClose_pressed" prefHeight="15.0" prefWidth="20.0">
                <styleClass>
                   <String fx:value="icon-button" />
                   <String fx:value="excluir-cinza-icon" />
                </styleClass>
             </Button>
+            <Label layoutX="348.0" layoutY="75.0" text="Logar-se" textFill="#6b6b6b">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="348.0" layoutY="110.0" text="Insira suas credenciais" textFill="#6b6b6b">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtUsuario" layoutX="348.0" layoutY="148.0" onKeyPressed="#txtUsuario_keyPressed" prefWidth="231.0" promptText="Usuário" styleClass="usuario-cinza-icon" />
+            <PasswordField fx:id="txtSenha" layoutX="348.0" layoutY="192.0" onKeyPressed="#txtSenha_keyPressed" prefWidth="231.0" promptText="Senha" styleClass="senha-cinza-icon" />
+            <Button fx:id="btnLogin" layoutX="348.0" layoutY="240.0" mnemonicParsing="false" onAction="#btnLogin_pressed" onKeyPressed="#btnLogin_keyPressed" prefHeight="32.0" prefWidth="231.0" text="Continuar" />
          </children>
       </AnchorPane>
    </children>
