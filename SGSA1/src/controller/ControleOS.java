@@ -1,5 +1,9 @@
 package controller;
 
+import java.awt.print.PrinterException;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -30,7 +34,19 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.swing.JTextPane;
 import model.Mecanico;
 import model.OrdemServico;
 import model.Peca;
@@ -88,6 +104,8 @@ public class ControleOS extends ControleBase implements Initializable {
     private Button btnVoltar;
     @FXML
     private Label lblVisualizar;
+    @FXML
+    private Button btnImprimir;
     
     // Custom
     private final int LIMITE_REGISTROS = 8;
@@ -218,6 +236,28 @@ public class ControleOS extends ControleBase implements Initializable {
         for(int i = 0; i < pecas.size(); i++){
             listvPecas.getItems().add(pecas.get(i));
         }
+    }
+    
+    private ButtonType imprimirOS(String texto) {
+        Alert alert = new Alert(AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.NO);
+        alert.setTitle("Imprimir Ordem de Serviço");
+        alert.setHeaderText("Impressão/visualização de OS");
+ 
+        VBox dialogPaneContent = new VBox();
+ 
+        Label label = new Label("Conteúdo:");
+ 
+        String stackTrace = texto;
+        TextArea textArea = new TextArea();
+        textArea.setText(stackTrace);
+ 
+        dialogPaneContent.getChildren().addAll(label, textArea);
+ 
+        // Set content for Dialog Pane
+        alert.getDialogPane().setContent(dialogPaneContent);
+ 
+        alert.showAndWait();
+        return alert.getResult();
     }
     
     @FXML
@@ -363,6 +403,7 @@ public class ControleOS extends ControleBase implements Initializable {
         btnRemoverServico.setVisible(false);
         btnSelecionarVeiculo.setVisible(false);
         btnVoltar.setVisible(true);
+        btnImprimir.setVisible(true);
         lblVisualizar.setText("Visualizar Ordem de Serviço");
         
         listvPecas.setDisable(true);
@@ -465,6 +506,7 @@ public class ControleOS extends ControleBase implements Initializable {
         abas.getSelectionModel().getSelectedItem().setDisable(false);
         abas.getTabs().get(0).setText("Emitir OS");
         btnVoltar.setVisible(false);
+        btnImprimir.setVisible(false);
         
         // Controles
         btnEmitirOS.setVisible(true);
@@ -480,6 +522,43 @@ public class ControleOS extends ControleBase implements Initializable {
         listvPecas.setDisable(false);
         listvServicos.setDisable(false);
         txtObs.setDisable(false);
+    }
+    
+    @FXML
+    private void btnImprimir_pressed(ActionEvent event){
+        OrdemServico os = (OrdemServico) tabelaOS.getSelectionModel().getSelectedItem();
+        String conteudo = "SGSA - Ordem de Serviço\n\n";
+        conteudo += "Cliente: " + os.getVeiculo().getNomeProprietario() + "\n";
+        conteudo += "Veiculo: " + os.getVeiculo().getModelo().getMarca() + " " + os.getVeiculo().getModelo().getNome() + " (" + os.getVeiculo().getPlaca() + ")" + "\n";
+        conteudo += "------------------[ SERVIÇOS ]------------------\n";
+        
+        ArrayList<Servico> servicos = os.getServicos();        
+        for(Servico s : servicos){
+            conteudo += s.getNome() + " - R$" + s.getValor() + "\n";
+        }
+        
+        conteudo += "---------------------[PEÇAS]---------------------\n";
+        
+        ArrayList<Peca> pecas = os.getPecas();
+        for(Peca p : pecas){
+            conteudo += p.getNome() + " - R$" + p.getValor() + "\n";
+        }
+        conteudo += "\n";
+        conteudo += "/////////////////////////////  TOTAL: R$" + os.getValor() + "\n";
+        conteudo += "///////////////////////////// STATUS: " + os.getStatusName();
+        System.out.println(conteudo);
+        
+        
+        JTextPane textPane = new JTextPane();
+        textPane.setText(conteudo);
+        try {
+            if(imprimirOS(conteudo) == ButtonType.YES)
+                textPane.print();
+        } catch (PrinterException ex) {
+            exibirErro(ex);
+            Logger.getLogger(ControleOS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
 }

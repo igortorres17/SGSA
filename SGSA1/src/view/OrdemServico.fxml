@@ -40,6 +40,7 @@
                         <Button fx:id="btnRemoverServico" layoutX="243.0" layoutY="284.0" mnemonicParsing="false" onAction="#btnRemoverServico_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Remover" />
                         <Button fx:id="btnRemoverPeca" layoutX="243.0" layoutY="467.0" mnemonicParsing="false" onAction="#btnRemoverPeca_pressed" prefHeight="0.0" prefWidth="110.0" styleClass="blue-button" text="Remover" />
                         <Button fx:id="btnVoltar" layoutX="503.0" layoutY="399.0" mnemonicParsing="false" onAction="#btnVoltar_pressed" prefHeight="29.0" prefWidth="307.0" styleClass="orange-button" text="Voltar" visible="false" />
+                        <Button fx:id="btnImprimir" layoutX="503.0" layoutY="363.0" mnemonicParsing="false" onAction="#btnImprimir_pressed" prefHeight="29.0" prefWidth="307.0" styleClass="orange-button" text="Imprimir" visible="false" />
                      </children>
                   </AnchorPane>
                </content>
