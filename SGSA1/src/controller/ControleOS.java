@@ -102,21 +102,17 @@ public class ControleOS extends ControleBase implements Initializable {
                 tv -> {
                 TableRow row = new TableRow<>();
                 row.setOnMouseClicked(event -> {
-                    if( event.getClickCount() == 1 && (! row.isEmpty()) ){
-                        OrdemServico rowData = (OrdemServico)row.getItem();
-                        if(rowData.getStatus() == OrdemServico.CONCLUIDA)
-                            btnDarBaixaOS.setDisable(true);
-                        else
-                            btnDarBaixaOS.setDisable(false);
-                        
-                        if(rowData.getStatus() == OrdemServico.CANCELADA){
-                            btnCancelarOS.setDisable(true);
-                            btnDarBaixaOS.setDisable(true);
-                        }else{
-                            btnCancelarOS.setDisable(false);
-                            btnDarBaixaOS.setDisable(false);
-                        }
+
+                    OrdemServico os = (OrdemServico)row.getItem();
+                    if (os.getStatus() == OrdemServico.CONCLUIDA || os.getStatus() == OrdemServico.CANCELADA){
+                        btnCancelarOS.setDisable(true);
+                        btnDarBaixaOS.setDisable(true);
+                    }else{
+                        btnCancelarOS.setDisable(false);
+                        btnDarBaixaOS.setDisable(false);
                     }
+                    
+                    
                     if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                         OrdemServico rowData = (OrdemServico)row.getItem();
                         btnVisualizarOS_pressed(null);
