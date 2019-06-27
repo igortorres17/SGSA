@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,13 +26,16 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebView;
+import model.Mecanico;
 import model.OrdemServico;
 import model.Peca;
 import model.Servico;
+import model.Sessao;
 import model.Veiculo;
 import model.dao.OrdemServicoDAO;
 
@@ -385,6 +389,30 @@ public class ControleOS extends ControleBase implements Initializable {
         Alert alert = new Alert(AlertType.CONFIRMATION, "Esta operação só poderá ser desfeita pela equipe de T.I. Realmente deseja cancelar esta Ordem de Serviço? ", ButtonType.YES, ButtonType.NO);
         alert.setHeaderText("Cancelar OS?");
         alert.showAndWait();
+        
+        if(alert.getResult() == ButtonType.NO)
+            return;
+        
+        TextInputDialog inputDialog = new TextInputDialog();
+        inputDialog.setTitle("Autenticação");
+        inputDialog.setHeaderText("Insira a senha do usuário " + Sessao.getUsuario().getNome() + " para continuar.");
+        inputDialog.setContentText("Senha: ");
+        Optional<String> result = inputDialog.showAndWait();
+        Mecanico usuario = (Mecanico)Sessao.getUsuario();
+        
+        if(result == null)
+            return;
+        
+        if(!result.isPresent())
+            return;
+        
+        int eIgual = usuario.getSenha().compareTo(result.get());
+        if( eIgual != 0 ){
+            Alert al = new Alert(AlertType.ERROR, "Senha informada não confere com a conta do usuário corrente", ButtonType.OK);
+            al.setHeaderText("Senha incorreta!");
+            al.showAndWait();
+            return;
+        }
         
         OrdemServicoDAO osDAO = new OrdemServicoDAO();
         try {

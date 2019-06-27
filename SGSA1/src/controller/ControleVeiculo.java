@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -158,7 +159,10 @@ public class ControleVeiculo extends ControleBase implements Initializable {
         try {
             veic = daoveic.buscar("", 8);
         } catch (Exception ex) {
-            System.out.println("Erro ao buscar veiculos: " + ex.getMessage());
+            exibirErro(ex); 
+            Alert res = new Alert(Alert.AlertType.ERROR, "Erro ao buscar veículos", ButtonType.OK);
+             res.showAndWait();
+            System.out.println("Erro ao buscar veículos: " + ex.getMessage());
             ex.printStackTrace();
         }
         configurarTableView();
@@ -184,6 +188,9 @@ public class ControleVeiculo extends ControleBase implements Initializable {
             try {
                 veiculos = daoveic.buscar(txtPesquisar.getText().toUpperCase(), 8);
             } catch (Exception ex) {
+                exibirErro(ex);
+                Alert res = new Alert(Alert.AlertType.ERROR, "Erro ao buscar veículos", ButtonType.OK);
+                res.showAndWait();
                 System.out.println("Erro ao buscar o Veículo: " + ex.getMessage());
             }
                 controle = true;
@@ -332,6 +339,7 @@ public class ControleVeiculo extends ControleBase implements Initializable {
              }
             }
             catch(Exception ex){
+                exibirErro(ex);
                 System.out.println("Erro ao tentar inserir veículo: "+ex.getMessage());
                 new Alert(Alert.AlertType.ERROR, "Erro ao tentar inserir o registro.", ButtonType.OK).showAndWait();
             }
@@ -436,6 +444,7 @@ public class ControleVeiculo extends ControleBase implements Initializable {
              
             }
             catch(Exception ex){
+                exibirErro(ex);
                 System.out.println("Erro ao editar o veículo: "+ex.getMessage());
                 new Alert(Alert.AlertType.ERROR, "Erro ao editar o registro.", ButtonType.OK).showAndWait();
                 ex.printStackTrace();
@@ -497,6 +506,8 @@ public class ControleVeiculo extends ControleBase implements Initializable {
     
     @FXML
     private void btnExcluir_press(ActionEvent event){
+        
+        if(tabelaVeiculo.getSelectionModel().getSelectedItem()==null){
         Alert mens = new Alert(Alert.AlertType.CONFIRMATION, "Gostaria de excluir este registro?", ButtonType.YES, ButtonType.NO);
         mens.showAndWait();
         if (mens.getResult() == ButtonType.YES) {
@@ -506,6 +517,9 @@ public class ControleVeiculo extends ControleBase implements Initializable {
                 res.showAndWait();
 
             } catch (Exception ex) {
+                exibirErro(ex);
+                Alert res = new Alert(Alert.AlertType.ERROR, "Erro ao excluir o registro.", ButtonType.OK);
+             res.showAndWait();
                 System.out.println("Erro ao excluir o veículo:" + ex.getMessage());
             }
             abas.getSelectionModel().select(0);
@@ -518,7 +532,11 @@ public class ControleVeiculo extends ControleBase implements Initializable {
             Alert res = new Alert(Alert.AlertType.INFORMATION, "Registro mantido.", ButtonType.OK);
             res.showAndWait();
         }
-        
+        }
+        else{
+            Alert res = new Alert(Alert.AlertType.INFORMATION, "Selecione um veículo", ButtonType.OK);
+             res.showAndWait();
+        }
     }
     @FXML
     private void btnViewModificar_pressed(ActionEvent event){
