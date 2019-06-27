@@ -59,10 +59,17 @@
                            </children>
                         </Pane>
                         <Label fx:id="lblLogadoDesde" layoutX="89.0" layoutY="42.0" prefHeight="17.0" prefWidth="192.0" style="-fx-alignment: center-left;" text="-" textFill="#c9c9c9" wrapText="true" />
-                        <Label fx:id="lblUsuario" layoutX="90.0" layoutY="17.0" onMousePressed="#lblUsuario_pressed" prefHeight="27.0" prefWidth="192.0" style="-fx-alignment: center-left;" styleClass="lblLink" text="Hercules M." textFill="WHITE">
+                        <Label fx:id="lblUsuario" contentDisplay="RIGHT" layoutX="90.0" layoutY="17.0" onMousePressed="#lblUsuario_pressed" prefHeight="27.0" style="-fx-alignment: center-left;" styleClass="lblLink" text="Hercules M." textFill="WHITE">
                            <font>
                               <Font size="14.0" />
                            </font>
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" style="-fx-alignment: center-right;">
+                                 <image>
+                                    <Image url="@../recursos/icones/expandir_cinza.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </Label>
                         <StackPane fx:id="stackOpcoes" layoutX="89.0" layoutY="44.0" prefHeight="56.0" prefWidth="182.0" style="-fx-background-color: white; -fx-border-color: -cor-borda-controle;" visible="false">
                            <children>
@@ -82,11 +89,6 @@
                               </Pane>
                            </children>
                         </StackPane>
-                        <ImageView fitHeight="20.0" fitWidth="39.0" layoutX="248.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../recursos/icones/expandir_cinza.png" />
-                           </image>
-                        </ImageView>
                      </children>
                   </Pane>
                   <Button fx:id="btnDeslogar" layoutX="95.0" layoutY="569.0" mnemonicParsing="false" onAction="#btnDeslogar_pressed" text="Deslogar-se" visible="false" />

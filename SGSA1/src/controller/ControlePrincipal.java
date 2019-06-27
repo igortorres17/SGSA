@@ -206,7 +206,9 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     
     @FXML
     private void dropLblAlterarSenha(MouseEvent event){
-        new Alert(Alert.AlertType.INFORMATION, "Em breve...").showAndWait();
+        ControleAlterarSenhaModal controller = (ControleAlterarSenhaModal) abrirModal("/view/AlterarSenhaModal.fxml");
+        controller.getStage().setTitle("Alterar Senha");
+        controller.getStage().showAndWait();
     }
     
     @FXML
@@ -219,6 +221,6 @@ public class ControlePrincipal extends ControleBase implements Initializable{
     
     @FXML
     void lblUsuario_pressed(MouseEvent event) {
-        stackOpcoes.setVisible(true);
+        stackOpcoes.setVisible(!stackOpcoes.isVisible());
     }
 }
