@@ -146,6 +146,7 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
         try {
             modelos = daoModelo.relatorio();
         } catch (Exception ex) {
+            new Alert(Alert.AlertType.ERROR, "Erro ao buscar o Modelo.", ButtonType.OK).showAndWait();
             System.out.println("Erro ao buscar o relatório de Modelo: " + ex.getMessage());
         }
 
@@ -162,7 +163,9 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
             try {
                 modelos = daoModelo.buscar(txtPesquisar.getText(), 8);
             } catch (Exception ex) {
+                exibirErro(ex);
                 System.out.println("Erro ao buscar o Modelo pesquisar: " + ex.getMessage());
+                new Alert(Alert.AlertType.ERROR, "Erro ao buscar o Modelo.", ButtonType.OK).showAndWait();
             }
             controle = true;
             for (int i = 0; i < modelos.size(); i++) {
@@ -263,6 +266,7 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
                         txtMarca.getText(), Integer.valueOf(txtQtdportas.getText()), txtMotor.getText(), cboxCombustivel.getSelectionModel().getSelectedIndex()));
                 new Alert(Alert.AlertType.INFORMATION, "Cadastrado com sucesso!", ButtonType.OK);
             } catch (Exception ex) {
+                exibirErro(ex);
                 System.out.println("Erro ao inserir o modelo: " + ex.getMessage());
                 new Alert(Alert.AlertType.ERROR, "Erro ao inserir o registro.", ButtonType.OK).showAndWait();
             }
@@ -345,6 +349,9 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
                 Alert mens = new Alert(Alert.AlertType.INFORMATION, "Registro editado com sucesso.", ButtonType.OK);
                 mens.showAndWait();
             } catch (Exception ex) {
+                exibirErro(ex);
+                Alert mens = new Alert(Alert.AlertType.ERROR, "Não foi possível editar o registro.", ButtonType.OK);
+                mens.showAndWait();
                 System.out.println("Erro ao alterar o modelo: " + ex.getMessage());
             }
         }
@@ -362,6 +369,9 @@ public class SelecionarModeloModal extends ControleBase implements Initializable
                 res.showAndWait();
 
             } catch (Exception ex) {
+                exibirErro(ex); 
+                Alert res = new Alert(Alert.AlertType.ERROR, "Erro ao excluir um modelo.", ButtonType.OK);
+                 res.showAndWait();
                 System.out.println("Erro ao excluir o modelo:" + ex.getMessage());
             }
             abas.getSelectionModel().select(0);
